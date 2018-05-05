@@ -1,0 +1,23 @@
+.btn-primary {
+	border: none;
+	border-radius: 3px;
+	background: $color__salmon;
+	color: #fff;
+	//padding: 10px 15px;
+	font-size: 16px;
+	.faint {
+		color: rgba(255,255,255,.5);
+	}
+	&:hover,
+	&:focus,
+	&:active {
+		background: $color__darker_salmon;
+		color: #fff;
+	}
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+	color: #fff;
+	background: $color__darker_salmon;
+	border-color: transparent;
+}
