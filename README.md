@@ -1,7 +1,11 @@
 # Tesis
 
-*All the functionalities*
+*All functionalities*
 
-| FEATURES | STATUS | UNITE TEST | FEATURE TEST | APLICATION TEST |
-| :--- | :---: | :---: | :---: | :---: |
-| Login | :heavy_check_mark: | :x: | :x: | :x: |
+| FEATURES | STATUS | UNITE TEST | FEATURE TEST | APLICATION TEST | DESIGN |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Auth | :heavy_check_mark: | :x: | :x: | :x: | :heavy_check_mark: |
+| Login Socialite | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
+| Create Company | :x: | :x: | :x: | :x: | :x: |
+| Client panel | :x: | :x: | :x: | :x: | :x: |
+| Admin panel | :x: | :x: | :x: | :x: | :x: |
