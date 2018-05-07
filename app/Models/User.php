@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +22,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'activation_code'
+        'name', 'email', 'password', 'token'
     ];
 
     /**
@@ -32,6 +33,9 @@ class User extends Authenticatable implements HasMedia
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
 
     // Mutators
     public function setPasswordAttribute($password)
@@ -77,9 +81,23 @@ class User extends Authenticatable implements HasMedia
         return $this->id === $model->$foreignKey;
     }
 
+    public function signedTokenUrl()
+    {
+        if ($this->isActive()) return null;
+
+        return URL::temporarySignedRoute(
+            'account.activate', now()->addMinutes(30), ['token' => $this->token]
+        );
+    }
+
     public function isActive()
     {
         return  $this->verified_at !== null;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === User::ROLE_ADMIN;
     }
 
     // Relationships

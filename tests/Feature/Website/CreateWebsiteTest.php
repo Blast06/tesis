@@ -4,9 +4,12 @@ namespace Tests\Feature\Website;
 
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateWebsiteTest extends TestCase
 {
+    use RefreshDatabase;
+
     private $name = "Software Cristian";
     private $phone = "+1 (456) 565-4654";
     private $address = "La vega, Rep. Dominicana";

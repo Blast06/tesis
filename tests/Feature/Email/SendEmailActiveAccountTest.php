@@ -6,9 +6,12 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserRegisteredSuccessfully;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SendEmailActiveAccountTest extends TestCase
 {
+    use RefreshDatabase;
+
     private $name = 'Cristian Gomez';
     private $email = 'cristiangomeze@example.com';
     private $pass = 'L@aravel1';

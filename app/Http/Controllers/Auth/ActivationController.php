@@ -10,19 +10,24 @@ use App\Notifications\UserRegisteredSuccessfully;
 class ActivationController extends Controller
 {
     /**
-     * @param $code
+     * @param $token
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function activate($code)
+    public function activate($token)
     {
-        tap($this->findUserByCode($code), function ($user) {
-            $user->activation_code = null;
-            $user->verified_at = Carbon::now()->format('Y-m-d H:i:s');
-            $user->save();
-            auth()->loginUsingId($user->id);
-        });
+        if (request()->hasValidSignature()) {
 
-        return redirect('/home')->with(['flash_success' => 'Cuenta activada exitosamente']);
+            tap($this->findUserByCode($token), function ($user) {
+                $user->token = null;
+                $user->verified_at = Carbon::now()->format('Y-m-d H:i:s');
+                $user->save();
+                auth()->loginUsingId($user->id);
+            });
+
+            return redirect('/home')->with(['flash_success' => 'Cuenta activada exitosamente']);
+        }
+
+        abort(404);
     }
 
     public function request()
@@ -37,7 +42,7 @@ class ActivationController extends Controller
         if (auth()->user()->isActive()) return redirect('/home');
 
         tap($this->findUserAuth(), function ($user) {
-            $user->activation_code = User::generateToken();
+            $user->token = User::generateToken();
             $user->save();
             $user->notify(new UserRegisteredSuccessfully($user));
         });
@@ -54,7 +59,7 @@ class ActivationController extends Controller
         ]);
 
         tap($this->findUserAuth(), function ($user) use($campos){
-            $user->activation_code = User::generateToken();
+            $user->token = User::generateToken();
             $user->email = $campos['email'];
             $user->save();
             $user->notify(new UserRegisteredSuccessfully($user));
@@ -63,9 +68,9 @@ class ActivationController extends Controller
         return redirect()->route('account.activation.request')->with('flash_success', 'Por favor revisa tu correo electrónico para ver el enlace de activación');
     }
 
-    private function findUserByCode($code)
+    private function findUserByCode($token)
     {
-        return User::where('activation_code', $code)->whereNull('verified_at')->firstOrFail();
+        return User::where('token', $token)->whereNull('verified_at')->firstOrFail();
     }
 
     private function findUserAuth()

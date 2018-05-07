@@ -16,7 +16,7 @@
                     </p>
                 </div>
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                    <a class="btn btn-primary text-white">{{ __('Login') }}</a>
+                    <a class="btn btn-primary">{{ __('Login') }}</a>
                     <a class="btn btn-outline-secondary">Buscar ahora!</a>
                 </div>
             </div>

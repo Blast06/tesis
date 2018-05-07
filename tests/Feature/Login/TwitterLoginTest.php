@@ -9,9 +9,12 @@ use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\One\TwitterProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Laravel\Socialite\Two\User as SocialiteUser;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TwitterLoginTest extends TestCase
 {
+    use RefreshDatabase;
+
     private $email = 'cristian@example.org';
     private $name = 'Cristian Gomez';
 

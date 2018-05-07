@@ -24,9 +24,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define('client-dashboard', function ($user, $website) {
-            return $user->owns($website);
-        });
     }
 }

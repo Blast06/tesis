@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -18,8 +17,6 @@ class UserRegisteredSuccessfully extends Notification implements ShouldQueue
      */
     public $user;
 
-    public $url;
-
     public $tries = 5;
 
     /**
@@ -30,10 +27,6 @@ class UserRegisteredSuccessfully extends Notification implements ShouldQueue
     public function __construct(User $user)
     {
         $this->user = $user;
-
-        $this->url = URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes(30), ['token' => $this->user->activation_code]
-        );
     }
 
     /**
@@ -59,7 +52,7 @@ class UserRegisteredSuccessfully extends Notification implements ShouldQueue
             ->subject('Verificación de correo electrónico')
             ->greeting("Hola {$this->user->name}")
             ->line("Usted se ha registrado exitosamente en ". config('app.name') .". Por favor active su cuenta")
-            ->action('activar la cuenta', $this->url)
+            ->action('ACTIVAR LA CUENTA', $this->user->signedTokenUrl() )
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 

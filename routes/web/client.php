@@ -10,6 +10,9 @@ Route::catch(function (){
     throw new NotFoundHttpException;
 });
 
-Route::get('{website}/dashboard', function (\App\Models\Website $website) {
-   return $website;
-})->middleware('can:client-dashboard,website');;
+Route::middleware(['client'])->group(function () {
+
+    Route::get('{website}/dashboard', 'Dashboard\ClientDashboardController@index')->name('client.dashboard');
+
+});
+

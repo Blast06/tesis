@@ -17,7 +17,7 @@ Route::get('/login/twitter/callback', 'LoginSocialite\TwitterController@handleTw
 /**
  *  Active account
 */
-Route::get('account/activate/{code}', 'Auth\ActivationController@activate')->name('account.activate')->middleware('signed');
+Route::get('account/activate/{token}', 'Auth\ActivationController@activate')->name('account.activate');
 Route::get('account/activation/request', 'Auth\ActivationController@request')->name('account.activation.request')->middleware(['auth']);
 Route::post('account/activation/email', 'Auth\ActivationController@changeEmailResend')->name('account.activation.change.email')->middleware(['auth','throttle:0,1']);
 Route::post('account/resend/activation', 'Auth\ActivationController@resend')->name('account.activation.resend')->middleware(['auth','throttle:0,1']);

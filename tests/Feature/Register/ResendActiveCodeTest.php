@@ -6,9 +6,12 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ResendActiveCodeTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     function user_can_forwarded_activation_code_account()
     {
@@ -25,7 +28,7 @@ class ResendActiveCodeTest extends TestCase
         $user->refresh();
 
         $this->assertTrue(
-            $user->activation_code !== null
+            $user->token !== null
         );
     }
 

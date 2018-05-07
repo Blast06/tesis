@@ -10932,12 +10932,15 @@ a.text-dark:focus {
   }
 }
 
-.btn-primary {
-  border: none;
+.btn {
   border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  color: #fff !important;
   background: #f4645f;
-  color: #fff;
-  font-size: 16px;
+  border: none;
 }
 
 .btn-primary .faint {
@@ -10947,16 +10950,39 @@ a.text-dark:focus {
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
+  color: #fff !important;
   background: #e74430;
-  color: #fff;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
-  color: #fff;
+  color: #fff !important;
   background: #e74430;
-  border-color: transparent;
+}
+
+.btn-outline-btn-primary {
+  color: #f4645f !important;
+  background-color: transparent;
+  border: 2px solid #f4645f;
+}
+
+.btn-outline-btn-primary .faint {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-outline-btn-primary:hover,
+.btn-outline-btn-primary:focus,
+.btn-outline-btn-primary:active {
+  color: #fff !important;
+  background: #e74430;
+  border-color: #e74430;
+}
+
+.btn-outline-btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-outline-btn-primary.dropdown-toggle {
+  color: #fff !important;
+  background: #e74430;
+  border-color: #e74430;
 }
 
 .dropup,

@@ -26,8 +26,8 @@ class HideAdminRoutesTest extends TestCase
     /** @test */
     function it_displays_404_when_admin_visit_invalid_urls()
     {
-        $user = $this->createUser();
-        $this->actingAs($user)
+        $admin = $this->createAdmin();
+        $this->actingAs($admin)
             ->get('admin/invalid-url')
             ->assertStatus(Response::HTTP_NOT_FOUND);
     }

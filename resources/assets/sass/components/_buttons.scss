@@ -1,23 +1,50 @@
-.btn-primary {
-	border: none;
+.btn {
 	border-radius: 3px;
+	text-transform: uppercase;
+}
+
+.btn-primary {
+	color: #fff !important;
 	background: $color__salmon;
-	color: #fff;
-	//padding: 10px 15px;
-	font-size: 16px;
+    border: none;
+
 	.faint {
 		color: rgba(255,255,255,.5);
 	}
+
 	&:hover,
 	&:focus,
 	&:active {
+		color: #fff!important;
 		background: $color__darker_salmon;
-		color: #fff;
 	}
 }
 
-.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
-	color: #fff;
+.btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+	color: #fff!important;
 	background: $color__darker_salmon;
-	border-color: transparent;
+}
+
+.btn-outline-btn-primary{
+	color: $color__salmon !important;
+	background-color: transparent;
+	border: 2px solid $color__salmon;
+
+	.faint {
+		color: rgba(255,255,255,.5);
+	}
+
+	&:hover,
+	&:focus,
+	&:active {
+		color: #fff!important;
+		background: $color__darker_salmon;
+		border-color: $color__darker_salmon;
+	}
+}
+
+.btn-outline-btn-primary:not(:disabled):not(.disabled):active, .show > .btn-outline-btn-primary.dropdown-toggle {
+	color: #fff!important;
+	background: $color__darker_salmon;
+	border-color: $color__darker_salmon;
 }

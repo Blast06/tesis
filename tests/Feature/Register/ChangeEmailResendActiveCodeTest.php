@@ -6,9 +6,12 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ChangeEmailResendActiveCodeTest extends TestCase
 {
+    use RefreshDatabase;
+
     private $email = 'cristiangomeze@example.com';
 
     /** @test */

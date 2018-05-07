@@ -5,9 +5,12 @@ namespace Tests\Feature\Website;
 use Tests\TestCase;
 use App\Models\Website;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ErrorsWebsiteValidationTest extends TestCase
 {
+    use RefreshDatabase;
+
     private $phone = "+1 (456) 565-4654";
     private $address = "La vega, Rep. Dominicana";
 
