@@ -15,7 +15,7 @@ class WebsiteController extends Controller
 
     public function create()
     {
-        return view('website.create');
+        return view('client.website.create');
     }
 
     public function store(CreateWebsiteRequest $request)

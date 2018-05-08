@@ -20,9 +20,8 @@ Vue.use(VeeValidate);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('v-login-socialite', require('./components/LoginSocialite'));
-Vue.component('v-submit', require('./components/SubmitForm'));
-Vue.component('website-create', require('./components/website/CreateWebSite'));
+Vue.component('socialite', require('./components/LoginSocialite'));
+Vue.component('website-create', require('./components/website/create'));
 
 new Vue({
     el: '#app',

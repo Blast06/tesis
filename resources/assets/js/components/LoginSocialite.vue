@@ -1,23 +1,3 @@
-<template>
-    <main>
-        <div class="form-group row mb-0">
-            <div class="col-md-8 offset-md-4">
-                <a href="/login/facebook" class="btn btn-link">
-                    <i class="fab fa-facebook-square fa-2x"></i>
-                </a>
-
-                <a href="/login/google" class="btn btn-link">
-                    <i class="fab fa-google fa-2x"></i>
-                </a>
-
-                <a href="/login/twitter" class="btn btn-link">
-                    <i class="fab fa-twitter fa-2x"></i>
-                </a>
-            </div>
-        </div>
-    </main>
-</template>
-
 <script>
     export default {
         name: 'login-socialite'

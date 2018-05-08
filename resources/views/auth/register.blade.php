@@ -77,9 +77,26 @@
                             </div>
                         </div>
 
-                        <hr>
+                        <socialite  inline-template>
+                            <main>
+                                <hr>
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-8 offset-md-4">
+                                        <a href="{{ route('login.facebook') }}" class="btn btn-link">
+                                            <i class="fab fa-facebook-square fa-2x"></i>
+                                        </a>
 
-                        <v-login-socialite></v-login-socialite>
+                                        <a href="{{ route('login.google') }}" class="btn btn-link">
+                                            <i class="fab fa-google fa-2x"></i>
+                                        </a>
+
+                                        <a href="{{ route('login.twitter') }}" class="btn btn-link">
+                                            <i class="fab fa-twitter fa-2x"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </main>
+                        </socialite>
 
                     </form>
                 </div>
