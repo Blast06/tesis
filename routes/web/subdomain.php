@@ -1,5 +1,5 @@
 <?php
 
-Route::get('/', function () {
-    return 'subdomain';
+Route::get('/', function ($subdomain) {
+    return $subdomain;
 })->name('subdomin.index');

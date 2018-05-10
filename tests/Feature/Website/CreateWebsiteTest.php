@@ -11,8 +11,7 @@ class CreateWebsiteTest extends TestCase
     use RefreshDatabase;
 
     private $name = "Software Cristian";
-    private $phone = "+1 (456) 565-4654";
-    private $address = "La vega, Rep. Dominicana";
+    private $username = "big_system";
 
     /** @test */
     function users_can_create_websites()
@@ -21,19 +20,18 @@ class CreateWebsiteTest extends TestCase
 
         $response = $this->actingAs($user)->json('POST',route('websites.store'), [
             'name' => $this->name,
-            'phone' => $this->phone,
-            'address' => $this->address,
+            'username' => $this->username,
         ]);
 
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJson(['data' => [
-                'name' => $this->name
+                'name' => $this->name,
+                'username' => $this->username,
             ]]);
 
         $this->assertDatabaseHas('websites', [
             'name' => $this->name,
-            'phone' => $this->phone,
-            'address' => $this->address
+            'username' => $this->username
         ]);
     }
 
@@ -46,8 +44,7 @@ class CreateWebsiteTest extends TestCase
 
         $this->assertDatabaseMissing('websites', [
             'name' => $this->name,
-            'phone' => $this->phone,
-            'address' => $this->address
+            'username' => $this->username,
         ]);
     }
 

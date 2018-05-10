@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Feature\Email;
+namespace Tests\Feature\Notification;
 
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\UserRegisteredSuccessfully;
+use App\Notifications\PleaseConfirmYourEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SendEmailActiveAccountTest extends TestCase
+class PleaseConfirmYourEmailTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -30,7 +30,7 @@ class SendEmailActiveAccountTest extends TestCase
 
         Notification::assertSentTo(
             [User::where('email', $this->email)->first()],
-            UserRegisteredSuccessfully::class
+            PleaseConfirmYourEmail::class
         );
     }
 
@@ -48,7 +48,7 @@ class SendEmailActiveAccountTest extends TestCase
 
         Notification::assertNotSentTo(
             [factory(User::class)->times(2)->create()],
-            UserRegisteredSuccessfully::class
+            PleaseConfirmYourEmail::class
         );
     }
 }

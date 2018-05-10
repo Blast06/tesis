@@ -19,6 +19,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        abort(403);
+        abort(403, 'No tienes autorizacion');
     }
 }

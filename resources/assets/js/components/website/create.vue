@@ -1,19 +1,13 @@
 <script>
-    import MaskedInput from 'vue-masked-input';
-
     export default {
         name: "website-create",
         data() {
             return {
                 form: new Form({
                     name: '',
-                    phone: '',
-                    address: '',
+                    username: ''
                 }),
             }
-        },
-        components: {
-            MaskedInput
         },
         methods: {
             onSubmit() {
@@ -21,7 +15,8 @@
                     if (valid) {
                         this.form.post('/websites')
                             .then(response => {
-                                window.location.href= '/client/'+ response.data.id +'/dashboard';
+                                this.$validator.reset();
+                                window.location.href= '/client/'+ response.data.username +'/dashboard';
                             });
                     }
                 });

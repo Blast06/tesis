@@ -13,8 +13,6 @@ class AdminDashboardTest extends TestCase
     /** @test */
     function admin_can_see_dashboard()
     {
-        $this->withoutExceptionHandling();
-
         $admin = $this->createAdmin();
 
         $this->actingAs($admin)

@@ -1,35 +1,31 @@
-<h5 class="title">sitios</h5>
-<div class="list-group mb-5">
-    <a href="#" class="list">
-        <i class="fas fa-hashtag"></i>
-        Dapibus ac facilisis in
-    </a>
+@auth
+    <h5 class="title">Sitios De Trabajo</h5>
+    <div class="list-group mb-5">
+        @foreach($websites as $website)
+            <a href="{{ route('client.dashboard', $website) }}" class="list">
+                <i class="fas fa-hashtag"></i>
+                {{ $website->name }}
+            </a>
+        @endforeach
+    </div>
 
-    <a href="#" class="list">
-        <i class="fas fa-hashtag"></i>
-        Dapibus ac facilisis in
-    </a>
+    <h5 class="title">Subscripciones</h5>
+    <div class="list-group mb-5">
+        <a href="#" class="list">
+            <i class="fas fa-hashtag"></i>
+            Dapibus ac facilisis in
+        </a>
 
-    <a href="#" class="list">
-        <i class="fas fa-hashtag"></i>
-        Dapibus ac facilisis in
-    </a>
-</div>
+        <a href="#" class="list">
+            <i class="fas fa-hashtag"></i>
+            Dapibus ac facilisis in
+        </a>
 
-<h5 class="sidebar-title">sitios de trabajo</h5>
-<div class="list-group mb-5">
-    <a href="{{ route('subdomin.index', 'cristian') }}" class="list">
-        <i class="fas fa-hashtag"></i>
-        Dapibus ac facilisis in
-    </a>
-
-    <a href="{{ route('subdomin.index', 'foro') }}" class="list">
-        <i class="fas fa-hashtag"></i>
-        Dapibus ac facilisis in
-    </a>
-
-    <a href="{{ route('subdomin.index', 'cliente') }}" class="list">
-        <i class="fas fa-hashtag"></i>
-        Dapibus ac facilisis in
-    </a>
-</div>
+        <a href="#" class="list">
+            <i class="fas fa-hashtag"></i>
+            Dapibus ac facilisis in
+        </a>
+    </div>
+    @else
+    #anucios
+@endauth

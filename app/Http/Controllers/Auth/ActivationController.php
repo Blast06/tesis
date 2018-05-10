@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Notifications\UserRegisteredSuccessfully;
+use App\Notifications\PleaseConfirmYourEmail;
 
 class ActivationController extends Controller
 {
@@ -24,10 +24,9 @@ class ActivationController extends Controller
                 auth()->loginUsingId($user->id);
             });
 
-            return redirect('/home')->with(['flash_success' => 'Cuenta activada exitosamente']);
+            return redirect('/home')->with(['flash_success' => '¡Tu cuenta ahora está confirmada!']);
         }
-
-        abort(404);
+        return redirect('/home')->with(['flash_danger' => 'Token desconocido']);
     }
 
     public function request()
@@ -44,7 +43,7 @@ class ActivationController extends Controller
         tap($this->findUserAuth(), function ($user) {
             $user->token = User::generateToken();
             $user->save();
-            $user->notify(new UserRegisteredSuccessfully($user));
+            $user->notify(new PleaseConfirmYourEmail($user));
         });
 
         return back()->with('flash_success', 'Por favor revisa tu correo electrónico para ver el enlace de activación');
@@ -62,7 +61,7 @@ class ActivationController extends Controller
             $user->token = User::generateToken();
             $user->email = $campos['email'];
             $user->save();
-            $user->notify(new UserRegisteredSuccessfully($user));
+            $user->notify(new PleaseConfirmYourEmail($user));
         });
 
         return redirect()->route('account.activation.request')->with('flash_success', 'Por favor revisa tu correo electrónico para ver el enlace de activación');

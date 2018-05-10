@@ -21,53 +21,35 @@
                                        type="text"
                                        name="name"
                                        v-model="form.name"
-                                       v-validate="'required|alpha_spaces'"
+                                       v-validate="'required|alpha_spaces|min:4|max:40'"
                                        data-vv-name="sitio"/>
 
                                 <span v-show="errors.has('sitio')" class="invalid-feedback"><strong v-text="errors.first('sitio')"></strong></span>
-                                <span v-show="form.errors.has('name')" class="invalid-feedback"><strong v-text="form.errors.get('name')"></strong></span>
+                                <span v-show="form.errors.has('name')" class="invalid-feedback"><strong v-text="form.errors.first('name')"></strong></span>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Telefono</label>
+                            <label class="col-md-4 col-form-label text-md-right">Nombre de usuario</label>
 
                             <div class="col-md-6">
+                                <input class="form-control"
+                                       :class="[{ 'is-invalid' : errors.has('usuario')  }, { 'is-invalid' : form.errors.has('username') }]"
+                                       type="text"
+                                       name="username"
+                                       v-model="form.username"
+                                       v-validate="'required|alpha_dash|min:4|max:40'"
+                                       data-vv-name="usuario"/>
 
-                                <masked-input type="tel"
-                                              name="phone"
-                                              class="form-control"
-                                              :class="[{ 'is-invalid' : errors.has('telefono')  }, { 'is-invalid' : form.errors.has('phone') }]"
-                                              v-model="form.phone"
-                                              mask="\+\1 (111) 111-1111"
-                                              v-validate="'required'"
-                                              data-vv-name="telefono"
-                                ></masked-input>
-                                <span v-show="errors.has('telefono')" class="invalid-feedback"><strong v-text="errors.first('telefono')"></strong></span>
-                                <span v-show="form.errors.has('phone')" class="invalid-feedback"><strong v-text="form.errors.get('phone')"></strong></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Direccion</label>
-                            <div class="col-md-6">
-                                <textarea class="form-control"
-                                          :class="[{ 'is-invalid' : errors.has('direccion') }, { 'is-invalid' : form.errors.has('address') }]"
-                                          type="text"
-                                          name="address"
-                                          v-model="form.address"
-                                          v-validate="'required|min:10'"
-                                          data-vv-name="direccion">
-                                </textarea>
-                                <span v-show="errors.has('direccion')" class="invalid-feedback"><strong v-text="errors.first('direccion')"></strong></span>
-                                <span v-show="form.errors.has('address')" class="invalid-feedback"><strong v-text="form.errors.get('address')"></strong></span>
+                                <span v-show="errors.has('usuario')" class="invalid-feedback"><strong v-text="errors.first('usuario')"></strong></span>
+                                <span v-show="form.errors.has('username')" class="invalid-feedback"><strong v-text="form.errors.first('username')"></strong></span>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary" :disabled="form.errors.any()">
-                                    Crear Sitios
+                                    Crear Sitio
                                 </button>
                             </div>
                         </div>

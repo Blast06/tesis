@@ -30,7 +30,7 @@ export default class Errors {
      *
      * @param {string} field
      */
-    get(field) {
+    first(field) {
         if (this.errors[field]) {
             return this.errors[field][0];
         }

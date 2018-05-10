@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class AdminCreate extends Command
@@ -27,10 +28,11 @@ class AdminCreate extends Command
      */
     public function handle()
     {
-        \App\Models\User::create([
+       User::create([
             'name' => 'Admin',
             'email' => 'admin@system.com',
             'password' => $this->secret('What is the password?'),
+            'role' => User::ROLE_ADMIN,
         ]);
 
         $this->info('Usuario admin creado correctamente!');

@@ -3,16 +3,7 @@
     <div class="row">
 
         <div class="d-none d-md-block col-md-3 sidebar">
-            @auth
-                @include('partials.sidenav')
-            @else
-                #Anucios
-                <br>
-                #Registrate
-                <br>
-                #Otra cosas
-            @endauth
-
+            @include('partials.sidenav')
         </div>
 
         <div class="col-md-9 col-lg-6">
@@ -32,7 +23,10 @@
         </div>
 
         <div class="d-none d-lg-block col-lg-3 sidebar">
-            @include('partials.filters')
+            {{-- Temporary, this will go on the results page--}}
+            @isset(request()->q)
+                @include('partials.filters')
+            @endisset
         </div>
 
     </div>

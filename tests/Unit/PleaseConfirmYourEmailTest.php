@@ -4,10 +4,10 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Notifications\UserRegisteredSuccessfully;
+use App\Notifications\PleaseConfirmYourEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class UserRegisteredSuccessfullyTest extends TestCase
+class PleaseConfirmYourEmailTest extends TestCase
 {
     /** @test */
     public function it_builds_a_mail_message()
@@ -17,7 +17,7 @@ class UserRegisteredSuccessfullyTest extends TestCase
             'verified_at' => null
         ]);
 
-        $notification = new UserRegisteredSuccessfully($user);
+        $notification = new PleaseConfirmYourEmail($user);
 
         $message = $notification->toMail($user);
 
@@ -29,17 +29,17 @@ class UserRegisteredSuccessfullyTest extends TestCase
         );
 
         $this->assertSame(
-            "Hola {$user->name}",
+            "Hola {$user->name}, Un último paso.",
             $message->greeting
         );
 
         $this->assertSame(
-            "Usted se ha registrado exitosamente en ". config('app.name') .". Por favor active su cuenta",
+            "Solo necesitamos que confirmes tu dirección de correo electrónico para demostrar que eres humano. Lo entiendes, ¿verdad? Coo.",
             $message->introLines[0]
         );
 
         $this->assertSame(
-            'ACTIVAR LA CUENTA',
+            'Confirmar correo electrónico',
             $message->actionText
         );
 

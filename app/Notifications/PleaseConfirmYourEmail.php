@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class UserRegisteredSuccessfully extends Notification implements ShouldQueue
+class PleaseConfirmYourEmail extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -50,9 +50,9 @@ class UserRegisteredSuccessfully extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('Verificación de correo electrónico')
-            ->greeting("Hola {$this->user->name}")
-            ->line("Usted se ha registrado exitosamente en ". config('app.name') .". Por favor active su cuenta")
-            ->action('ACTIVAR LA CUENTA', $this->user->signedTokenUrl() )
+            ->greeting("Hola {$this->user->name}, Un último paso.")
+            ->line("Solo necesitamos que confirmes tu dirección de correo electrónico para demostrar que eres humano. Lo entiendes, ¿verdad? Coo.")
+            ->action('Confirmar correo electrónico', $this->user->signedTokenUrl() )
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\PleaseConfirmYourEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Notifications\UserRegisteredSuccessfully;
 
 class RegisterController extends Controller
 {
@@ -72,14 +72,14 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'activation_code' => User::generateToken(),
+            'token' => User::generateToken(),
         ]);
 
         if (isset($data['avatar'])) {
             $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
         }
 
-        $user->notify(new UserRegisteredSuccessfully($user));
+        $user->notify(new PleaseConfirmYourEmail($user));
 
         return $user;
     }

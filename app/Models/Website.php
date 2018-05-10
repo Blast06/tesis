@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Website extends Model
 {
-    protected $fillable = ['name', 'phone', 'address', 'private', 'domain'];
+    protected $fillable = ['name', 'username', 'phone', 'address', 'private', 'domain'];
 
     // Mutators
 
     public function setNameAttribute($name)
     {
         $this->attributes['name'] = strtolower($name);
+    }
+
+    public function setUsernameAttribute($username)
+    {
+        $this->attributes['username'] = strtolower($username);
     }
 
     // Accessor
@@ -22,6 +27,15 @@ class Website extends Model
         return ucwords($name);
     }
 
+    /**
+     * Get the route key name for Laravel.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
     // Relationships
 
     public function user()

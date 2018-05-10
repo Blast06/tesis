@@ -13,7 +13,6 @@ Route::get('/login/google/callback', 'LoginSocialite\GoogleController@handleGoog
 Route::get('/login/twitter', 'LoginSocialite\TwitterController@redirectToTwitter')->name('login.twitter');
 Route::get('/login/twitter/callback', 'LoginSocialite\TwitterController@handleTwitterCallback')->name('login.twitter.callback');
 
-
 /**
  *  Active account
 */
@@ -22,12 +21,18 @@ Route::get('account/activation/request', 'Auth\ActivationController@request')->n
 Route::post('account/activation/email', 'Auth\ActivationController@changeEmailResend')->name('account.activation.change.email')->middleware(['auth','throttle:0,1']);
 Route::post('account/resend/activation', 'Auth\ActivationController@resend')->name('account.activation.resend')->middleware(['auth','throttle:0,1']);
 
+/*
+ * Others Routes...
+ */
 Route::get('/', 'MarketingController@index')->name('marketing.index');
 Route::get('/home', 'HomeController@index')->name('home.index');
-
-// Website Routes
-Route::resource('websites', 'Website\WebsiteController');
 
 Route::get('/search', function () {
     return view('pages.details');
 });
+
+/*
+ * Public Website
+ */
+Route::resource('websites', 'Website\WebsiteController')->only('index', 'create', 'store');
+Route::get('{website}', 'Website\WebsiteController@show')->fallback();

@@ -25,7 +25,7 @@
 </head>
 <body class="@yield('body-class')">
     <div id="app">
-        <div class="laracon-banner">
+        <div class="app-banner">
             Banner informativo
             <a href="#">¡Obtenga el suyo hoy!</a>
         </div>

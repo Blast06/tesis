@@ -1,10 +1,11 @@
-<li><a href="{{ route('home.index') }}">Home</a></li>
-<li><a href="{{ url('/en-construccion') }}">Sitios</a></li>
-
 @guest
-    <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
-    <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+    <li><a href="{{ route('websites.index') }}">SITIOS</a></li>
+    <li><a href="{{ route('login') }}">ACCEDER</a></li>
+    <li><a href="{{ route('register') }}">REGISTRO</a></li>
 @else
+    <li><a href="{{ route('home.index') }}">HOME</a></li>
+    <li><a href="{{ route('websites.index') }}">SITIOS</a></li>
+
     <li class="dropdown community-dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
             Crear

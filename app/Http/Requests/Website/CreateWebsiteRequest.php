@@ -24,9 +24,8 @@ class CreateWebsiteRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:5|max:40|unique:websites',
-            'phone' => 'required|min:17|max:17',
-            'address' => 'required|min:10|max:255'
+            'name' => 'required|min:4|max:40',
+            'username' => 'required|min:4|max:40|unique:websites',
         ];
     }
 
@@ -34,8 +33,12 @@ class CreateWebsiteRequest extends FormRequest
     {
         return [
             'name' => 'sitio',
-            'phone' => 'telefono',
-            'address' => 'direccion'
+            'username' => 'usuario'
         ];
+    }
+
+    public function createWebsite()
+    {
+        return auth()->user()->websites()->create($this->validated());
     }
 }

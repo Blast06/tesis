@@ -27,7 +27,8 @@ class ActiveAccountTest extends TestCase
 
         $this->get($url)
             ->assertStatus(Response::HTTP_FOUND)
-            ->assertRedirect('/home');
+            ->assertRedirect('/home')
+            ->assertSessionHas(['flash_success' => '¡Tu cuenta ahora está confirmada!']);
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
@@ -53,8 +54,9 @@ class ActiveAccountTest extends TestCase
         Carbon::setTestNow(Carbon::parse('+31 minutes'));
 
         $this->get($url)
-            ->assertStatus(Response::HTTP_NOT_FOUND)
-            ->assertSee('Parece que has alterado el delicado equilibrio interno de mi ama de llaves.');
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/home')
+            ->assertSessionHas(['flash_danger' => 'Token desconocido']);
 
         $this->assertFalse($this->isAuthenticated());
     }

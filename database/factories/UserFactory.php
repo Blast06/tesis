@@ -25,7 +25,8 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
 
 $factory->define(App\Models\Website::class, function (Faker $faker) {
     return [
-        'name' => 'new website '. $faker->unique()->randomNumber,
+        'name' => 'new website '. $faker->randomNumber,
+        'username' => $faker->unique()->userName,
         'phone' => $faker->phoneNumber,
         'address' => $faker->address,
         'user_id' => factory(App\Models\User::class)->create()
