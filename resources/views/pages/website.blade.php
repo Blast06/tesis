@@ -12,7 +12,9 @@
                 @endforeach
 
             @else
-                <h1>No hay resultados...</h1>
+                <div class="alert alert-info" role="alert">
+                    <h3 class="text-center">No hay resultados...</h3>
+                </div>
             @endif
 
             {{ $websites->links() }}

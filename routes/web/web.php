@@ -22,6 +22,14 @@ Route::post('account/activation/email', 'Auth\ActivationController@changeEmailRe
 Route::post('account/resend/activation', 'Auth\ActivationController@resend')->name('account.activation.resend')->middleware(['auth','throttle:0,1']);
 
 /*
+ * Notification
+ */
+Route::get('notifications', 'Notification\NotificationController@index');
+Route::get('notifications/read-all', 'Notification\NotificationController@markAsRead');
+Route::get('notifications/count', 'Notification\NotificationController@count');
+Route::get('notifications/{notification}', 'Notification\NotificationController@readNotification');
+
+/*
  * Others Routes...
  */
 Route::get('/', 'MarketingController@index')->name('marketing.index');

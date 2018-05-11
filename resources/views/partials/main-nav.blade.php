@@ -20,7 +20,7 @@
         </ul>
     </li>
 
-    <li><a href=""><i class="fas fa-bell fa-lg"></i></a></li>
+    <user-notifications :user_id="{{auth()->id()}}"></user-notifications>
     <li><a href=""><i class="fas fa-shopping-cart fa-lg"></i></a></li>
 
     <li class="dropdown community-dropdown">

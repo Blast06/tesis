@@ -5,11 +5,13 @@ namespace App\Notifications;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class PleaseConfirmYourEmail extends Notification implements ShouldQueue
 {
+
     use Queueable;
 
     /**
@@ -37,7 +39,7 @@ class PleaseConfirmYourEmail extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database', 'broadcast  '];
     }
 
     /**
@@ -56,4 +58,17 @@ class PleaseConfirmYourEmail extends Notification implements ShouldQueue
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 
+    public function toArray($notifiable)
+    {
+        return [
+            'icon' => 'far fa-envelope',
+            'subject' => 'Verificación de correo electrónico',
+            'body' => "necesitamos que confirmes tu dirección de correo electrónico...",
+        ];
+    }
+
+    public function broadcastOn()
+    {
+        return new PrivateChannel('User.'.$this->user->id);
+    }
 }
