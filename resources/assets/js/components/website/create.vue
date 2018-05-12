@@ -5,7 +5,7 @@
             return {
                 form: new Form({
                     name: '',
-                    username: ''
+                    username: '',
                 }),
             }
         },

@@ -23,6 +23,7 @@ Vue.use(VeeValidate);
 Vue.component('socialite', require('./components/LoginSocialite'));
 Vue.component('user-notifications', require('./components/UserNotifications'));
 Vue.component('website-create', require('./components/website/create'));
+Vue.component('image-form', require('./components/website/ImageForm'));
 
 new Vue({
     el: '#app',

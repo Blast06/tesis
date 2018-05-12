@@ -25,9 +25,7 @@
 
     <li class="dropdown community-dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            @if($url = Auth::user()->avatar())
-                <img class="rounded-circle" src="{{ asset($url) }}">
-            @endif
+            <img class="rounded-circle" src="{{ Auth::user()->avatar }}">
             {{ Auth::user()->name }}
         </a>
 

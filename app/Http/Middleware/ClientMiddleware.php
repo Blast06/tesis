@@ -16,14 +16,41 @@ class ClientMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (is_null($request->website) || $this->isNotOwns($request->website)) {
+        
+        if ($this->isWebsiteDefined($request->website)) {
             return redirect('/home');
         }
 
         return $next($request);
     }
-    
-    private function isNotOwns(Website $website): bool
+
+    /**
+     * @param $website
+     * @return bool
+     */
+    protected function isWebsiteDefined($website): bool
+    {
+        if (is_null($website)){
+            return true;
+        }
+
+        return $this->isNotOwns($this->getInstaceWebsite($website));
+    }
+
+    /**
+     * @param $website
+     * @return \App\Models\Website
+     */
+    protected function getInstaceWebsite($website)
+    {
+        if ($website instanceof Website) {
+            return $website;
+        }
+        
+        return Website::where('username', $website)->firstOrFail();
+    }
+
+    protected function isNotOwns(Website $website): bool
     {
         return !auth()->user()->owns($website);
     }

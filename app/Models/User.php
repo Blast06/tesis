@@ -34,6 +34,10 @@ class User extends Authenticatable implements HasMedia
         'password', 'remember_token',
     ];
 
+    protected $appends = [
+        'avatar'
+    ];
+
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
 
@@ -65,15 +69,9 @@ class User extends Authenticatable implements HasMedia
             ->height(32);
     }
 
-    public function avatar()
+    public function getAvatarAttribute()
     {
-        $path = optional($this->getMedia('avatars')->first())->getUrl('thumb');
-
-        if ($path) {
-            return config('app.url') . $path;
-        }
-
-        return false;
+        return $this->getFirstMediaUrl('avatars', 'thumb');
     }
 
     public function owns(Model $model, $foreignKey = 'user_id')
