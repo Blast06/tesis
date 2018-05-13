@@ -23,6 +23,14 @@ class AdminDashboardTest extends TestCase
     }
 
     /** @test */
+    function guest_cannot_see_admin_dashboard()
+    {
+        $this->get(route('admin.dashboard'))
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
     function unauthorized_user_cannot_see_admin_dashboard()
     {
         $admin = $this->createUser();

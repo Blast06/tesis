@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Login Route
  */
@@ -28,6 +29,12 @@ Route::get('notifications', 'Notification\NotificationController@index');
 Route::get('notifications/read-all', 'Notification\NotificationController@markAsRead');
 Route::get('notifications/count', 'Notification\NotificationController@count');
 Route::get('notifications/{notification}', 'Notification\NotificationController@readNotification');
+
+/*
+ * Profile
+ */
+Route::get('profile', 'User\ProfileController@index');
+Route::post('profile/change/avatar', 'User\ProfileController@avatar');
 
 /*
  * Others Routes...

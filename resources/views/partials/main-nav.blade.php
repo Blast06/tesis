@@ -25,12 +25,12 @@
 
     <li class="dropdown community-dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            <img class="rounded-circle" src="{{ Auth::user()->avatar }}">
+            <img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="36" height="22">
             {{ Auth::user()->name }}
         </a>
 
         <ul class="dropdown-menu" role="menu">
-            <li><a href="">Otros...</a></li>
+            <li><a href="{{ url('/profile') }}">Perfil</a></li>
 
             <li class="divider"></li>
 

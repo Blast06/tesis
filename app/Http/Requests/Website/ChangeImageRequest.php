@@ -4,6 +4,7 @@ namespace App\Http\Requests\Website;
 
 use App\Models\Website;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class ChangeImageRequest extends FormRequest
 {
@@ -42,6 +43,6 @@ class ChangeImageRequest extends FormRequest
 
         $website->addMediaFromRequest('image')->toMediaCollection('websites');
 
-        return 'imagen actualizada correctamente.';
+        return response()->json(['message' => 'imagen actualizada correctamente.'], Response::HTTP_OK);
     }
 }

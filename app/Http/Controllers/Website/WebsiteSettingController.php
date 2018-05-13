@@ -16,7 +16,7 @@ class WebsiteSettingController extends Controller
 
     public function image(ChangeImageRequest $request, Website $website)
     {
-        return response()->json(['message' =>  $request->updateImage($website)], 200);
+        return $request->updateImage($website);
     }
 
     public function update(UpdateWebsiteRequest $request, Website $website)

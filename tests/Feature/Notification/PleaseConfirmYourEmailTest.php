@@ -17,7 +17,7 @@ class PleaseConfirmYourEmailTest extends TestCase
     private $pass = 'L@aravel1';
 
     /** @test */
-    function when_user_registered_send_activation_email()
+    function when_user_registered_successfully_sent_account_activation_email()
     {
         Notification::fake();
 
@@ -35,7 +35,14 @@ class PleaseConfirmYourEmailTest extends TestCase
     }
 
     /** @test */
-    function registration_email_only_send_user_that_is_registering()
+    function only_registered_successfully_user_sent_account_activation_email()
+    {
+        $this->post('/register', [])
+            ->assertSessionHasErrors(['name','email','password']);
+    }
+
+    /** @test */
+    function account_activation_email_only_sent_user_registed_successfully()
     {
         Notification::fake();
 

@@ -24,6 +24,16 @@ class ClientDashboardTest extends TestCase
     }
 
     /** @test */
+    function guest_cannot_see_client_dashboard()
+    {
+        $website = factory(Website::class)->create();
+
+        $this->get(route('client.dashboard', $website))
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
     function unauthorized_user_cannot_see_client_dashboard()
     {
         $website = factory(Website::class)->create();
