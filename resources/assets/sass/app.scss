@@ -9,6 +9,7 @@
 // third party components
 @import '~bootstrap/scss/bootstrap';
 @import url("https://use.fontawesome.com/releases/v5.0.12/css/all.css");
+@import "~toastr/toastr.scss";
 
 // content components
 @import "components/buttons";     // modified bootstrap buttons
@@ -17,6 +18,7 @@
 @import "components/nav";         // top nav
 @import "components/sidenav";
 @import "components/footer";      // the footer
+@import "components/loader";      // loader
 
 // content
 @import "content/404";

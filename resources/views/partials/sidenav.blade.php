@@ -10,23 +10,19 @@
             @endforeach
         </div>
     @endif
-    <h5 class="title">Subscripciones</h5>
-    <div class="list-group mb-5">
-        <a href="#" class="list">
-            <i class="fas fa-hashtag"></i>
-            Dapibus ac facilisis in
-        </a>
 
-        <a href="#" class="list">
-            <i class="fas fa-hashtag"></i>
-            Dapibus ac facilisis in
-        </a>
+    @if($subscriptions->count())
+        <h5 class="title">Subscripciones</h5>
+        <div class="list-group mb-5">
+            @foreach($subscriptions as $subscription)
+                <a href="{{ url("$subscription->username") }}" class="list">
+                    <i class="fas fa-hashtag"></i>
+                    {{ $subscription->name }}
+                </a>
+            @endforeach
+        </div>
+    @endif
 
-        <a href="#" class="list">
-            <i class="fas fa-hashtag"></i>
-            Dapibus ac facilisis in
-        </a>
-    </div>
-    @else
+@else
     #anucios
 @endauth

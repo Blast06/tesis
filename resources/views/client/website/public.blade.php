@@ -7,9 +7,11 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="media">
-                        <img src="{{ $website->image_path }}" class="rounded mr-3">
-                        <div class="media-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <img src="{{ $website->image_path }}" class="rounded mr-3"width="200" height="200">
+                        </div>
+                        <div class="col-lg-6">
                             <h3 class="mt-5">{{ $website->name }}</h3>
                             <p>1.284.696 suscriptores</p>
                         </div>
@@ -17,9 +19,18 @@
                 </div>
                 <div class="col-md-6">
                     <div class="float-right mt-5">
-                        <button type="button" class="btn btn-light">SUSCRIBIRSE</button>
-                        <button type="button" class="btn btn-light">Otro...</button>
-                        <button type="button" class="btn btn-light">Dashboard</button>
+                        @if(auth()->check())
+                            <subscribe-button
+                                    subscribed="{{ auth()->user()->isSubscribedTo($website) }}"
+                                    website="{{ $website->username }}">
+                            </subscribe-button>
+
+                            <br>
+
+                            @if(auth()->id() === $website->user_id)
+                                <a href="{{ route('client.dashboard', $website) }}" class="btn btn-light">Dashboard</a>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>

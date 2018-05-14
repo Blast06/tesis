@@ -16,7 +16,12 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{$website->name}}</h5>
                                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-primary">SUSCRIBIRSE</a>
+                                    @if(auth()->check())
+                                        <subscribe-button
+                                                subscribed="{{ auth()->user()->isSubscribedTo($website) }}"
+                                                website="{{ $website->username }}">
+                                        </subscribe-button>
+                                    @endif
                                 </div>
                             </div>
                         </div>

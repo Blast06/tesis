@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Register;
+namespace Tests\Feature\Auth;
 
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class RegisterUserTest extends TestCase
+class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 

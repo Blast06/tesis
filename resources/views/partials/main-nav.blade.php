@@ -24,8 +24,8 @@
     <li><a href=""><i class="fas fa-shopping-cart fa-lg"></i></a></li>
 
     <li class="dropdown community-dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            <img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="36" height="22">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="padding: 22px 10px; !important;">
+            <img class="rounded-circle" src="{{ Auth::user()->avatar }}" width="32" height="32">
             {{ Auth::user()->name }}
         </a>
 

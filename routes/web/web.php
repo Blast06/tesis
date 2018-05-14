@@ -51,3 +51,5 @@ Route::get('/search', function () {
  */
 Route::resource('websites', 'Website\WebsiteController')->only('index', 'create', 'store');
 Route::get('{website}', 'Website\WebsiteController@show')->fallback();
+Route::post('{website}/subscribe', 'Website\SubcribeController@subscribe')->name('website.subscribe')->fallback();
+Route::post('{website}/unsubscribe', 'Website\SubcribeController@unsubscribe')->name('website.unsubscribe')->fallback();

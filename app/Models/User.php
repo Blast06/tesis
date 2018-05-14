@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
@@ -71,7 +72,9 @@ class User extends Authenticatable implements HasMedia
 
     public function getAvatarAttribute()
     {
-        return $this->getFirstMediaUrl('avatars', 'thumb');
+        return !empty($this->getFirstMediaUrl('avatars', 'thumb'))
+            ? $this->getFirstMediaUrl('avatars', 'thumb')
+            : asset('/img/avatar.png');
     }
 
     public function owns(Model $model, $foreignKey = 'user_id')
@@ -105,4 +108,34 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Website::class);
     }
 
+    public function subscribedWebsite()
+    {
+        return $this->belongsToMany(Website::class);
+    }
+
+    public function subscribeTo(Website $website)
+    {
+         $this->subscribedWebsite()->attach($website);
+    }
+
+    public function unsubscribeTo(Website $website)
+    {
+       $this->subscribedWebsite()->detach($website);
+    }
+
+    public function isSubscribedTo(Website $website): bool
+    {
+        return $this->subscribedWebsite()->where('website_id', $website->id)->count() > 0;
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
 }

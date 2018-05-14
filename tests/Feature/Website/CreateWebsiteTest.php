@@ -33,6 +33,12 @@ class CreateWebsiteTest extends TestCase
             'name' => $this->name,
             'username' => $this->username
         ]);
+
+        // Suscribed to website
+        $this->assertDatabaseHas('user_website', [
+            'user_id' => $user->id,
+            'website_id' => (\App\Models\Website::first())->id
+        ]);
     }
 
     /** @test */

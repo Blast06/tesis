@@ -55,7 +55,9 @@ class Website extends Model implements HasMedia
 
     public function getImagePathAttribute()
     {
-        return $this->getFirstMediaUrl('websites', 'thumb');
+        return !empty($this->getFirstMediaUrl('websites', 'thumb'))
+            ?  $this->getFirstMediaUrl('websites', 'thumb')
+            : asset('img/website.png');
     }
 
     // Relationships
@@ -63,5 +65,10 @@ class Website extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function subscribedUsers()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

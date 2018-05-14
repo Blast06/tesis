@@ -14,12 +14,9 @@ class PleaseConfirmYourEmail extends Notification implements ShouldQueue
 
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
-    public $user;
-
     public $tries = 5;
+
+    public $user;
 
     /**
      * Create a new notification instance.
@@ -52,9 +49,9 @@ class PleaseConfirmYourEmail extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('Verificación de correo electrónico')
-            ->greeting("Hola {$this->user->name}, Un último paso.")
+            ->greeting("Hola {$notifiable->name}, Un último paso.")
             ->line("Solo necesitamos que confirmes tu dirección de correo electrónico para demostrar que eres humano. Lo entiendes, ¿verdad? Coo.")
-            ->action('Confirmar correo electrónico', $this->user->signedTokenUrl() )
+            ->action('Confirmar correo electrónico', $notifiable->signedTokenUrl() )
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 

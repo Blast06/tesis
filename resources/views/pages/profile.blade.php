@@ -16,7 +16,7 @@
                             <label class="col-md-4 col-form-label text-md-right">Cambiar avatar</label>
 
                             <div class="col-md-6">
-                                <img :src="avatar" class="rounded-circle mx-auto d-block mb-2 " width="46" height="46">
+                                <img :src="avatar" class="rounded-circle mx-auto d-block mb-2 " width="86" height="86">
                                 <form method="POST" enctype="multipart/form-data">
                                     <image-upload name="avatar" class="form-control" @loaded="onLoad"></image-upload>
                                 </form>

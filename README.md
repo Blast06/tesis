@@ -5,11 +5,10 @@
 | FEATURES | STATUS | UNITE TEST | FEATURE TEST | APLICATION TEST | DESIGN |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | Auth | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :heavy_check_mark: |
-| Login Socialite | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
 | Website | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
-| Notifications | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
-| Client panel | :x: | :x: | :x: | :x: | :heavy_check_mark: |
-| Admin panel | :x: | :x: | :x: | :x: | :heavy_check_mark: |
+| Notifications | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :heavy_check_mark: |
+| Client panel | :x: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
+| Admin panel | :x: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
 
 ## Instalación
 

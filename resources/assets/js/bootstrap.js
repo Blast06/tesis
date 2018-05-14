@@ -59,3 +59,7 @@ window.Echo = new Echo({
 import Form from './utilities/Form';
 
 window.Form = Form;
+
+window.swal = require('sweetalert');
+
+window.toastr = require('toastr');

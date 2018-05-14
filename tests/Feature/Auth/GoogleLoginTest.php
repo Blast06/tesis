@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Login;
+namespace Tests\Feature\Auth;
 
 use Mockery as  m;
 use Tests\TestCase;

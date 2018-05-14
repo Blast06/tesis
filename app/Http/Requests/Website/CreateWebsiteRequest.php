@@ -37,8 +37,13 @@ class CreateWebsiteRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return mixed
+     */
     public function createWebsite()
     {
-        return auth()->user()->websites()->create($this->validated());
+        return tap(auth()->user()->websites()->create($this->validated()), function ($website) {
+            auth()->user()->subscribeTo($website);
+        });
     }
 }
