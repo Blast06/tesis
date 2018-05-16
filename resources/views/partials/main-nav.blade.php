@@ -30,7 +30,7 @@
         </a>
 
         <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ url('/profile') }}">Perfil</a></li>
+            <li><a href="{{ route('profiles.index') }}">Perfil</a></li>
 
             <li class="divider"></li>
 

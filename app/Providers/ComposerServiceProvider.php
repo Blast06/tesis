@@ -14,7 +14,11 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         \View::composer(
-            'partials.sidenav', 'App\Http\ViewComposers\MainSidebarComposer'
+            [
+                'partials.sidenav',
+                'client.client-sidebar'
+            ]
+            , 'App\Http\ViewComposers\MainSidebarComposer'
         );
     }
 

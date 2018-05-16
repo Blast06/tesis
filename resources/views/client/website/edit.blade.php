@@ -1,7 +1,7 @@
 @component('component.main')
     <div class="row">
-        <div class="col-md-3">
-
+        <div class="col-md-3 sidebar">
+            @include('client.client-sidebar')
         </div>
 
         <div class="col-md-9">
@@ -30,7 +30,7 @@
 
                 </image-form>
 
-                {{ Form::model($website, ['route' => ['client.setting.update', $website], 'method' => 'put']) }}
+                {{ Form::model($website, ['route' => ['website.update', $website], 'method' => 'put']) }}
 
                         <div class="form-group row">
                             {{ Form::label('name', 'Nombre del sitio', ['class' => 'col-sm-4 col-form-label text-md-right']) }}

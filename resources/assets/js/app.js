@@ -22,7 +22,7 @@ Vue.use(VeeValidate);
 
 Vue.component('socialite', require('./components/LoginSocialite'));
 Vue.component('user-notifications', require('./components/UserNotifications'));
-Vue.component('website-create', require('./components/website/create'));
+Vue.component('website-create', require('./components/website/CreateForm'));
 Vue.component('image-form', require('./components/website/ImageForm'));
 Vue.component('avatar-form', require('./components/user/AvatarForm'));
 Vue.component('subscribe-button', require('./components/website/SubscribeButton'));

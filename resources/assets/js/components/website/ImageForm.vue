@@ -17,8 +17,8 @@
                 let data = new FormData();
                 data.append('image', image);
                 console.log(data);
-                axios.post(`/client/${this.website}/settings/change/image`, data)
-                    .then(() => alert('Image uploaded!'));
+                axios.post(`/v1/${this.website}/image`, data)
+                    .then(() => toastr.success('¡Cambió la imagen exitosamente!'));
             }
         }
     }

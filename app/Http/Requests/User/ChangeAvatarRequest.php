@@ -36,6 +36,6 @@ class ChangeAvatarRequest extends FormRequest
 
         auth()->user()->addMediaFromRequest('avatar')->toMediaCollection('avatars');
 
-        return response()->json(['message' => 'avatar actualizada correctamente.'], Response::HTTP_OK);
+        return response()->json(['message' => 'avatar actualizado correctamente.'], Response::HTTP_OK);
     }
 }

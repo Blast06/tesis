@@ -42,7 +42,5 @@ class ChangeImageRequest extends FormRequest
         $website->clearMediaCollection('websites');
 
         $website->addMediaFromRequest('image')->toMediaCollection('websites');
-
-        return response()->json(['message' => 'imagen actualizada correctamente.'], Response::HTTP_OK);
     }
 }

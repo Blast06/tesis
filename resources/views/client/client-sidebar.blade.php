@@ -1,19 +1,18 @@
-<h5 class="title">Mis Sitios</h5>
-<div class="list-group mb-5">
-    <a href="" class="list">
-        Mi sitio 1
-    </a>
-    <a href="" class="list">
-        Mi sitio 2
-    </a>
-    <a href="" class="list">
-        Otros....
-    </a>
-</div>
+@if($websites->count())
+    <h5 class="title">Sitios De Trabajo</h5>
+    <div class="list-group mb-5">
+        @foreach($websites as $website)
+            <a href="{{ route('client.dashboard', $website) }}" class="list">
+
+                {{ $website->name }}
+            </a>
+        @endforeach
+    </div>
+@endif
 
 <h5 class="title">Configuraciones</h5>
 <div class="list-group mb-5">
-    <a href="{{ route('client.setting.index', request()->website) }}" class="list">
+    <a href="{{ route('websites.edit', request()->website) }}" class="list">
         <i class="fas fa-cog"></i>
         Website
     </a>
