@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Website;
+namespace App\Http\Requests;
 
-use App\Models\Website;
+use App\Website;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
 
-class ChangeImageRequest extends FormRequest
+class UpdateWebsiteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,21 +25,22 @@ class ChangeImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|image:jpeg,png,gif,svg|max:5120'
+            'name' => 'required|min:4|max:40',
         ];
     }
 
     public function attributes()
     {
         return [
-            'image' => 'imagen del sitio',
+            'name' => 'sitio',
+            'username' => 'usuario'
         ];
     }
 
-    public function updateImage(Website $website)
+    public function updateWebsite(Website $website)
     {
-        $website->clearMediaCollection('websites');
-
-        $website->addMediaFromRequest('image')->toMediaCollection('websites');
+       return [
+           'data' => $website->update($this->validated())
+       ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use Tests\TestCase;
-use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Notifications\Messages\MailMessage;
 

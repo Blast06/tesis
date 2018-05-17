@@ -33,9 +33,9 @@ export default class Form {
      * Reset the form fields.
      */
     reset() {
-        for (let field in this.originalData) {
+        /*for (let field in this.originalData) {
             this[field] = '';
-        }
+        }*/
 
         this.errors.clear();
     }

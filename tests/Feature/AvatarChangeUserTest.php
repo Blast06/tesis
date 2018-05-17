@@ -12,12 +12,10 @@ class AvatarChangeUserTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $url = "v1/user/avatar";
-
    /** @test */
    function guest_cannot_change_avatar()
    {
-       $this->json('POST',$this->url,[])
+       $this->json('POST', route('profiles.avatar'), [])
            ->assertStatus(Response::HTTP_UNAUTHORIZED);
    }
 
@@ -29,7 +27,7 @@ class AvatarChangeUserTest extends TestCase
         Storage::fake($user->id);
 
         $this->actingAs($user)
-            ->json('POST',$this->url,[
+            ->json('POST', route('profiles.avatar'), [
                 'avatar' => UploadedFile::fake()->image('avatar.jpg')
             ])
             ->assertSuccessful()
@@ -44,7 +42,7 @@ class AvatarChangeUserTest extends TestCase
         Storage::fake($user->id);
 
         $this->actingAs($user)
-            ->json('POST',$this->url,[
+            ->json('POST', route('profiles.avatar'), [
                 'avatar' => UploadedFile::fake()->image('avatar.pdf')
             ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)

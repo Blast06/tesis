@@ -2,8 +2,7 @@
 
 namespace Tests;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -18,7 +17,7 @@ abstract class TestCase extends BaseTestCase
     public function createAdmin()
     {
         return factory(User::class)->create([
-            'role' => \App\Models\User::ROLE_ADMIN
+            'role' => User::ROLE_ADMIN
         ]);
     }
 }

@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Models\Website;
+use App\Website;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,12 +13,19 @@ class ChangeImageWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $website;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->website = factory(Website::class)->create();
+    }
+
     /** @test */
     function guest_cannot_change_website_image()
     {
-        $website = factory(Website::class)->create();
-
-        $this->post(route('client.change.image', $website),[])
+        $this->post(route('website.image', $this->website),[])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
     }
@@ -26,12 +33,10 @@ class ChangeImageWebsiteTest extends TestCase
     /** @test */
     function client_can_change_website_image()
     {
-        $website = factory(Website::class)->create();
+        Storage::fake($this->website->user->id);
 
-        Storage::fake($website->user->id);
-
-        $this->actingAs($website->user)
-            ->post(route('client.change.image', $website),[
+        $this->actingAs($this->website->user)
+            ->post(route('website.image', $this->website),[
                 'image' => UploadedFile::fake()->image('image.jpeg')
             ])
             ->assertStatus(Response::HTTP_OK)
@@ -41,10 +46,8 @@ class ChangeImageWebsiteTest extends TestCase
     /** @test */
     function unathorized_user_cannot_change_website_image()
     {
-        $website = factory(Website::class)->create();
-
         $this->actingAs($this->createUser())
-            ->post(route('client.change.image', $website),[])
+            ->post(route('website.image', $this->website),[])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }
@@ -52,10 +55,8 @@ class ChangeImageWebsiteTest extends TestCase
     /** @test */
     function client_cannot_upload_others_file()
     {
-        $website = factory(Website::class)->create();
-
-        $this->actingAs($website->user)
-            ->json('POST',route('client.change.image', $website),[
+        $this->actingAs($this->website->user)
+            ->json('POST',route('website.image', $this->website),[
                 'image' => UploadedFile::fake()->image('image.pdf')
             ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)

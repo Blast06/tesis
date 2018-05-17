@@ -28,38 +28,25 @@ Route::get('/search', function () {
     return view('pages.details');
 });
 
-Route::middleware('auth')->group(function () {
-    /*
-     * Auth User Route
-     */
-    Route::get('/home', 'HomeController@index')->name('home.index');
-    Route::get('profiles', 'ProfileController@index')->name('profiles.index');
-
-    /*
-     * Notification
-     */
-    Route::get('notifications', 'NotificationController@index');
-    Route::get('notifications/read-all', 'NotificationController@markAsRead');
-    Route::get('notifications/count', 'NotificationController@count');
-    Route::get('notifications/{notification}', 'NotificationController@readNotification');
-});
-
+/*
+* Auth User Route
+*/
+Route::get('/home', 'HomeController@index')->name('home.index');
+Route::get('profiles', 'ProfileController@index')->name('profiles.index');
+Route::post('profiles/avatar', 'ProfileController@avatar')->name('profiles.avatar');
+/*
+ * Notification
+ */
+Route::get('notifications', 'NotificationController@index');
+Route::get('notifications/read-all', 'NotificationController@markAsRead');
+Route::get('notifications/count', 'NotificationController@count');
+Route::get('notifications/{notification}', 'NotificationController@readNotification');
 /*
  * Public Website Route
  */
 Route::get('websites', 'WebsiteController@index')->name('websites.index');
 Route::get('websites/create', 'WebsiteController@create')->name('websites.create');
+Route::post('websites', 'WebsiteController@store')->name('websites.store');
 Route::get('{website}', 'WebsiteController@show')->name('website.show')->fallback();
-
-/*
- * Api Web
- */
-Route::prefix('v1')->middleware('auth')->group(function () {
-    Route::post('user/avatar', 'API\V1\Web\UserController@avatar');
-
-    Route::post('websites', 'API\V1\Web\WebsiteController@store');
-    Route::put('{website}/update', 'API\V1\Web\WebsiteController@update')->name('website.update')->middleware('client')->fallback();
-    Route::post('{website}/subscribe', 'API\V1\Web\WebsiteController@subscribe')->name('website.subscribe')->fallback();
-    Route::post('{website}/unsubscribe', 'API\V1\Web\WebsiteController@unsubscribe')->name('website.unsubscribe')->fallback();
-    Route::post('{website}/image', 'API\V1\Web\WebsiteController@image')->name('client.change.image')->middleware('client')->fallback();
-});
+Route::post('{website}/unsubscribe', 'WebsiteController@unsubscribe')->name('website.unsubscribe')->fallback();
+Route::post('{website}/subscribe', 'WebsiteController@subscribe')->name('website.subscribe')->fallback();

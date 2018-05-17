@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
 
 class ChangeAvatarRequest extends FormRequest
 {
@@ -36,6 +34,6 @@ class ChangeAvatarRequest extends FormRequest
 
         auth()->user()->addMediaFromRequest('avatar')->toMediaCollection('avatars');
 
-        return response()->json(['message' => 'avatar actualizado correctamente.'], Response::HTTP_OK);
+        return ['message' => 'avatar actualizado correctamente.'];
     }
 }

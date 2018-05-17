@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Mockery as m;
 use Tests\TestCase;
-use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\FacebookProvider;
 use Symfony\Component\HttpFoundation\Response;

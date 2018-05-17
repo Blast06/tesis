@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Website;
 use Tests\TestCase;
-use App\Models\Website;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -12,15 +12,22 @@ class ErrorsValidationWebsiteTest extends TestCase
     use RefreshDatabase;
 
     private $name = 'Big System';
+    private $user;
+    private $website;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->user = $this->createUser();
+        $this->website = factory(Website::class)->create();
+    }
 
     /** @test */
     function users_can_see_validation_errors_form()
     {
-        $user = $this->createUser();
-
-        $response = $this->actingAs($user)->json('POST','v1/websites', []);
-
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+        $this->actingAs($this->user)->json('POST',route('websites.store'), [])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertExactJson(["errors" => [
                 "name" => ["El campo sitio es obligatorio."],
                 "username" => ["El campo usuario es obligatorio."],
@@ -32,16 +39,11 @@ class ErrorsValidationWebsiteTest extends TestCase
     /** @test */
     function users_cannot_register_duplicate_username()
     {
-        $user = $this->createUser();
-
-        $website = factory(Website::class)->create();
-
-        $response = $this->actingAs($user)->json('POST','v1/websites', [
+        $this->actingAs($this->user)->json('POST',route('websites.store'), [
             'name' => $this->name,
-            'username' => $website->username
-        ]);
-
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            'username' => $this->website->username
+        ])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertExactJson(["errors" => [
                 "username" => ["El valor del campo usuario ya está en uso."]
             ],
@@ -50,7 +52,7 @@ class ErrorsValidationWebsiteTest extends TestCase
 
         $this->assertDatabaseMissing('websites', [
             'name' => $this->name,
-            'username' => $website->username
+            'username' => $this->website->username
         ]);
     }
 }

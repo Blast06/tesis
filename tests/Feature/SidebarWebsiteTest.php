@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Website;
 use Tests\TestCase;
-use App\Models\Website;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

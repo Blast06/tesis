@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class UserOwnsModelTest extends TestCase

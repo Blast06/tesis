@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;

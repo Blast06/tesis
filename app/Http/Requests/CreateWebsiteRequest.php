@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Website;
+namespace App\Http\Requests;
 
-use App\Models\Website;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateWebsiteRequest extends FormRequest
+class CreateWebsiteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +16,7 @@ class UpdateWebsiteRequest extends FormRequest
         return true;
     }
 
-    /**
+    /**4
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -26,6 +25,7 @@ class UpdateWebsiteRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4|max:40',
+            'username' => 'required|min:4|max:40|unique:websites',
         ];
     }
 
@@ -37,8 +37,15 @@ class UpdateWebsiteRequest extends FormRequest
         ];
     }
 
-    public function updateWebsite(Website $website)
+    /**
+     * @return mixed
+     */
+    public function createWebsite()
     {
-       return $website->update($this->validated());
+        return [
+            'data' =>  tap(auth()->user()->websites()->create($this->validated()), function ($website) {
+                auth()->user()->subscribeTo($website);
+            })
+        ];
     }
 }

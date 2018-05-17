@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
+use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
 
 class Website extends Model implements HasMedia
 {
-    use HasMediaTrait;
+    use HasMediaTrait, SoftDeletes;
 
     protected $fillable = ['name', 'username', 'phone', 'address', 'private', 'domain'];
 
@@ -70,5 +71,10 @@ class Website extends Model implements HasMedia
     public function subscribedUsers()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

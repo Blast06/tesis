@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Models\Website;
+use App\Website;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ListWebsiteTest extends TestCase
@@ -25,7 +25,6 @@ class ListWebsiteTest extends TestCase
             })
             ->assertSee($website1->name)
             ->assertSee($website2->name);
-
     }
 
     /** @test */
@@ -41,14 +40,11 @@ class ListWebsiteTest extends TestCase
             })
             ->assertSee($website1->name)
             ->assertSee($website2->name);
-
     }
 
     /** @test */
     function authenticated_users_can_see_a_specific_site()
     {
-        $this->withoutExceptionHandling();
-
         $user = $this->createUser();
 
         $website = factory(Website::class)->create(['user_id' => $user->id]);
@@ -56,7 +52,6 @@ class ListWebsiteTest extends TestCase
         $this->actingAs($user)->get("/{$website->username}")
             ->assertViewIs('client.website.public')
             ->assertSee($website->name);
-
     }
 
     /** @test */

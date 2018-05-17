@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, SoftDeletes, HasMediaTrait;
+    use Notifiable, SoftDeletes, HasMediaTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

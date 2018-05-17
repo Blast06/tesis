@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Browser\BrowserTest;
+namespace Tests\Browser;
 
-use App\Models\User;
+use App\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

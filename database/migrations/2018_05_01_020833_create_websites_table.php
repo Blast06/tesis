@@ -14,15 +14,16 @@ class CreateWebsitesTable extends Migration
     public function up()
     {
         Schema::create('websites', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('name');
             $table->string('username')->unique();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->boolean('private')->default(false);
             $table->string('domain')->nullable();
-            $table->integer('user_id')->unsigned();
+            $table->unsignedInteger('user_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users');
         });

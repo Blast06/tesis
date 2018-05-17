@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,27 +13,35 @@ class ActiveAccountTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    function user_can_active_account()
+    private $user;
+
+    private $url;
+
+    protected function setUp()
     {
-        $user = factory(User::class)->create([
+        parent::setUp();
+
+        $this->user = factory(User::class)->create([
             'token' => User::generateToken(),
             'verified_at' => null
         ]);
 
-        $url = URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes(30), ['token' => $user->token]
+        $this->url = URL::temporarySignedRoute(
+            'account.activate', now()->addMinutes(30), ['token' => $this->user->token]
         );
+    }
 
-        $this->get($url)
+    /** @test */
+    function user_can_active_account()
+    {
+        $this->get($this->url)
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home')
             ->assertSessionHas(['flash_success' => '¡Tu cuenta ahora está confirmada!']);
 
         $this->assertDatabaseHas('users', [
-            'id' => $user->id,
+            'id' => $this->user->id,
             'token' => null,
-            'verified_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         $this->assertAuthenticated();
@@ -42,18 +50,9 @@ class ActiveAccountTest extends TestCase
     /** @test */
     function user_cannot_active_account_with_expired_token()
     {
-        $user = factory(User::class)->create([
-            'token' => User::generateToken(),
-            'verified_at' => null
-        ]);
-
-        $url = URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes(30), ['token' => $user->token]
-        );
-
         Carbon::setTestNow(Carbon::parse('+31 minutes'));
 
-        $this->get($url)
+        $this->get($this->url)
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home')
             ->assertSessionHas(['flash_danger' => 'Token desconocido']);
@@ -64,13 +63,8 @@ class ActiveAccountTest extends TestCase
     /** @test */
     function the_token_is_case_sensitive()
     {
-        $user = factory(User::class)->create([
-            'token' => User::generateToken(),
-            'verified_at' => null
-        ]);
-
         $url = URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes(30), ['token' => strtolower($user->token)]
+            'account.activate', now()->addMinutes(30), ['token' => strtolower($this->user->token)]
         );
 
         $this->get($url)

@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Support\Facades\URL;
 
 class UserSignedTokenUrlTest extends TestCase

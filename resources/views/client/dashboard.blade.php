@@ -3,7 +3,7 @@
     <div class="row">
 
         <div class="col-md-3 sidebar">
-            @include('client.client-sidebar')
+            @include('client._sidebar')
         </div>
 
         <div class="col-md-9">

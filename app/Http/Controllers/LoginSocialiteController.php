@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\User;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginSocialiteController extends Controller

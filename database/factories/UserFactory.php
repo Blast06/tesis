@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Models\User::class, function (Faker $faker) {
+$factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -23,12 +23,36 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\Website::class, function (Faker $faker) {
+$factory->define(App\Website::class, function (Faker $faker) {
     return [
         'name' => 'new website '. $faker->randomNumber,
         'username' => $faker->unique()->userName,
         'phone' => $faker->phoneNumber,
         'address' => $faker->address,
-        'user_id' => factory(App\Models\User::class)->create()
+        'user_id' => factory(App\User::class)->create()
+    ];
+});
+
+$factory->define(App\Category::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+        'slug' => str_slug($faker->unique()->word)
+    ];
+});
+
+$factory->define(App\SubCategory::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+        'slug' => str_slug($faker->unique()->word),
+        'category_id' => factory(\App\Category::class)->create()
+    ];
+});
+
+$factory->define(App\Product::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+        'description' => $faker->paragraph(4),
+        'price' => $faker->randomNumber,
+        'category_id' => factory(\App\SubCategory::class)->create()
     ];
 });

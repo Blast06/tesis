@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\PleaseConfirmYourEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,24 +12,15 @@ class PleaseConfirmYourEmailTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $name = 'Cristian Gomez';
-    private $email = 'cristiangomeze@example.com';
-    private $pass = 'L@aravel1';
-
     /** @test */
     function when_user_registered_successfully_sent_account_activation_email()
     {
         Notification::fake();
 
-        $this->post('/register', [
-            'name' =>  $this->name,
-            'email' => $this->email,
-            'password' => $this->pass,
-            'password_confirmation' => $this->pass
-        ]);
+        $this->post('/register', $this->getData());
 
         Notification::assertSentTo(
-            [User::where('email', $this->email)->first()],
+            [User::where('email', $this->getData()['email'])->first()],
             PleaseConfirmYourEmail::class
         );
     }
@@ -46,16 +37,21 @@ class PleaseConfirmYourEmailTest extends TestCase
     {
         Notification::fake();
 
-        $this->post('/register', [
-            'name' =>  $this->name,
-            'email' => $this->email,
-            'password' => $this->pass,
-            'password_confirmation' => $this->pass
-        ]);
+        $this->post('/register', $this->getData());
 
         Notification::assertNotSentTo(
             [factory(User::class)->times(2)->create()],
             PleaseConfirmYourEmail::class
         );
+    }
+
+    protected function getData($data = [])
+    {
+        return array_filter(array_merge([
+            'name' => 'Cristian Gomez',
+            'email' => 'cristiangomeze@example.com',
+            'password' => 'L@aravel1',
+            'password_confirmation' => 'L@aravel1'
+        ],$data));
     }
 }

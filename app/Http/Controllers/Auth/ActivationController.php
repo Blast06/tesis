@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Carbon\Carbon;
-use App\Models\User;
+use App\User;
 use App\Http\Controllers\Controller;
 use App\Notifications\PleaseConfirmYourEmail;
 

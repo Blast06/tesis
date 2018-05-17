@@ -16,7 +16,7 @@ class ComposerServiceProvider extends ServiceProvider
         \View::composer(
             [
                 'partials.sidenav',
-                'client.client-sidebar'
+                'client._sidebar'
             ]
             , 'App\Http\ViewComposers\MainSidebarComposer'
         );

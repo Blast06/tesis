@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Notifications\DatabaseNotification;
@@ -114,7 +114,7 @@ class UserInteractionWithNotificationTest extends TestCase
             DatabaseNotification::create([
                 'id' =>  (string) Str::uuid(),
                 'type' => "Notification\Test",
-                'notifiable_type' => 'App\Models\User',
+                'notifiable_type' => 'App\User',
                 'notifiable_id' => $user->id,
                 'data' => [
                     'body' => 'Test Body'
@@ -129,7 +129,7 @@ class UserInteractionWithNotificationTest extends TestCase
             DatabaseNotification::create([
                 'id' =>  (string) Str::uuid(),
                 'type' => "Notification\Test",
-                'notifiable_type' => 'App\Models\User',
+                'notifiable_type' => 'App\User',
                 'notifiable_id' => $user->id,
                 'data' => [
                     'body' => 'Test Body'
