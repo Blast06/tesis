@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
-use App\Http\Requests\CreateProductRequest;
 use App\Website;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateProductRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller

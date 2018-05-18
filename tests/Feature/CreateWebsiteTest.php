@@ -20,7 +20,7 @@ class CreateWebsiteTest extends TestCase
     }
 
     /** @test */
-    function users_can_create_websites_and_is_subscribe_to()
+    function an_users_can_create_websites_and_is_subscribe_to()
     {
         $this->actingAs($this->user)
             ->json('POST',route('websites.store'), $this->getData())
@@ -36,12 +36,43 @@ class CreateWebsiteTest extends TestCase
     }
 
     /** @test */
-    function guests_cannot_create_websites()
+    function a_guests_cannot_create_websites()
     {
         $this->json('POST',route('websites.store'), [])
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
 
         $this->assertDatabaseMissing('websites', $this->getData());
+    }
+
+    /** @test */
+    function a_users_can_see_validation_errors_form()
+    {
+        $this->actingAs($this->user)->json('POST',route('websites.store'), [])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertExactJson(["errors" => [
+                "name" => ["El campo sitio es obligatorio."],
+                "username" => ["El campo usuario es obligatorio."],
+            ],
+                "message" => "The given data was invalid.",
+            ]);
+    }
+
+    /** @test */
+    function a_users_cannot_register_duplicate_username()
+    {
+        factory(\App\Website::class)->create($this->getData());
+
+        $this->actingAs($this->user)->json('POST',route('websites.store'), $this->getData([
+            'name' => 'Big System inc.'
+        ]))
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertExactJson(["errors" => [
+                "username" => ["El valor del campo usuario ya está en uso."]
+            ],
+                "message" => "The given data was invalid."
+            ]);
+
+        $this->assertDatabaseMissing('websites', $this->getData(['name' => 'Big System inc.']));
     }
 
     protected function getData($data = [])

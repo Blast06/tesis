@@ -20,6 +20,11 @@ class ComposerServiceProvider extends ServiceProvider
             ]
             , 'App\Http\ViewComposers\MainSidebarComposer'
         );
+
+        \View::composer('layouts.app', function ($view) {
+            $app_name = request()->website->name ?? config('app.name', 'Laravel');
+            $view->with(compact('app_name'));
+        });
     }
 
     /**

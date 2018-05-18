@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Client;
 
 use App\Website;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class DashboardClientTest extends TestCase
+class ClientTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    function client_can_see_dashboard()
+    function client_can_access_the_client_section()
     {
         $website = factory(Website::class)->create();
 
@@ -24,17 +24,7 @@ class DashboardClientTest extends TestCase
     }
 
     /** @test */
-    function guest_cannot_see_client_dashboard()
-    {
-        $website = factory(Website::class)->create();
-
-        $this->get(route('client.dashboard', $website))
-            ->assertStatus(Response::HTTP_FOUND)
-            ->assertRedirect('/login');
-    }
-
-    /** @test */
-    function unauthorized_user_cannot_see_client_dashboard()
+    function unauthorized_user_cannot_access_the_client_section()
     {
         $website = factory(Website::class)->create();
 
@@ -43,5 +33,15 @@ class DashboardClientTest extends TestCase
         $this->actingAs($admin)
             ->get(route('client.dashboard', $website))
             ->assertStatus(Response::HTTP_FOUND);
+    }
+
+    /** @test */
+    function guest_cannot_see_client_dashboard()
+    {
+        $website = factory(Website::class)->create();
+
+        $this->get(route('client.dashboard', $website))
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/login');
     }
 }

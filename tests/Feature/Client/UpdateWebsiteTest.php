@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Client;
 
 use App\Website;
 use Tests\TestCase;
@@ -16,12 +16,11 @@ class UpdateWebsiteTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-
         $this->website = factory(Website::class)->create();
     }
 
     /** @test */
-    function guest_cannot_update_website()
+    function a_aguest_cannot_update_website()
     {
         $this->put(route('website.update', $this->website),[])
             ->assertStatus(Response::HTTP_FOUND)
@@ -29,7 +28,7 @@ class UpdateWebsiteTest extends TestCase
     }
 
     /** @test */
-    function client_can_update_website()
+    function a_client_can_update_website()
     {
         $this->actingAs($this->website->user)
             ->put(route('website.update', $this->website),[
@@ -45,7 +44,7 @@ class UpdateWebsiteTest extends TestCase
     }
 
     /** @test */
-    function unathorized_user_cannot_update_website()
+    function an_unathorized_user_cannot_update_website()
     {
         $this->actingAs($this->createUser())
             ->put(route('website.update', $this->website),[])

@@ -1,17 +1,17 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\User;
 use Mockery as  m;
 use Tests\TestCase;
 use Laravel\Socialite\Facades\Socialite;
-use Laravel\Socialite\Two\GoogleProvider;
+use Laravel\Socialite\One\TwitterProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class GoogleLoginTest extends TestCase
+class TwitterLoginTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,25 +19,27 @@ class GoogleLoginTest extends TestCase
     private $name = 'Cristian Gomez';
 
     /** @test */
-    function login_requests_are_send_to_google ()
+    function login_requests_are_send_to_twitter()
     {
-        $message = 'Redirecting to Google...';
-        $this->mockGoogleProvider()
+        $message = 'Redirecting to Twitter...';
+
+        $this->mockTwitterProvider()
             ->shouldReceive('redirect')
             ->andReturn($message);
-        $this->get(route('login.google'))
+
+        $this->get(route('login.twitter'))
             ->assertStatus(Response::HTTP_OK)
             ->assertSee($message);
     }
 
     /** @test */
-    function new_users_authorized_by_google_are_registered_and_authenticated()
+    function new_users_authorized_by_twitter_are_registered_and_authenticated()
     {
         $this->withoutExceptionHandling();
 
-        $this->mockGoogleUser();
+        $this->mockTwitterUser();
 
-        $response = $this->get(route('login.google.callback'));
+        $response = $this->get(route('login.twitter.callback'));
 
         $this->assertDatabaseHas('users', [
             'email' => $this->email,
@@ -50,36 +52,36 @@ class GoogleLoginTest extends TestCase
     }
 
     /** @test */
-    function known_new_users_authorized_by_google_are_registered_and_authenticated()
+    function known_new_users_authorized_by_twitter_are_registered_and_authenticated()
     {
         factory(User::class)->create([
             'email' => $this->email
         ]);
 
-        $this->mockGoogleUser();
+        $this->mockTwitterUser();
 
-        $response = $this->get(route('login.google.callback'));
+        $response = $this->get(route('login.twitter.callback'));
 
         $this->assertAuthenticated();
 
         $response->assertRedirect('/home');
     }
 
-    protected function mockGoogleUser()
+    protected function mockTwitterUser()
     {
-        $googleUser = m::mock(SocialiteUser::class, [
+        $twitterUser = m::mock(SocialiteUser::class, [
             'getEmail' => $this->email,
             'getName' => $this->name,
         ]);
-        $this->mockGoogleProvider()
-            ->shouldReceive('user')->andReturn($googleUser);
+
+        $this->mockTwitterProvider()
+            ->shouldReceive('user')->andReturn($twitterUser);
     }
 
-    protected function mockGoogleProvider()
+    protected function mockTwitterProvider()
     {
-        return tap(m::mock(GoogleProvider::class), function ($provider) {
-            Socialite::shouldReceive('driver')->with('google')->andReturn($provider);
+        return tap(m::mock(TwitterProvider::class), function ($provider) {
+            Socialite::shouldReceive('driver')->with('twitter')->andReturn($provider);
         });
     }
-
 }

@@ -1829,7 +1829,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$validator.validateAll().then(function (valid) {
                 if (valid) {
-                    _this.form.post('websites/create').then(function (response) {
+                    _this.form.post('/websites').then(function (response) {
                         _this.$validator.reset();
                         window.location.href = '/client/' + response.data.username + '/dashboard';
                     });
@@ -59200,8 +59200,8 @@ window.Pusher = __webpack_require__("./node_modules/pusher-js/dist/web/pusher.js
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "mt1",
+  key: "0435649384c4f4e8a73e",
+  cluster: "us2",
   encrypted: true
 });
 

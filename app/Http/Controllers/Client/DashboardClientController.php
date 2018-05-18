@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
 use App\Website;
+use App\Http\Controllers\Controller;
 
 class DashboardClientController extends Controller
 {

@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Website;
-use App\Http\Requests\ChangeImageRequest;
 use App\Http\Requests\CreateWebsiteRequest;
-use App\Http\Requests\UpdateWebsiteRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class WebsiteController extends Controller
+class PublicWebsiteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('show','index');
+        $this->middleware('auth')->only('create','store','subscribe','unsubscribe');
     }
 
     /**
@@ -59,40 +57,6 @@ class WebsiteController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Website $website
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Website $website)
-    {
-        return view('client.website.edit', compact('website'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateWebsiteRequest $request
-     * @param \App\Website $website
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateWebsiteRequest $request, Website $website)
-    {
-        return response()->json($request->updateWebsite($website), Response::HTTP_OK);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    /**
      * Subscribe the specified resource.
      *
      * @param \App\Website $website
@@ -114,18 +78,5 @@ class WebsiteController extends Controller
     {
         auth()->user()->unsubscribeTo($website);
         return response()->json(['message' => 'unsubscribe']);
-    }
-
-    /**
-     * Image upload the specified resource in storage.
-     *
-     * @param \App\Http\Requests\ChangeImageRequest $request
-     * @param \App\Website $website
-     * @return \Illuminate\Http\Response
-     */
-    public function image(ChangeImageRequest $request, Website $website)
-    {
-        $request->updateImage($website);
-        return response()->json(['message' => 'imagen actualizada correctamente.'], Response::HTTP_OK);
     }
 }

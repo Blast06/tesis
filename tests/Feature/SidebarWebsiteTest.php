@@ -12,7 +12,7 @@ class SidebarWebsiteTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    function authenticated_users_can_see_sidebar_website_list()
+    function an_user_can_see_sidebar_website_list()
     {
         $user = $this->createUser();
 
@@ -24,11 +24,10 @@ class SidebarWebsiteTest extends TestCase
             ->assertSee('Sitios De Trabajo')
             ->assertSee($website1->name)
             ->assertSee($website2->name);
-
     }
 
     /** @test */
-    function guest_cannot_see_sidebar_website_list()
+    function a_guest_cannot_see_sidebar_website_list()
     {
         $user = $this->createUser();
 
@@ -38,6 +37,5 @@ class SidebarWebsiteTest extends TestCase
         $this->get('/home')
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
-
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\User;
 use Carbon\Carbon;
@@ -14,7 +14,6 @@ class ActiveAccountTest extends TestCase
     use RefreshDatabase;
 
     private $user;
-
     private $url;
 
     protected function setUp()
@@ -32,7 +31,7 @@ class ActiveAccountTest extends TestCase
     }
 
     /** @test */
-    function user_can_active_account()
+    function an_user_can_active_account()
     {
         $this->get($this->url)
             ->assertStatus(Response::HTTP_FOUND)
@@ -48,7 +47,7 @@ class ActiveAccountTest extends TestCase
     }
 
     /** @test */
-    function user_cannot_active_account_with_expired_token()
+    function an_user_cannot_active_account_with_expired_token()
     {
         Carbon::setTestNow(Carbon::parse('+31 minutes'));
 

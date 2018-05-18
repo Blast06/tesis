@@ -61,7 +61,7 @@
             onSubmit() {
                 this.$validator.validateAll().then((valid) => {
                     if (valid) {
-                        this.form.post('websites/create')
+                        this.form.post('/websites')
                             .then(response => {
                                 this.$validator.reset();
                                 window.location.href= '/client/'+ response.data.username +'/dashboard';

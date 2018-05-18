@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use App\User;
 use Mockery as m;
@@ -37,7 +37,7 @@ class FacebookLoginTest extends TestCase
     {
         $this->mockFacebookUser();
 
-        $response = $this->get(route('login.facebook.callback'));
+        $this->get(route('login.facebook.callback'))->assertRedirect('/home');
 
         $this->assertDatabaseHas('users', [
             'email' => $this->email,
@@ -45,8 +45,6 @@ class FacebookLoginTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-
-        $response->assertRedirect('/home');
     }
 
     /** @test */
@@ -58,11 +56,9 @@ class FacebookLoginTest extends TestCase
 
         $this->mockFacebookUser();
 
-        $response = $this->get(route('login.facebook.callback'));
+        $this->get(route('login.facebook.callback'))->assertRedirect('/home');
 
         $this->assertAuthenticated();
-
-        $response->assertRedirect('/home');
     }
 
     protected function mockFacebookUser()

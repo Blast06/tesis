@@ -2,20 +2,18 @@
 
 namespace Tests\Feature;
 
-use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UserInteractionWithNotificationTest extends TestCase
+class NotificationTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function guest_cannot_see_notificaion()
+    function guest_cannot_see_notificaion()
     {
         $this->get('notifications')
             ->assertStatus(Response::HTTP_FOUND)
@@ -23,7 +21,7 @@ class UserInteractionWithNotificationTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_can_see_notificaion()
+    function authenticated_users_can_see_notificaion()
     {
         $this->actingAs($this->createUser())->get('notifications')
             ->assertStatus(Response::HTTP_OK)
@@ -31,13 +29,11 @@ class UserInteractionWithNotificationTest extends TestCase
     }
 
     /** @test */
-    public function user_can_mark_as_read_all_notification()
+    function user_can_mark_as_read_all_notification()
     {
-        $user = $this->createUser();
+        $this->be($user = $this->createUser());
 
-        $this->be($user);
-
-        $this->createUnReadNotification($user);
+        factory(DatabaseNotification::class)->times(5)->create();
 
         $this->get('notifications/read-all')
             ->assertStatus(Response::HTTP_FOUND);
@@ -46,21 +42,15 @@ class UserInteractionWithNotificationTest extends TestCase
             ->assertStatus(Response::HTTP_OK)
             ->assertSee('bandeja de notificación vacía');
 
-        $this->assertTrue(
-            $user->unreadNotifications->count() === 0
-        );
+        $this->assertCount(0, $user->unreadNotifications);
     }
 
     /** @test */
-    public function user_can_mark_as_read_one_notification()
+    function a_user_can_mark_a_notification_as_read()
     {
-        $user = $this->createUser();
+        $this->be($user = $this->createUser());
 
-        $this->be($user);
-
-        $this->createUnReadNotification($user);
-
-        $notifications = DatabaseNotification::all();
+        $notifications = factory(DatabaseNotification::class)->times(5)->create();
 
         $this->get("notifications/{$notifications[0]->id}")
             ->assertStatus(Response::HTTP_FOUND);
@@ -76,21 +66,17 @@ class UserInteractionWithNotificationTest extends TestCase
                 && $allNotifications->contains($notifications[4]);
             });
 
-        $this->assertTrue(
-            $user->unreadNotifications->count() === 4
-        );
+        $this->assertCount(4, $user->unreadNotifications);
     }
 
     /** @test */
-    public function user_cannot_see_read_notifications()
+    function user_cannot_see_read_notifications()
     {
-        $user = $this->createUser();
+        $this->be($user = $this->createUser());
 
-        $this->be($user);
-
-        $this->createReadNotification($user);
-
-        $notifications = DatabaseNotification::all();
+        $notifications = factory(DatabaseNotification::class)->times(5)->create([
+            'read_at' => Carbon::now()
+        ]);
 
         $this->get('notifications')
             ->assertStatus(Response::HTTP_OK)
@@ -103,39 +89,7 @@ class UserInteractionWithNotificationTest extends TestCase
                     && !$allNotifications->contains($notifications[4]);
             });
 
-        $this->assertTrue(
-            $user->unreadNotifications->count() === 0
-        );
+        $this->assertCount(0, $user->unreadNotifications);
     }
 
-    protected function createUnReadNotification(User $user, $times = 5)
-    {
-        for ($index = 0; $index < $times; $index++) {
-            DatabaseNotification::create([
-                'id' =>  (string) Str::uuid(),
-                'type' => "Notification\Test",
-                'notifiable_type' => 'App\User',
-                'notifiable_id' => $user->id,
-                'data' => [
-                    'body' => 'Test Body'
-                ]
-            ]);
-        }
-    }
-
-    protected function createReadNotification(User $user, $times = 5)
-    {
-        for ($index = 0; $index < $times; $index++) {
-            DatabaseNotification::create([
-                'id' =>  (string) Str::uuid(),
-                'type' => "Notification\Test",
-                'notifiable_type' => 'App\User',
-                'notifiable_id' => $user->id,
-                'data' => [
-                    'body' => 'Test Body'
-                ],
-                'read_at' => Carbon::now()
-            ]);
-        }
-    }
 }

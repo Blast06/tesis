@@ -56,3 +56,19 @@ $factory->define(App\Product::class, function (Faker $faker) {
         'category_id' => factory(\App\SubCategory::class)->create()
     ];
 });
+
+
+
+$factory->define(\Illuminate\Notifications\DatabaseNotification::class, function (Faker $faker) {
+    return [
+        'id' =>  (string) \Illuminate\Support\Str::uuid(),
+        'type' => "Notification\Test",
+        'notifiable_id' => function () {
+            return auth()->id() ?: factory(\App\User::class)->create()->id;
+        },
+        'notifiable_type' => 'App\User',
+        'data' => [
+            'body' => 'Test Body'
+        ],
+    ];
+});

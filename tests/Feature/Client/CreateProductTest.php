@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Client;
 
 use App\Website;
 use Tests\TestCase;
@@ -20,20 +20,28 @@ class CreateProductTest extends TestCase
         parent::setUp();
 
         $this->subcategory = factory(SubCategory::class)->create();
+
         $this->website = factory(Website::class)->create();
     }
 
     /** @test */
-    function client_can_create_a_product()
+    function an_client_can_create_a_product()
     {
-        $this->withoutExceptionHandling();
-
         $this->actingAs($this->website->user)
             ->post(route('products.store', $this->website), $this->getData())
             ->assertStatus(Response::HTTP_CREATED)
             ->assertJson(['data' => $this->getData()]);
 
         $this->assertDatabaseHas('products', $this->getData());
+    }
+
+    /** @test */
+    function a_non_client_cannot_create_a_product()
+    {
+        $this->actingAs($this->createUser())
+            ->post(route('products.store', $this->website), $this->getData())
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/home');
     }
 
     protected function getData($data = [])

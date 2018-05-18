@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Client;
 
 use Tests\TestCase;
 use App\Website;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ChangeImageWebsiteTest extends TestCase
+class AddImageToWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 

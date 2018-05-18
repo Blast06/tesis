@@ -41,12 +41,13 @@ Route::get('notifications', 'NotificationController@index');
 Route::get('notifications/read-all', 'NotificationController@markAsRead');
 Route::get('notifications/count', 'NotificationController@count');
 Route::get('notifications/{notification}', 'NotificationController@readNotification');
+
 /*
  * Public Website Route
  */
-Route::get('websites', 'WebsiteController@index')->name('websites.index');
-Route::get('websites/create', 'WebsiteController@create')->name('websites.create');
-Route::post('websites', 'WebsiteController@store')->name('websites.store');
-Route::get('{website}', 'WebsiteController@show')->name('website.show')->fallback();
-Route::post('{website}/unsubscribe', 'WebsiteController@unsubscribe')->name('website.unsubscribe')->fallback();
-Route::post('{website}/subscribe', 'WebsiteController@subscribe')->name('website.subscribe')->fallback();
+Route::get('websites', 'PublicWebsiteController@index')->name('websites.index');
+Route::get('websites/create', 'PublicWebsiteController@create')->name('websites.create');
+Route::post('websites', 'PublicWebsiteController@store')->name('websites.store');
+Route::get('{website}', 'PublicWebsiteController@show')->name('website.show')->fallback();
+Route::post('{website}/unsubscribe', 'PublicWebsiteController@unsubscribe')->name('website.unsubscribe')->fallback();
+Route::post('{website}/subscribe', 'PublicWebsiteController@subscribe')->name('website.subscribe')->fallback();

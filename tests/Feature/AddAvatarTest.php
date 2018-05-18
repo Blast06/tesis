@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AvatarChangeUserTest extends TestCase
+class AddAvatarTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,7 +20,7 @@ class AvatarChangeUserTest extends TestCase
    }
 
     /** @test */
-    function authenticated_user_can_change_avatar()
+    function an_user_can_change_avatar()
     {
         $user = $this->createUser();
 
@@ -35,7 +35,7 @@ class AvatarChangeUserTest extends TestCase
     }
 
     /** @test */
-    function authenticated_user_cannot_upload_others_file()
+    function an_user_cannot_upload_others_file()
     {
         $user = $this->createUser();
 

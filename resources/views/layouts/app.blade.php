@@ -32,7 +32,7 @@
 
         <nav class="main">
             <a href="/" class="brand nav-block">
-                <span>{{ config('app.name', 'Laravel') }}</span>
+                <span>{{ $app_name }}</span>
             </a>
 
             <div class="search nav-block">

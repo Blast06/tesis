@@ -1,17 +1,17 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Admin;
 
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class DashboardAdminTest extends TestCase
+class AdministratorTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    function admin_can_see_dashboard()
+    function an_admin_can_see_dashboard()
     {
         $admin = $this->createAdmin();
 
@@ -23,7 +23,7 @@ class DashboardAdminTest extends TestCase
     }
 
     /** @test */
-    function guest_cannot_see_admin_dashboard()
+    function a_guest_cannot_see_admin_dashboard()
     {
         $this->get(route('admin.dashboard'))
             ->assertStatus(Response::HTTP_FOUND)
@@ -31,7 +31,7 @@ class DashboardAdminTest extends TestCase
     }
 
     /** @test */
-    function unauthorized_user_cannot_see_admin_dashboard()
+    function an_unauthorized_user_cannot_see_admin_dashboard()
     {
         $admin = $this->createUser();
 
