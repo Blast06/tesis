@@ -23,7 +23,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'token', 'role'
+        'name', 'email', 'password', 'token'
     ];
 
     /**
@@ -38,9 +38,6 @@ class User extends Authenticatable implements HasMedia
     protected $appends = [
         'avatar'
     ];
-
-    const ROLE_ADMIN = 'admin';
-    const ROLE_USER = 'user';
 
     // Mutators
     public function setPasswordAttribute($password)
@@ -98,7 +95,10 @@ class User extends Authenticatable implements HasMedia
 
     public function isAdmin()
     {
-        return $this->role === User::ROLE_ADMIN;
+        return in_array(
+            strtolower($this->email),
+            array_map('strtolower', config('tesis.administrators'))
+        );
     }
 
     // Relationships

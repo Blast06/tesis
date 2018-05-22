@@ -20,7 +20,7 @@ class ActiveAccountTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create([
+        $this->user = $this->create(User::class, [
             'token' => User::generateToken(),
             'verified_at' => null
         ]);
@@ -62,6 +62,8 @@ class ActiveAccountTest extends TestCase
     /** @test */
     function the_token_is_case_sensitive()
     {
+        $this->withExceptionHandling();
+
         $url = URL::temporarySignedRoute(
             'account.activate', now()->addMinutes(30), ['token' => strtolower($this->user->token)]
         );

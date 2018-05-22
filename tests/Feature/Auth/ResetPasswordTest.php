@@ -17,7 +17,7 @@ class ResetPasswordTest extends TestCase
     {
         Notification::fake();
 
-        $user = factory(User::class)->create();
+        $user = $this->create(User::class);
 
         $this->post(route('password.email'), [
            'email' => $user->email
@@ -42,20 +42,19 @@ class ResetPasswordTest extends TestCase
     {
         Notification::fake();
 
-        $user1 = factory(User::class)->create();
-        $user2 = factory(User::class)->create();
+        $users = $this->create(User::class, [], 2);
 
         $this->post(route('password.email'), [
-            'email' => $user1->email
+            'email' => $users[0]->email
         ])->assertSessionHas(['status' => '¡Recordatorio de contraseña enviado!']);
 
         Notification::assertSentTo(
-            [$user1],
+            [$users[0]],
             ResetPasswordNotification::class
         );
 
         Notification::assertNotSentTo(
-            [$user2],
+            [$users[1]],
             ResetPasswordNotification::class
         );
     }

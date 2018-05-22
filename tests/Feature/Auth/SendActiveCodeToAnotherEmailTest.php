@@ -12,31 +12,33 @@ class SendActiveCodeToAnotherEmailTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $email = 'cristiangomeze@example.com';
+    protected $defaultData = [
+      'email' => 'cristiangomeze@example.com'
+    ];
 
     /** @test */
     function user_can_forwarded_activation_code_account()
     {
         Notification::fake();
 
-        $user = factory(User::class)->create([
+        $user = $this->create(User::class, [
             'verified_at' => null
         ]);
 
         $this->actingAs($user)
-            ->post(route('account.activation.change.email'), [
-                'email' => $this->email
-            ])->assertStatus(Response::HTTP_FOUND);
+            ->post(route('account.activation.change.email'), $this->defaultData)
+            ->assertStatus(Response::HTTP_FOUND);
 
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('users', $this->withData([
             'id' => $user->id,
-            'email' => $this->email
-        ]);
+        ]));
     }
 
     /** @test */
     function guest_cannot_forwarded_activation_code_account()
     {
+        $this->withExceptionHandling();
+
         $this->post(route('account.activation.change.email'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
@@ -45,7 +47,7 @@ class SendActiveCodeToAnotherEmailTest extends TestCase
     /** @test */
     function user_with_active_account_cannot_forwarded_activation_code_account()
     {
-        $this->actingAs($this->createUser())
+        $this->actingAs($this->create(User::class))
             ->post(route('account.activation.change.email'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');

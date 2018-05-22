@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,8 @@ class NotificationTest extends TestCase
     /** @test */
     function guest_cannot_see_notificaion()
     {
+        $this->withExceptionHandling();
+
         $this->get('notifications')
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
@@ -23,7 +26,7 @@ class NotificationTest extends TestCase
     /** @test */
     function authenticated_users_can_see_notificaion()
     {
-        $this->actingAs($this->createUser())->get('notifications')
+        $this->actingAs($this->create(User::class))->get('notifications')
             ->assertStatus(Response::HTTP_OK)
             ->assertViewIs('pages.notification');
     }
@@ -31,9 +34,9 @@ class NotificationTest extends TestCase
     /** @test */
     function user_can_mark_as_read_all_notification()
     {
-        $this->be($user = $this->createUser());
+        $this->be($user = $this->create(User::class));
 
-        factory(DatabaseNotification::class)->times(5)->create();
+        $this->create(DatabaseNotification::class,[], 5);
 
         $this->get('notifications/read-all')
             ->assertStatus(Response::HTTP_FOUND);
@@ -48,9 +51,9 @@ class NotificationTest extends TestCase
     /** @test */
     function a_user_can_mark_a_notification_as_read()
     {
-        $this->be($user = $this->createUser());
+        $this->be($user = $this->create(User::class));
 
-        $notifications = factory(DatabaseNotification::class)->times(5)->create();
+        $notifications = $this->create(DatabaseNotification::class, [],5);
 
         $this->get("notifications/{$notifications[0]->id}")
             ->assertStatus(Response::HTTP_FOUND);
@@ -72,11 +75,9 @@ class NotificationTest extends TestCase
     /** @test */
     function user_cannot_see_read_notifications()
     {
-        $this->be($user = $this->createUser());
+        $this->be($user = $this->create(User::class));
 
-        $notifications = factory(DatabaseNotification::class)->times(5)->create([
-            'read_at' => Carbon::now()
-        ]);
+        $notifications = $this->create(DatabaseNotification::class, ['read_at' => Carbon::now()],5);
 
         $this->get('notifications')
             ->assertStatus(Response::HTTP_OK)

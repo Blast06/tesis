@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Website;
 use Tests\TestCase;
+use App\{User, Website};
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -11,28 +11,33 @@ class SidebarWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->user = $this->create(User::class);
+    }
+
     /** @test */
     function an_user_can_see_sidebar_website_list()
     {
-        $user = $this->createUser();
+        $websites = $this->create(Website::class, ['user_id' => $this->user->id], 2);
 
-        $website1 = factory(Website::class)->create(['user_id' => $user->id]);
-        $website2 = factory(Website::class)->create(['user_id' => $user->id]);
-
-        $this->actingAs($user)->get('/home')
+        $this->actingAs($this->user)->get('/home')
             ->assertViewIs('pages.home')
             ->assertSee('Sitios De Trabajo')
-            ->assertSee($website1->name)
-            ->assertSee($website2->name);
+            ->assertSee($websites[0]->name)
+            ->assertSee($websites[1]->name);
     }
 
     /** @test */
     function a_guest_cannot_see_sidebar_website_list()
     {
-        $user = $this->createUser();
+        $this->withExceptionHandling();
 
-        factory(Website::class)->create(['user_id' => $user->id]);
-        factory(Website::class)->create(['user_id' => $user->id]);
+        $this->create(Website::class, ['user_id' => $this->user->id], 2);
 
         $this->get('/home')
             ->assertStatus(Response::HTTP_FOUND)

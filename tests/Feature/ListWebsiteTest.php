@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Website;
+use App\{User, Website};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ListWebsiteTest extends TestCase
@@ -13,10 +13,10 @@ class ListWebsiteTest extends TestCase
     /** @test */
     function authenticated_users_can_search_any_registered_site()
     {
-        $user = $this->createUser();
+        $user = $this->create(User::class);
 
-        $website1 = factory(Website::class)->create(['user_id' => $user->id]);
-        $website2 = factory(Website::class)->create();
+        $website1 = $this->create(Website::class, ['user_id' => $user->id]);
+        $website2 =  $this->create(Website::class);
 
         $this->actingAs($user)->get('/websites')
             ->assertViewIs('pages.website')
@@ -30,24 +30,23 @@ class ListWebsiteTest extends TestCase
     /** @test */
     function guests_can_search_any_registered_site()
     {
-        $website1 = factory(Website::class)->create();
-        $website2 = factory(Website::class)->create();
+        $websites_list = $this->create(Website::class, [], 2);
 
         $this->get('/websites')
             ->assertViewIs('pages.website')
-            ->assertViewHas('websites', function($websites) use ($website1, $website2) {
-                return $websites->contains($website1) && $websites->contains($website2);
+            ->assertViewHas('websites', function($websites) use ($websites_list) {
+                return $websites->contains($websites_list[0]) && $websites->contains($websites_list[0]);
             })
-            ->assertSee($website1->name)
-            ->assertSee($website2->name);
+            ->assertSee($websites_list[0]->name)
+            ->assertSee($websites_list[1]->name);
     }
 
     /** @test */
     function authenticated_users_can_see_a_specific_site()
     {
-        $user = $this->createUser();
+        $user = $this->create(User::class);
 
-        $website = factory(Website::class)->create(['user_id' => $user->id]);
+        $website = $this->create(Website::class, ['user_id' => $user->id]);
 
         $this->actingAs($user)->get("/{$website->username}")
             ->assertViewIs('client.website.public')

@@ -2,8 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\User;
 use App\Website;
+use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -18,8 +19,8 @@ class SubscribeToWebsiteTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = $this->createUser();
-        $this->website = factory(Website::class)->create();
+        $this->user = $this->create(User::class);
+        $this->website = $this->create(Website::class);
     }
 
     /** @test */
@@ -55,6 +56,8 @@ class SubscribeToWebsiteTest extends TestCase
     /** @test */
     function guest_cannot_subscribe_to_a_website()
     {
+        $this->withExceptionHandling();
+
         $this->json('POST',route('website.subscribe', $this->website))
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
@@ -62,6 +65,8 @@ class SubscribeToWebsiteTest extends TestCase
     /** @test */
     function guest_cannot_unsubscribe_to_a_website()
     {
+        $this->withExceptionHandling();
+
         $this->json('POST',route('website.unsubscribe', $this->website))
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }

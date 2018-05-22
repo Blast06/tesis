@@ -34,9 +34,13 @@
 </template>
 
 <script>
+    import image_form from './_ImageForm';
     export default {
         name: "website-edit",
         props: ['website'],
+        components: {
+            'image-form': image_form,
+        },
         data() {
             return {
                 form: new Form({

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Client;
 
+use App\User;
 use App\Website;
 use Tests\TestCase;
 use App\SubCategory;
@@ -12,6 +13,11 @@ class CreateProductTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $defaultData = [
+        'name' => 'nuevo producto',
+        'price' => 500,
+        'description' => 'descripcion del producto es bastante larga'
+    ];
     private $subcategory;
     private $website;
 
@@ -19,39 +25,60 @@ class CreateProductTest extends TestCase
     {
         parent::setUp();
 
-        $this->subcategory = factory(SubCategory::class)->create();
+        $this->subcategory = $this->create(SubCategory::class);
+        $this->website = $this->create(Website::class);
+    }
 
-        $this->website = factory(Website::class)->create();
+    /** @test */
+    function a_non_client_cannot_create_a_product()
+    {
+        $this->actingAs($this->create(User::class))
+            ->post(route('products.store', $this->website), $this->withData())
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/home');
     }
 
     /** @test */
     function an_client_can_create_a_product()
     {
         $this->actingAs($this->website->user)
-            ->post(route('products.store', $this->website), $this->getData())
+            ->json('POST',route('products.store', $this->website), $this->withData([
+                'website_id' => $this->website->id,
+                'sub_category_id' => $this->subcategory->id,
+            ]))
             ->assertStatus(Response::HTTP_CREATED)
-            ->assertJson(['data' => $this->getData()]);
+            ->assertJson(['data' => $this->withData([
+                'website_id' => $this->website->id,
+                'sub_category_id' => $this->subcategory->id,
+            ])]);
 
-        $this->assertDatabaseHas('products', $this->getData());
+        $this->assertDatabaseHas('products', $this->withData([
+            'website_id' => $this->website->id,
+            'sub_category_id' => $this->subcategory->id,
+        ]));
     }
 
     /** @test */
-    function a_non_client_cannot_create_a_product()
+    function an_client_can_create_a_product_and_make_it_private()
     {
-        $this->actingAs($this->createUser())
-            ->post(route('products.store', $this->website), $this->getData())
-            ->assertStatus(Response::HTTP_FOUND)
-            ->assertRedirect('/home');
-    }
+        $this->actingAs($this->website->user)
+            ->post(route('products.store', $this->website), $this->withData([
+                'price' => null,
+                'website_id' => $this->website->id,
+                'sub_category_id' => $this->subcategory->id,
+            ]))
+            ->assertStatus(Response::HTTP_CREATED)
+            ->assertJson(['data' => $this->withData([
+                'price' => null,
+                'website_id' => $this->website->id,
+                'sub_category_id' => $this->subcategory->id,
+            ])]);
 
-    protected function getData($data = [])
-    {
-        return array_filter(array_merge([
-            'name' => 'nuevo producto',
-            'price' => 500.00,
+        $this->assertDatabaseHas('products', $this->withData([
+            'price' => null,
             'website_id' => $this->website->id,
             'sub_category_id' => $this->subcategory->id,
-            'description' => 'descripcion del producto es bastante larga'
-        ],$data));
+        ]));
     }
+
 }

@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->decimal('price',9,2);
+            $table->decimal('price',9,2)->nullable();
             $table->unsignedInteger('website_id');
             $table->unsignedInteger('sub_category_id');
             $table->timestamps();

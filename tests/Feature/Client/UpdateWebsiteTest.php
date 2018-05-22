@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Client;
 
+use App\User;
 use App\Website;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,8 @@ class UpdateWebsiteTest extends TestCase
     /** @test */
     function a_aguest_cannot_update_website()
     {
+        $this->withExceptionHandling();
+
         $this->put(route('website.update', $this->website),[])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
@@ -46,7 +49,7 @@ class UpdateWebsiteTest extends TestCase
     /** @test */
     function an_unathorized_user_cannot_update_website()
     {
-        $this->actingAs($this->createUser())
+        $this->actingAs($this->create(User::class))
             ->put(route('website.update', $this->website),[])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');

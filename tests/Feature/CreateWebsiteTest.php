@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\User;
+use App\Website;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,24 +12,29 @@ class CreateWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $defaultData = [
+        'name' => "Software Cristian",
+        'username' => "big_system"
+    ];
+
     private $user;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->user = $this->createUser();
+        $this->user = $this->create(User::class);
     }
 
     /** @test */
     function an_users_can_create_websites_and_is_subscribe_to()
     {
         $this->actingAs($this->user)
-            ->json('POST',route('websites.store'), $this->getData())
+            ->json('POST',route('websites.store'), $this->withData())
             ->assertStatus(Response::HTTP_CREATED)
-            ->assertJson(['data' => $this->getData()]);
+            ->assertJson(['data' => $this->withData()]);
 
-        $this->assertDatabaseHas('websites', $this->getData());
+        $this->assertDatabaseHas('websites', $this->withData());
 
         $this->assertDatabaseHas('user_website', [
             'user_id' => $this->user->id,
@@ -38,15 +45,19 @@ class CreateWebsiteTest extends TestCase
     /** @test */
     function a_guests_cannot_create_websites()
     {
+        $this->withExceptionHandling();
+
         $this->json('POST',route('websites.store'), [])
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
 
-        $this->assertDatabaseMissing('websites', $this->getData());
+        $this->assertDatabaseMissing('websites', $this->withData());
     }
 
     /** @test */
     function a_users_can_see_validation_errors_form()
     {
+        $this->handleValidationExceptions();
+
         $this->actingAs($this->user)->json('POST',route('websites.store'), [])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertExactJson(["errors" => [
@@ -60,9 +71,11 @@ class CreateWebsiteTest extends TestCase
     /** @test */
     function a_users_cannot_register_duplicate_username()
     {
-        factory(\App\Website::class)->create($this->getData());
+        $this->handleValidationExceptions();
 
-        $this->actingAs($this->user)->json('POST',route('websites.store'), $this->getData([
+        $this->create(Website::class, $this->withData());
+
+        $this->actingAs($this->user)->json('POST',route('websites.store'), $this->withData([
             'name' => 'Big System inc.'
         ]))
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -72,15 +85,7 @@ class CreateWebsiteTest extends TestCase
                 "message" => "The given data was invalid."
             ]);
 
-        $this->assertDatabaseMissing('websites', $this->getData(['name' => 'Big System inc.']));
-    }
-
-    protected function getData($data = [])
-    {
-        return array_filter(array_merge([
-            'name' => "Software Cristian",
-            'username' => "big_system"
-        ],$data));
+        $this->assertDatabaseMissing('websites', $this->withData(['name' => 'Big System inc.']));
     }
 
 }

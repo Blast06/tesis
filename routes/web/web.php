@@ -51,3 +51,8 @@ Route::post('websites', 'PublicWebsiteController@store')->name('websites.store')
 Route::get('{website}', 'PublicWebsiteController@show')->name('website.show')->fallback();
 Route::post('{website}/unsubscribe', 'PublicWebsiteController@unsubscribe')->name('website.unsubscribe')->fallback();
 Route::post('{website}/subscribe', 'PublicWebsiteController@subscribe')->name('website.subscribe')->fallback();
+
+/*
+ * Recursos API Web
+ */
+Route::get('web/api/categories', 'ApiCategoryController@categories')->middleware('auth');

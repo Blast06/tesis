@@ -15,8 +15,10 @@ class FacebookLoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $email = 'cristian@example.org';
-    private $name = 'Cristian Gomez';
+    protected $defaultData = [
+        'email' => 'cristian@example.org',
+        'name' => 'Cristian Gomez'
+    ];
 
     /** @test */
     function login_requests_are_send_to_facebook ()
@@ -39,10 +41,7 @@ class FacebookLoginTest extends TestCase
 
         $this->get(route('login.facebook.callback'))->assertRedirect('/home');
 
-        $this->assertDatabaseHas('users', [
-            'email' => $this->email,
-            'name' => $this->name,
-        ]);
+        $this->assertDatabaseHas('users', $this->withData());
 
         $this->assertAuthenticated();
     }
@@ -50,8 +49,8 @@ class FacebookLoginTest extends TestCase
     /** @test */
     function known_new_users_authorized_by_facebook_are_registered_and_authenticated()
     {
-        factory(User::class)->create([
-            'email' => $this->email
+        $this->create(User::class, [
+            'email' => $this->defaultData['email']
         ]);
 
         $this->mockFacebookUser();
@@ -64,8 +63,8 @@ class FacebookLoginTest extends TestCase
     protected function mockFacebookUser()
     {
         $facebookUser = m::mock(SocialiteUser::class, [
-            'getEmail' => $this->email,
-            'getName' => $this->name,
+            'getEmail' => $this->defaultData['email'],
+            'getName' => $this->defaultData['name'],
         ]);
 
         $this->mockFacebookProvider()

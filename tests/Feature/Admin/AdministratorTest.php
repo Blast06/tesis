@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Admin;
 
+use App\User;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,6 +26,8 @@ class AdministratorTest extends TestCase
     /** @test */
     function a_guest_cannot_see_admin_dashboard()
     {
+        $this->withExceptionHandling();
+
         $this->get(route('admin.dashboard'))
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
@@ -33,7 +36,9 @@ class AdministratorTest extends TestCase
     /** @test */
     function an_unauthorized_user_cannot_see_admin_dashboard()
     {
-        $admin = $this->createUser();
+        $this->withExceptionHandling();
+
+        $admin = $this->create(User::class);
 
         $this->actingAs($admin)
             ->get(route('admin.dashboard'))

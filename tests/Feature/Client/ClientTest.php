@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Client;
 
+use App\User;
 use App\Website;
 use Tests\TestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ class ClientTest extends TestCase
     /** @test */
     function client_can_access_the_client_section()
     {
-        $website = factory(Website::class)->create();
+        $website = $this->create(Website::class);
 
         $this->actingAs($website->user)
             ->get(route('client.dashboard', $website))
@@ -26,11 +27,9 @@ class ClientTest extends TestCase
     /** @test */
     function unauthorized_user_cannot_access_the_client_section()
     {
-        $website = factory(Website::class)->create();
+        $website = $this->create(Website::class);
 
-        $admin = $this->createUser();
-
-        $this->actingAs($admin)
+        $this->actingAs($this->create(User::class))
             ->get(route('client.dashboard', $website))
             ->assertStatus(Response::HTTP_FOUND);
     }
@@ -38,7 +37,9 @@ class ClientTest extends TestCase
     /** @test */
     function guest_cannot_see_client_dashboard()
     {
-        $website = factory(Website::class)->create();
+        $this->withExceptionHandling();
+
+        $website = $this->create(Website::class);
 
         $this->get(route('client.dashboard', $website))
             ->assertStatus(Response::HTTP_FOUND)

@@ -12,15 +12,22 @@ class PleaseConfirmYourEmailTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $defaultData = [
+        'name' => 'Cristian Gomez',
+        'email' => 'cristiangomeze@example.com',
+        'password' => 'L@aravel1',
+        'password_confirmation' => 'L@aravel1'
+    ];
+
     /** @test */
     function when_user_registered_successfully_sent_account_activation_email()
     {
         Notification::fake();
 
-        $this->post('/register', $this->getData());
+        $this->post('/register', $this->withData());
 
         Notification::assertSentTo(
-            [User::where('email', $this->getData()['email'])->first()],
+            [User::where('email', $this->defaultData['email'])->first()],
             PleaseConfirmYourEmail::class
         );
     }
@@ -28,6 +35,8 @@ class PleaseConfirmYourEmailTest extends TestCase
     /** @test */
     function only_registered_successfully_user_sent_account_activation_email()
     {
+        $this->handleValidationExceptions();
+
         $this->post('/register', [])
             ->assertSessionHasErrors(['name','email','password']);
     }
@@ -37,21 +46,11 @@ class PleaseConfirmYourEmailTest extends TestCase
     {
         Notification::fake();
 
-        $this->post('/register', $this->getData());
+        $this->post('/register', $this->withData());
 
         Notification::assertNotSentTo(
-            [factory(User::class)->times(2)->create()],
+            [$this->create(User::class, [], 2)],
             PleaseConfirmYourEmail::class
         );
-    }
-
-    protected function getData($data = [])
-    {
-        return array_filter(array_merge([
-            'name' => 'Cristian Gomez',
-            'email' => 'cristiangomeze@example.com',
-            'password' => 'L@aravel1',
-            'password_confirmation' => 'L@aravel1'
-        ],$data));
     }
 }

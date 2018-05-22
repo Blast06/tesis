@@ -1,3 +1,13 @@
+<h5 class="title">Productos</h5>
+<div class="list-group mb-5">
+    <a href="{{ route('products.create', request()->website) }}" class="list">
+        Crear Productos
+    </a>
+    <a href="" class="list">
+        Todos los productos
+    </a>
+</div>
+
 @if($websites->count())
     <h5 class="title">Sitios De Trabajo</h5>
     <div class="list-group mb-5">

@@ -2,22 +2,18 @@
 
 namespace Tests;
 
-use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, TestHelpers;
 
-    public function createUser()
-    {
-        return factory(User::class)->create();
-    }
+    protected $defaultData = [];
 
-    public function createAdmin()
+    protected function setUp()
     {
-        return factory(User::class)->create([
-            'role' => User::ROLE_ADMIN
-        ]);
+        parent::setUp();
+
+        $this->withoutExceptionHandling();
     }
 }

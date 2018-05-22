@@ -17,7 +17,7 @@ class ResendActiveCodeTest extends TestCase
     {
         Notification::fake();
 
-        $user = factory(User::class)->create([
+        $user = $this->create(User::class, [
             'verified_at' => null
         ]);
 
@@ -35,6 +35,8 @@ class ResendActiveCodeTest extends TestCase
     /** @test */
     function guest_cannot_forwarded_activation_code_account()
     {
+        $this->withExceptionHandling();
+
         $this->post(route('account.activation.resend'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
@@ -43,7 +45,7 @@ class ResendActiveCodeTest extends TestCase
     /** @test */
     function user_with_active_account_cannot_forwarded_activation_code_account()
     {
-        $this->actingAs($this->createUser())
+        $this->actingAs($this->create(User::class))
             ->post(route('account.activation.resend'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');

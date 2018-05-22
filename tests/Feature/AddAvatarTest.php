@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +16,8 @@ class AddAvatarTest extends TestCase
    /** @test */
    function guest_cannot_change_avatar()
    {
+       $this->withExceptionHandling();
+
        $this->json('POST', route('profiles.avatar'), [])
            ->assertStatus(Response::HTTP_UNAUTHORIZED);
    }
@@ -22,7 +25,7 @@ class AddAvatarTest extends TestCase
     /** @test */
     function an_user_can_change_avatar()
     {
-        $user = $this->createUser();
+        $user = $this->create(User::class);
 
         Storage::fake($user->id);
 
@@ -37,7 +40,9 @@ class AddAvatarTest extends TestCase
     /** @test */
     function an_user_cannot_upload_others_file()
     {
-        $user = $this->createUser();
+        $this->handleValidationExceptions();
+
+        $user = $this->create(User::class);
 
         Storage::fake($user->id);
 
