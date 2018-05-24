@@ -66,6 +66,8 @@ class CreateWebsiteTest extends TestCase
             ],
                 "message" => "The given data was invalid.",
             ]);
+
+        $this->assertDatabaseEmpty('websites');
     }
 
     /** @test */

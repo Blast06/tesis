@@ -17,7 +17,7 @@
                 let data = new FormData();
                 data.append('avatar', avatar);
                 console.log(data);
-                axios.post(`/v1/user/avatar`, data)
+                axios.post(`/profiles/avatar`, data)
                     .then(() => toastr.success('¡Cambió la imagen exitosamente!'));
             }
         }

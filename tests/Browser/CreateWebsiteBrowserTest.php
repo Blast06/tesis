@@ -25,7 +25,6 @@ class CreateWebsiteBrowserTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                 ->visit('/websites/create')
-                ->assertSee('Crear Sitio Web')
                 ->type('name',$this->name)
                 ->type('username',$this->username)
                 ->press('Crear Sitio')

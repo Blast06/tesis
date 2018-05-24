@@ -18,6 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('price',9,2)->nullable();
+            $table->integer('stock' )->nullable();
+            $table->enum('status', [\App\Product::STATUS_AVAILABLE, \App\Product::STATUS_NOT_AVAILABLE, \App\Product::STATUS_PRIVATE])->default(\App\Product::STATUS_AVAILABLE);
             $table->unsignedInteger('website_id');
             $table->unsignedInteger('sub_category_id');
             $table->timestamps();

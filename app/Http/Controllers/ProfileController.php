@@ -30,6 +30,6 @@ class ProfileController extends Controller
      */
     public function avatar(ChangeAvatarRequest $request)
     {
-        return response()->json($request->updateAvatar(), Response::HTTP_OK);;
+        return $this->responseMessage($request->updateAvatar());
     }
 }

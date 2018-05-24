@@ -42,7 +42,7 @@ class PublicWebsiteController extends Controller
      */
     public function store(CreateWebsiteRequest $request)
     {
-        return response()->json($request->createWebsite(), Response::HTTP_CREATED);
+        return $this->responseOne($request->createWebsite(), Response::HTTP_CREATED);
     }
 
     /**
@@ -65,7 +65,7 @@ class PublicWebsiteController extends Controller
     public function subscribe(Website $website)
     {
         auth()->user()->subscribeTo($website);
-        return response()->json(['message' => 'subscribe']);
+        return $this->responseMessage('subscribe');
     }
 
     /**
@@ -77,6 +77,6 @@ class PublicWebsiteController extends Controller
     public function unsubscribe(Website $website)
     {
         auth()->user()->unsubscribeTo($website);
-        return response()->json(['message' => 'unsubscribe']);
+        return $this->responseMessage('unsubscribe');
     }
 }

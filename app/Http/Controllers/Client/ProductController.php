@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Website;
 use App\Http\Controllers\Controller;
+use App\DataTables\ClientProductsDataTable;
 use App\Http\Requests\CreateProductRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,11 +13,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\DataTables\ClientProductsDataTable $dataTable
+     * @param \App\Website $website
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ClientProductsDataTable $dataTable, Website $website)
     {
-        //
+        $header = $dataTable->getTableName($website);
+        return $dataTable->render('datatables.index', compact('header'));
     }
 
     /**
@@ -38,7 +42,7 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request, Website $website)
     {
-        return response()->json($request->createProduct($website),Response::HTTP_CREATED);
+        return $this->responseOne($request->createProduct($website), Response::HTTP_CREATED);
     }
 
     /**

@@ -31,11 +31,11 @@ class WebsiteController extends Controller
      *
      * @param \App\Http\Requests\UpdateWebsiteRequest $request
      * @param \App\Website $website
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateWebsiteRequest $request, Website $website)
     {
-        return response()->json($request->updateWebsite($website), Response::HTTP_OK);
+        return $this->responseOne($request->updateWebsite($website), Response::HTTP_OK);
     }
 
     /**
@@ -58,7 +58,6 @@ class WebsiteController extends Controller
      */
     public function image(ChangeImageRequest $request, Website $website)
     {
-        $request->updateImage($website);
-        return response()->json(['message' => 'imagen actualizada correctamente.'], Response::HTTP_OK);
+        return $this->responseMessage($request->updateImage($website));
     }
 }

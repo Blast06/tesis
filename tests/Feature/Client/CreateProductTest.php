@@ -2,10 +2,8 @@
 
 namespace Tests\Feature\Client;
 
-use App\User;
-use App\Website;
 use Tests\TestCase;
-use App\SubCategory;
+use App\{User, Website, Product, SubCategory};
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -16,6 +14,8 @@ class CreateProductTest extends TestCase
     protected $defaultData = [
         'name' => 'nuevo producto',
         'price' => 500,
+        'stock' => 10,
+        'status' => Product::STATUS_AVAILABLE,
         'description' => 'descripcion del producto es bastante larga'
     ];
     private $subcategory;
@@ -59,26 +59,23 @@ class CreateProductTest extends TestCase
     }
 
     /** @test */
-    function an_client_can_create_a_product_and_make_it_private()
+    function an_client_can_see_validation_errors_form()
     {
+        $this->handleValidationExceptions();
+
         $this->actingAs($this->website->user)
-            ->post(route('products.store', $this->website), $this->withData([
-                'price' => null,
-                'website_id' => $this->website->id,
-                'sub_category_id' => $this->subcategory->id,
-            ]))
-            ->assertStatus(Response::HTTP_CREATED)
-            ->assertJson(['data' => $this->withData([
-                'price' => null,
-                'website_id' => $this->website->id,
-                'sub_category_id' => $this->subcategory->id,
-            ])]);
+            ->json('POST',route('products.store', $this->website), [])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertExactJson(["errors" => [
+                "name" => ["El campo titulo es obligatorio."],
+                "price" => ["El campo precio es obligatorio."],
+                "status" => ["El campo estado es obligatorio."],
+                "description" => ["El campo descripcion es obligatorio."],
+                "sub_category_id" => ["El campo categoria es obligatorio."],
+            ],
+                "message" => "The given data was invalid.",
+            ]);
 
-        $this->assertDatabaseHas('products', $this->withData([
-            'price' => null,
-            'website_id' => $this->website->id,
-            'sub_category_id' => $this->subcategory->id,
-        ]));
+        $this->assertDatabaseEmpty('products');
     }
-
 }

@@ -39,8 +39,6 @@ class UpdateWebsiteRequest extends FormRequest
 
     public function updateWebsite(Website $website)
     {
-       return [
-           'data' => $website->update($this->validated())
-       ];
+       return $website->update($this->validated());
     }
 }

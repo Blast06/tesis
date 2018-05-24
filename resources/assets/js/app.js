@@ -9,9 +9,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import VeeValidate from 'vee-validate';
-import es from 'vee-validate/dist/locale/es';
-import BootstrapVue from 'bootstrap-vue';
+import VeeValidate from "vee-validate";
+import es from "vee-validate/dist/locale/es";
+import BootstrapVue from "bootstrap-vue";
 
 Vue.use(VeeValidate);
 Vue.use(BootstrapVue);
@@ -22,18 +22,18 @@ Vue.use(BootstrapVue);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('socialite', require('./components/LoginSocialite'));
-Vue.component('user-notifications', require('./components/UserNotifications'));
-Vue.component('avatar-form', require('./components/user/AvatarForm'));
-Vue.component('website-create', require('./components/website/CreateForm'));
-Vue.component('website-update', require('./components/website/UpdateForm'));
-Vue.component('subscribe-button', require('./components/website/SubscribeButton'));
-Vue.component('product-create', require('./components/product/CreateForm'));
+Vue.component("socialite", require("./components/LoginSocialite"));
+Vue.component("user-notifications", require("./components/UserNotifications"));
+Vue.component("avatar-form", require("./components/user/AvatarForm"));
+Vue.component("website-create", require("./components/website/CreateForm"));
+Vue.component("website-update", require("./components/website/UpdateForm"));
+Vue.component("subscribe-button", require("./components/website/SubscribeButton"));
+Vue.component("product-create", require("./components/product/CreateForm"));
 
 new Vue({
     el: '#app',
     created: function () {
-        this.$validator.localize('es', {
+        this.$validator.localize("es", {
             messages: es.messages,
         });
     },

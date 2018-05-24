@@ -10,7 +10,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Website extends Model implements HasMedia
 {
-    use HasMediaTrait, SoftDeletes;
+    use SoftDeletes, HasMediaTrait;
 
     protected $fillable = ['name', 'username', 'phone', 'address', 'private', 'domain'];
 
@@ -58,7 +58,7 @@ class Website extends Model implements HasMedia
     {
         return !empty($this->getFirstMediaUrl('websites', 'thumb'))
             ?  $this->getFirstMediaUrl('websites', 'thumb')
-            : asset('img/website.png');
+            : asset('img/default.png');
     }
 
     // Relationships

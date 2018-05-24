@@ -32,7 +32,6 @@ class AdminCreate extends Command
             'name' => 'Admin',
             'email' => 'admin@system.com',
             'password' => $this->secret('What is the password?'),
-            'role' => User::ROLE_ADMIN,
         ]);
 
         $this->info('Usuario admin creado correctamente!');

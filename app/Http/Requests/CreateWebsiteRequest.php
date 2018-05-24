@@ -42,10 +42,8 @@ class CreateWebsiteRequest extends FormRequest
      */
     public function createWebsite()
     {
-        return [
-            'data' =>  tap(auth()->user()->websites()->create($this->validated()), function ($website) {
-                auth()->user()->subscribeTo($website);
-            })
-        ];
+        return tap(auth()->user()->websites()->create($this->validated()), function ($website) {
+            auth()->user()->subscribeTo($website);
+        });
     }
 }

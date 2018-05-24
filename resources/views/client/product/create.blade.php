@@ -1,10 +1,6 @@
 @component('component.main')
     <div class="row">
-        <div class="col-md-3 sidebar">
-            @include('client._sidebar')
-        </div>
-
-        <div class="col-md-9">
+        <div class="col-md-12">
             @component('component.card')
 
                 @slot('header','Describe tu producto, articulo o servicio')
