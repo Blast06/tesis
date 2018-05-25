@@ -12,7 +12,7 @@
 
                 @slot('body_style', 'bg-light')
 
-                <product-create username="{{ request()->website }}"></product-create>
+                <product-create :website="{{ request()->website }}"></product-create>
             @endcomponent
         </div>
     </div>

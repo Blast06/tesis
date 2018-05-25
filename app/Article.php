@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Laravel\Scout\Searchable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -10,7 +13,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Article extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes, Searchable, HasMediaTrait, HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +21,7 @@ class Article extends Model implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'price', 'stock', 'sub_category_id', 'status', 'website_id', 'description'
+        'name', 'price', 'stock', 'sub_category_id', 'status', 'website_id', 'description', 'slug'
     ];
 
     protected $appends = [
@@ -63,5 +66,28 @@ class Article extends Model implements HasMedia
     public function subCategory()
     {
         return $this->belongsTo(SubCategory::class);
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'image_path' => $this->image_path,
+            'name' => $this->name,
+            'website' => $this->website->name,
+            'price' => $this->status !== Article::STATUS_PRIVATE ? $this->price : null,
+            'updated_at' => $this->updated_at->format('l j F Y'),
+            'sub_category' => $this->subCategory->name,
+            'slug' => $this->slug
+        ];
+    }
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }

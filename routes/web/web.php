@@ -39,6 +39,11 @@ Route::get('notifications/count', 'NotificationController@count');
 Route::get('notifications/{notification}', 'NotificationController@readNotification');
 
 /*
+ * Search
+ */
+Route::get('search', 'HomeController@search');
+
+/*
  * Public Website Route
  */
 Route::get('websites', 'PublicWebsiteController@index')->name('websites.index');

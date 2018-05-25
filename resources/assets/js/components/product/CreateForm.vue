@@ -163,7 +163,7 @@
 
     export default {
         name: "prodcut-create",
-        props: ['username'],
+        props: ['website'],
         components: {
             VueNumeric,
             vueDropzone,
@@ -178,7 +178,7 @@
                     { value: 'PRIVADO', text: 'Privado' }
                 ],
                 dropzoneOptions: {
-                    url: `/client/${this.username}/products`,
+                    url: `/client/${this.website.username}/articles`,
                     thumbnailWidth: 150,
                     maxFilesize: 5,
                     maxFiles: 10,
@@ -268,7 +268,7 @@
                     dangerMode: true,
                 }).then((redirect) => {
                     if (!redirect) {
-                        window.location.href= `/client/${this.username}/products`;
+                        window.location.href= `/client/${this.website.username}/articles`;
                     }
                 });
             },

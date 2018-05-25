@@ -4,6 +4,9 @@ return [
         'admin@system.com'
     ],
     'pagination' => [
-        'perPage' => 25
+        'perPage' => 20
+    ],
+    'algolia' => [
+        'search_key' => env('ALGOLIA_SEARCH_KEY', '')
     ]
 ];

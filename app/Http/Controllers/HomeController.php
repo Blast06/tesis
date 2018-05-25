@@ -7,7 +7,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('search');
     }
 
     public function index()
@@ -22,5 +22,10 @@ class HomeController extends Controller
             ->values();
 
         return view('pages.home', compact('articles'));
+    }
+
+    public function search()
+    {
+        return view('pages.search');
     }
 }
