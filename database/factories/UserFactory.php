@@ -48,7 +48,7 @@ $factory->define(App\SubCategory::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Product::class, function (Faker $faker) {
+$factory->define(App\Article::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->paragraph(4),

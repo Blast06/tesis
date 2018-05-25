@@ -2,9 +2,8 @@
 
 namespace Tests\Feature\Client;
 
-use App\User;
-use App\Website;
 use Tests\TestCase;
+use App\{User, Website};
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,13 +35,13 @@ class AddImageToWebsiteTest extends TestCase
     /** @test */
     function client_can_change_website_image()
     {
-        Storage::fake($this->website->user->id);
+        Storage::fake('public');
 
         $this->actingAs($this->website->user)
             ->post(route('website.image', $this->website),[
-                'image' => UploadedFile::fake()->image('image.jpeg')
+                'image' => UploadedFile::fake()->image('image.png')
             ])
-            ->assertStatus(Response::HTTP_OK)
+            ->assertSuccessful()
             ->assertExactJson(['message' => 'imagen actualizada correctamente.']);
     }
 

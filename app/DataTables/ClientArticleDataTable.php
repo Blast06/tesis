@@ -2,10 +2,10 @@
 
 namespace App\DataTables;
 
-use App\{Product, Website};
+use App\{Article, Website};
 use Yajra\DataTables\Services\DataTable;
 
-class ClientProductsDataTable extends DataTable
+class ClientArticleDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -17,16 +17,16 @@ class ClientProductsDataTable extends DataTable
     {
         return datatables($query)
             ->addColumn('action', 'datatables.action')
-            ->addColumn('image_path', function (Product $product) {
+            ->addColumn('image_path', function (Article $product) {
                 return '<img src='.$product->image_path.' class="img-thumbnail" />';
             })
-            ->editColumn('price', function (Product $product){
+            ->editColumn('price', function (Article $product){
                 return number_format($product->price,2,'.',',');
             })
-            ->editColumn('created_at', function(Product $product) {
+            ->editColumn('created_at', function(Article $product) {
                 return $product->created_at->format('l j F Y');
             })
-            ->editColumn('updated_at', function(Product $product) {
+            ->editColumn('updated_at', function(Article $product) {
                 return $product->updated_at->format('l j F Y');
             })
             ->rawColumns(['image_path','action']);
@@ -39,7 +39,7 @@ class ClientProductsDataTable extends DataTable
      */
     public function query()
     {
-        return Product::category()->ownsWebsite(request()->website)->get();
+        return Article::category()->ownsWebsite(request()->website)->get();
     }
 
     /**
@@ -78,7 +78,7 @@ class ClientProductsDataTable extends DataTable
 
     public function getTableName(Website $website)
     {
-        return 'Todos los productos de '. $website->name;
+        return 'Todos los articulos de '. $website->name;
     }
 
     /**
@@ -88,6 +88,6 @@ class ClientProductsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Products_' . date('YmdHis');
+        return 'Articles' . date('YmdHis');
     }
 }

@@ -6,6 +6,8 @@
 
         <div class="col-md-9">
 
+            {{ Breadcrumbs::render('website_config', $website) }}
+
             @include('partials.alert')
 
             @component('component.card')

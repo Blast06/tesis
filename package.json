@@ -26,6 +26,7 @@
     "sweetalert": "^2.1.0",
     "toastr": "^2.1.4",
     "vee-validate": "^2.0.8",
+    "vue-instantsearch": "^1.6.0",
     "vue-masked-input": "^0.5.2",
     "vue-numeric": "^2.3.0",
     "vue2-dropzone": "^3.2.2"

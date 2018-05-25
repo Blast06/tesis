@@ -12,6 +12,15 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('pages.home');
+        $articles = auth()->user()
+            ->subscribedWebsite()
+            ->with('articles')
+            ->get()
+            ->pluck('article')
+            ->collapse()
+            ->unique('id')
+            ->values();
+
+        return view('pages.home', compact('articles'));
     }
 }

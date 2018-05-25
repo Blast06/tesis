@@ -24,10 +24,6 @@ Route::get('account/activation/request', 'Auth\ActivationController@request')->n
 Route::post('account/activation/email', 'Auth\ActivationController@changeEmailResend')->name('account.activation.change.email')->middleware(['auth','throttle:0,1']);
 Route::post('account/resend/activation', 'Auth\ActivationController@resend')->name('account.activation.resend')->middleware(['auth','throttle:0,1']);
 
-Route::get('/search', function () {
-    return view('pages.details');
-});
-
 /*
 * Auth User Route
 */

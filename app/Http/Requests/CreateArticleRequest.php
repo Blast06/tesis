@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Product;
+use App\Article;
 use App\Website;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProductRequest extends FormRequest
+class CreateArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class CreateProductRequest extends FormRequest
             'price' => 'required|numeric|digits_between:3,9',
             'stock' => 'nullable|numeric|digits_between:1,4',
             'sub_category_id' => 'required|numeric',
-            'status' => 'required|in:' .Product::STATUS_AVAILABLE. ',' .Product::STATUS_NOT_AVAILABLE. ',' .Product::STATUS_PRIVATE,
+            'status' => 'required|in:' .Article::STATUS_AVAILABLE. ',' .Article::STATUS_NOT_AVAILABLE. ',' .Article::STATUS_PRIVATE,
             'description' => 'required|min:20',
             'file.*' => 'required|image:jpeg,png,gif,svg|max:5120'
         ];
@@ -50,16 +50,16 @@ class CreateProductRequest extends FormRequest
 
     public function createProduct(Website $website)
     {
-        return tap($website->products()->create($this->validated()), function ($product) {
-            $this->uploadImage($product);
+        return tap($website->articles()->create($this->validated()), function ($article) {
+            $this->uploadImage($article);
         });
     }
 
-    private function uploadImage(Product $product)
+    private function uploadImage(Article $article)
     {
         if($this->hasFile('file')) {
             foreach (request()->file as $file) {
-                $product->addMedia($file)->toMediaCollection('products');
+                $article->addMedia($file)->toMediaCollection('articles');
             }
         }
     }

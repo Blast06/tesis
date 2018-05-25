@@ -7,6 +7,9 @@
         </div>
 
         <div class="col-md-9">
+
+            {{ Breadcrumbs::render('dashboard', $website) }}
+
             @component('component.card')
 
                 @slot('header',  "Dashboard {$website->name}")

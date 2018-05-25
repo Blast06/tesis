@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Product extends Model implements HasMedia
+class Article extends Model implements HasMedia
 {
     use SoftDeletes, HasMediaTrait;
 
@@ -38,8 +38,8 @@ class Product extends Model implements HasMedia
 
     public function getImagePathAttribute()
     {
-        return !empty($this->getFirstMediaUrl('products', 'thumb'))
-            ?  $this->getFirstMediaUrl('products', 'thumb')
+        return !empty($this->getFirstMediaUrl('articles', 'thumb'))
+            ?  $this->getFirstMediaUrl('articles', 'thumb')
             : asset('img/default.png');
     }
 

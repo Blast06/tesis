@@ -3,20 +3,20 @@
 namespace Tests\Feature\Client;
 
 use Tests\TestCase;
-use App\{User, Website, Product, SubCategory};
+use App\{User, Website, Article, SubCategory};
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreateProductTest extends TestCase
+class CreateArticleTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $defaultData = [
-        'name' => 'nuevo producto',
+        'name' => 'nuevo articulo',
         'price' => 500,
         'stock' => 10,
-        'status' => Product::STATUS_AVAILABLE,
-        'description' => 'descripcion del producto es bastante larga'
+        'status' => Article::STATUS_AVAILABLE,
+        'description' => 'descripcion del articulo es bastante larga'
     ];
     private $subcategory;
     private $website;
@@ -30,19 +30,19 @@ class CreateProductTest extends TestCase
     }
 
     /** @test */
-    function a_non_client_cannot_create_a_product()
+    function a_non_client_cannot_create_a_article()
     {
         $this->actingAs($this->create(User::class))
-            ->post(route('products.store', $this->website), $this->withData())
+            ->post(route('articles.store', $this->website), $this->withData())
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }
 
     /** @test */
-    function an_client_can_create_a_product()
+    function an_client_can_create_a_article()
     {
         $this->actingAs($this->website->user)
-            ->json('POST',route('products.store', $this->website), $this->withData([
+            ->json('POST',route('articles.store', $this->website), $this->withData([
                 'website_id' => $this->website->id,
                 'sub_category_id' => $this->subcategory->id,
             ]))
@@ -52,7 +52,7 @@ class CreateProductTest extends TestCase
                 'sub_category_id' => $this->subcategory->id,
             ])]);
 
-        $this->assertDatabaseHas('products', $this->withData([
+        $this->assertDatabaseHas('articles', $this->withData([
             'website_id' => $this->website->id,
             'sub_category_id' => $this->subcategory->id,
         ]));
@@ -64,7 +64,7 @@ class CreateProductTest extends TestCase
         $this->handleValidationExceptions();
 
         $this->actingAs($this->website->user)
-            ->json('POST',route('products.store', $this->website), [])
+            ->json('POST',route('articles.store', $this->website), [])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertExactJson(["errors" => [
                 "name" => ["El campo titulo es obligatorio."],
@@ -76,6 +76,6 @@ class CreateProductTest extends TestCase
                 "message" => "The given data was invalid.",
             ]);
 
-        $this->assertDatabaseEmpty('products');
+        $this->assertDatabaseEmpty('articles');
     }
 }

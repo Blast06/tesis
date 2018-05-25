@@ -1,10 +1,10 @@
-<h5 class="title">Productos</h5>
+<h5 class="title">Articulos</h5>
 <div class="list-group mb-5">
-    <a href="{{ route('products.create', request()->website) }}" class="list">
-        Crear Productos
+    <a href="{{ route('articles.create', request()->website) }}" class="list">
+        Crear Articulos
     </a>
-    <a href="" class="list">
-        Todos los productos
+    <a href="{{ route('articles.index', request()->website) }}" class="list">
+        Todos los Articulos
     </a>
 </div>
 

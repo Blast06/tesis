@@ -73,8 +73,8 @@ class Website extends Model implements HasMedia
         return $this->belongsToMany(User::class);
     }
 
-    public function products()
+    public function articles()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Article::class);
     }
 }

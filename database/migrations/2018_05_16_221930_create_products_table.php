@@ -13,13 +13,13 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->text('description');
             $table->decimal('price',9,2)->nullable();
             $table->integer('stock' )->nullable();
-            $table->enum('status', [\App\Product::STATUS_AVAILABLE, \App\Product::STATUS_NOT_AVAILABLE, \App\Product::STATUS_PRIVATE])->default(\App\Product::STATUS_AVAILABLE);
+            $table->enum('status', [\App\Article::STATUS_AVAILABLE, \App\Article::STATUS_NOT_AVAILABLE, \App\Article::STATUS_PRIVATE])->default(\App\Article::STATUS_AVAILABLE);
             $table->unsignedInteger('website_id');
             $table->unsignedInteger('sub_category_id');
             $table->timestamps();
@@ -37,6 +37,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('articles');
     }
 }

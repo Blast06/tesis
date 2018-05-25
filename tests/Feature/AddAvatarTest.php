@@ -25,9 +25,9 @@ class AddAvatarTest extends TestCase
     /** @test */
     function an_user_can_change_avatar()
     {
-        $user = $this->create(User::class);
+        Storage::fake('public');
 
-        Storage::fake($user->id);
+        $user = $this->create(User::class);
 
         $this->actingAs($user)
             ->json('POST', route('profiles.avatar'), [
@@ -35,6 +35,8 @@ class AddAvatarTest extends TestCase
             ])
             ->assertSuccessful()
             ->assertExactJson(['message' => 'avatar actualizado correctamente.']);
+
+        Storage::disk('public')->assertExists('1/avatar.jpg');
     }
 
     /** @test */

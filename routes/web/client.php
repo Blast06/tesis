@@ -17,6 +17,6 @@ Route::middleware(['client'])->group(function () {
     Route::put('{website}/update', 'Client\WebsiteController@update')->name('website.update');
     Route::post('{website}/image', 'Client\WebsiteController@image')->name('website.image');
 
-    Route::resource('{website}/products', 'Client\ProductController');
+    Route::resource('{website}/articles', 'Client\ArticleController');
 });
 

@@ -4,43 +4,45 @@ namespace App\Http\Controllers\Client;
 
 use App\Website;
 use App\Http\Controllers\Controller;
-use App\DataTables\ClientProductsDataTable;
-use App\Http\Requests\CreateProductRequest;
+use App\DataTables\ClientArticleDataTable;
+use App\Http\Requests\CreateArticleRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param \App\DataTables\ClientProductsDataTable $dataTable
+     * @param \App\DataTables\ClientArticleDataTable $dataTable
      * @param \App\Website $website
      * @return \Illuminate\Http\Response
      */
-    public function index(ClientProductsDataTable $dataTable, Website $website)
+    public function index(ClientArticleDataTable $dataTable, Website $website)
     {
         $header = $dataTable->getTableName($website);
-        return $dataTable->render('datatables.index', compact('header'));
+        $breadcrumb_name = 'article';
+        return $dataTable->render('datatables.index', compact('header', 'breadcrumb_name', 'website'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param \App\Website $website
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Website $website)
     {
-        return view('client.product.create');
+        return view('client.article.create', compact('website'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\CreateProductRequest $request
+     * @param \App\Http\Requests\CreateArticleRequest $request
      * @param \App\Website $website
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateProductRequest $request, Website $website)
+    public function store(CreateArticleRequest $request, Website $website)
     {
         return $this->responseOne($request->createProduct($website), Response::HTTP_CREATED);
     }
