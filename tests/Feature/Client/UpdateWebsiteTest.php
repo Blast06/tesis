@@ -12,6 +12,9 @@ class UpdateWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * @var \App\Website
+     */
     private $website;
 
     protected function setUp()
@@ -25,7 +28,7 @@ class UpdateWebsiteTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->put(route('website.update', $this->website),[])
+        $this->put($this->website->url->update, [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
     }
@@ -34,7 +37,7 @@ class UpdateWebsiteTest extends TestCase
     function a_client_can_update_website()
     {
         $this->actingAs($this->website->user)
-            ->put(route('website.update', $this->website),[
+            ->put($this->website->url->update, [
                 'name' => 'New name website'
             ])
             ->assertStatus(Response::HTTP_OK)
@@ -50,7 +53,7 @@ class UpdateWebsiteTest extends TestCase
     function an_unathorized_user_cannot_update_website()
     {
         $this->actingAs($this->create(User::class))
-            ->put(route('website.update', $this->website),[])
+            ->put($this->website->url->update, [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }

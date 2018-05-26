@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Article;
-use App\Website;
+use App\{Article, Website};
 use Illuminate\Foundation\Http\FormRequest;
+use App\Notifications\NewArticleNotification;
 
 class CreateArticleRequest extends FormRequest
 {
@@ -36,6 +36,9 @@ class CreateArticleRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributes()
     {
         return [
@@ -48,13 +51,21 @@ class CreateArticleRequest extends FormRequest
         ];
     }
 
+    /**
+     * @param \App\Website $website
+     * @return mixed
+     */
     public function createProduct(Website $website)
     {
         return tap($website->articles()->create($this->validated()), function ($article) {
             $this->uploadImage($article);
+            $this->usersNotificationToArticle($article);
         });
     }
 
+    /**
+     * @param \App\Article $article
+     */
     private function uploadImage(Article $article)
     {
         if($this->hasFile('file')) {
@@ -62,6 +73,27 @@ class CreateArticleRequest extends FormRequest
                 $article->addMedia($file)->toMediaCollection('articles');
             }
         }
+    }
+
+    /**
+     * @param \App\Article $article
+     */
+    private function usersNotificationToArticle(Article $article)
+    {
+        foreach ($this->getUsersSubscribe($article) as $user) {
+            $user->notify(new NewArticleNotification($user, $article));
+        }
+    }
+
+    /**
+     * @param \App\Article $article
+     * @return mixed
+     */
+    private function getUsersSubscribe(Article $article)
+    {
+        return $article->website->subscribedUsers()
+            ->where('id', '<>', $article->website->user_id)
+            ->get();
     }
 
 }

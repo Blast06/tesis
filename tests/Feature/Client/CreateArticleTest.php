@@ -3,6 +3,7 @@
 namespace Tests\Feature\Client;
 
 use Tests\TestCase;
+use Illuminate\Support\Facades\Notification;
 use App\{User, Website, Article, SubCategory};
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -41,6 +42,8 @@ class CreateArticleTest extends TestCase
     /** @test */
     function an_client_can_create_a_article()
     {
+        Notification::fake();
+
         $this->actingAs($this->website->user)
             ->json('POST',route('articles.store', $this->website), $this->withData([
                 'website_id' => $this->website->id,

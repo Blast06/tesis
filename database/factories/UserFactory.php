@@ -52,8 +52,10 @@ $factory->define(App\Article::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->paragraph(4),
-        'price' => $faker->randomNumber,
-        'category_id' => factory(\App\SubCategory::class)->create()
+        'price' => 100.00,
+        'sub_category_id' => factory(\App\SubCategory::class)->create(),
+        'website_id' => factory(\App\Website::class)->create(),
+        'status' => \App\Article::STATUS_AVAILABLE
     ];
 });
 

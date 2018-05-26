@@ -7,6 +7,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
+use App\Presenters\Article\UrlPresenter;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -25,7 +26,7 @@ class Article extends Model implements HasMedia
     ];
 
     protected $appends = [
-        'image_path'
+        'image_path', 'url'
     ];
 
     const STATUS_NOT_AVAILABLE = 'NO_DISPONIBLE';
@@ -44,6 +45,21 @@ class Article extends Model implements HasMedia
         return !empty($this->getFirstMediaUrl('articles', 'thumb'))
             ?  $this->getFirstMediaUrl('articles', 'thumb')
             : asset('img/default.png');
+    }
+
+    public function getUrlAttribute()
+    {
+        return new UrlPresenter(request()->website, $this);
+    }
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     public function scopeCategory($query)
@@ -79,15 +95,5 @@ class Article extends Model implements HasMedia
             'sub_category' => $this->subCategory->name,
             'slug' => $this->slug
         ];
-    }
-
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
     }
 }

@@ -14,8 +14,8 @@ Route::middleware(['client'])->group(function () {
 
     Route::get('{website}/dashboard', 'Client\DashboardClientController@index')->name('client.dashboard');
     Route::get('{website}/edit', 'Client\WebsiteController@edit')->name('websites.edit');
-    Route::put('{website}/update', 'Client\WebsiteController@update')->name('website.update');
-    Route::post('{website}/image', 'Client\WebsiteController@image')->name('website.image');
+    Route::put('{website}/update', 'Client\WebsiteController@update')->name('websites.update');
+    Route::post('{website}/image', 'Client\WebsiteController@image')->name('websites.image');
 
     Route::resource('{website}/articles', 'Client\ArticleController');
 });

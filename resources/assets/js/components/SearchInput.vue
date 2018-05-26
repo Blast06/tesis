@@ -37,7 +37,7 @@
 
 <style lang="scss">
     $custom:(
-            input-width: 400px,
+            //input-width: 400px,
             //input-height: 50px,
             border-width: 0,
             input-border-color: #FFFFFF,

@@ -4,23 +4,10 @@
     <li><a href="{{ route('register') }}">REGISTRO</a></li>
 @else
     <li><a href="{{ route('home.index') }}">HOME</a></li>
-    <li><a href="{{ route('websites.index') }}">SITIOS</a></li>
-
-    <li class="dropdown community-dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-            Crear
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-            <li>
-                <a href="{{ route('websites.create') }}">
-                    <i class="fas fa-building"> Sitio</i>
-                </a>
-            </li>
-        </ul>
-    </li>
+    <li><a href="{{ route('websites.index') }}">BUSCAR SITIOS</a></li>
 
     <user-notifications :user_id="{{auth()->id()}}"></user-notifications>
+
     <li><a href=""><i class="fas fa-shopping-cart fa-lg"></i></a></li>
 
     <li class="dropdown community-dropdown">
@@ -30,7 +17,12 @@
         </a>
 
         <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ url('/websites/create') }}">Crear Sitio</i></a></li>
+
+            <li class="divider"></li>
+
             <li><a href="{{ route('profiles.index') }}">Perfil</a></li>
+            <li><a href="">Configuracion</a></li>
 
             <li class="divider"></li>
 

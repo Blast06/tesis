@@ -4,6 +4,7 @@ namespace App;
 
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
+use App\Presenters\Website\UrlPresenter;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -15,7 +16,7 @@ class Website extends Model implements HasMedia
     protected $fillable = ['name', 'username', 'phone', 'address', 'private', 'domain'];
 
     protected $appends = [
-        'image_path'
+        'image_path', 'url'
     ];
 
     // Mutators
@@ -37,6 +38,11 @@ class Website extends Model implements HasMedia
         return ucwords($name);
     }
 
+    public function getUrlAttribute()
+    {
+        return new UrlPresenter($this);
+    }
+
     /**
      * Get the route key name for Laravel.
      *
@@ -50,8 +56,8 @@ class Website extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')
-            ->width(286)
-            ->height(180);
+            ->width(268)
+            ->height(184);
     }
 
     public function getImagePathAttribute()

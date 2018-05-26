@@ -12,7 +12,14 @@ class SubscribeToWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * @var \App\User
+     */
     private $user;
+
+    /**
+     * @var \App\Website
+     */
     private $website;
 
     protected function setUp()
@@ -24,10 +31,10 @@ class SubscribeToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function user_can_subscribe_to_a_website()
+    function an_user_can_subscribe_to_a_website()
     {
         $this->actingAs($this->user)
-            ->json('POST',route('website.subscribe', $this->website))
+            ->json('POST', $this->website->url->subscribe)
             ->assertSuccessful()
             ->assertExactJson(['message' => 'subscribe']);
 
@@ -38,12 +45,12 @@ class SubscribeToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function user_can_unsubscribe_to_a_website()
+    function an_user_can_unsubscribe_to_a_website()
     {
         $this->user->subscribeTo($this->website);
 
         $this->actingAs($this->user)
-            ->json('POST',route('website.unsubscribe', $this->website))
+            ->json('POST', $this->website->url->unsubscribe)
             ->assertSuccessful()
             ->assertExactJson(['message' => 'unsubscribe']);
 
@@ -54,20 +61,20 @@ class SubscribeToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function guest_cannot_subscribe_to_a_website()
+    function a_guest_cannot_subscribe_to_a_website()
     {
         $this->withExceptionHandling();
 
-        $this->json('POST',route('website.subscribe', $this->website))
+        $this->json('POST', $this->website->url->subscribe)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     /** @test */
-    function guest_cannot_unsubscribe_to_a_website()
+    function a_guest_cannot_unsubscribe_to_a_website()
     {
         $this->withExceptionHandling();
 
-        $this->json('POST',route('website.unsubscribe', $this->website))
+        $this->json('POST', $this->website->url->unsubscribe)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }

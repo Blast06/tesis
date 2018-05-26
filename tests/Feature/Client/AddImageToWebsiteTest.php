@@ -13,6 +13,9 @@ class AddImageToWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * @var \App\Website
+     */
     private $website;
 
     protected function setUp()
@@ -23,22 +26,22 @@ class AddImageToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function guest_cannot_change_website_image()
+    function an_guest_cannot_change_website_image()
     {
         $this->withExceptionHandling();
 
-        $this->post(route('website.image', $this->website),[])
+        $this->post($this->website->url->image ,[])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
     }
 
     /** @test */
-    function client_can_change_website_image()
+    function an_client_can_change_website_image()
     {
         Storage::fake('public');
 
         $this->actingAs($this->website->user)
-            ->post(route('website.image', $this->website),[
+            ->post($this->website->url->image, [
                 'image' => UploadedFile::fake()->image('image.png')
             ])
             ->assertSuccessful()
@@ -46,21 +49,21 @@ class AddImageToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function unathorized_user_cannot_change_website_image()
+    function a_unathorized_user_cannot_change_website_image()
     {
         $this->actingAs($this->create(User::class))
-            ->post(route('website.image', $this->website),[])
+            ->post($this->website->url->image, [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }
 
     /** @test */
-    function client_cannot_upload_others_file()
+    function an_client_cannot_upload_others_file()
     {
         $this->handleValidationExceptions();
 
         $this->actingAs($this->website->user)
-            ->json('POST',route('website.image', $this->website),[
+            ->json('POST', $this->website->url->image, [
                 'image' => UploadedFile::fake()->image('image.pdf')
             ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)

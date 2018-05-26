@@ -16,7 +16,7 @@ class HomeController extends Controller
             ->subscribedWebsite()
             ->with('articles')
             ->get()
-            ->pluck('article')
+            ->pluck('articles')
             ->collapse()
             ->unique('id')
             ->values();

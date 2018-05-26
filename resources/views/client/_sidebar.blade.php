@@ -1,9 +1,11 @@
 <h5 class="title">Articulos</h5>
 <div class="list-group mb-5">
-    <a href="{{ route('articles.create', request()->website) }}" class="list">
+    <a href="{{ url("/client/{$website->username}/articles/create") }}" class="list">
+        <i class="fas fa-dot-circle"></i>
         Crear Articulos
     </a>
-    <a href="{{ route('articles.index', request()->website) }}" class="list">
+    <a href="{{ url("/client/{$website->username}/articles") }}" class="list">
+        <i class="fas fa-dot-circle"></i>
         Todos los Articulos
     </a>
 </div>
@@ -13,7 +15,7 @@
     <div class="list-group mb-5">
         @foreach($websites as $website)
             <a href="{{ route('client.dashboard', $website) }}" class="list">
-
+                <img class="rounded-circle" src="{{ $website->image_path }}" width="24" height="24">
                 {{ $website->name }}
             </a>
         @endforeach

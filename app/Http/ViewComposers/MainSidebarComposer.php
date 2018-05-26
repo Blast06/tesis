@@ -14,10 +14,12 @@ class MainSidebarComposer
      */
     public function compose(View $view)
     {
-        $websites = auth()->user()->websites ?? [];
+        $website = request()->website ?? null;
 
-        $subscriptions = auth()->user()->subscribedWebsite;
+        $websites = auth()->user()->websites()->take(10)->get();
 
-        $view->with(compact('websites', 'subscriptions'));
+        $subscriptions = auth()->user()->subscribedWebsite()->take(10)->get();
+
+        $view->with(compact('website', 'websites', 'subscriptions'));
     }
 }

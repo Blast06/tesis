@@ -49,9 +49,9 @@ Route::get('search', 'HomeController@search');
 Route::get('websites', 'PublicWebsiteController@index')->name('websites.index');
 Route::get('websites/create', 'PublicWebsiteController@create')->name('websites.create');
 Route::post('websites', 'PublicWebsiteController@store')->name('websites.store');
-Route::get('{website}', 'PublicWebsiteController@show')->name('website.show')->fallback();
-Route::post('{website}/unsubscribe', 'PublicWebsiteController@unsubscribe')->name('website.unsubscribe')->fallback();
-Route::post('{website}/subscribe', 'PublicWebsiteController@subscribe')->name('website.subscribe')->fallback();
+Route::get('{website}', 'PublicWebsiteController@show')->name('websites.show')->fallback();
+Route::post('{website}/unsubscribe', 'PublicWebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
+Route::post('{website}/subscribe', 'PublicWebsiteController@subscribe')->name('websites.subscribe')->fallback();
 
 /*
  * Recursos API Web
