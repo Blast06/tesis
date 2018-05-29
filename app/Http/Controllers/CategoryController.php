@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 
-class ApiCategoryController extends Controller
+class CategoryController extends Controller
 {
     public function categories()
     {

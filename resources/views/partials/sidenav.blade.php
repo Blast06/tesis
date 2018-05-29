@@ -11,7 +11,7 @@
 @endif
 
 @if($subscriptions->count())
-    <h5 class="title">Subscripciones</h5>
+    <h5 class="title"><a href="{{ route('websites.feed') }}">Subscripciones</a></h5>
     <div class="list-group mb-5">
         @foreach($subscriptions as $subscription)
             <a href="{{ url("$subscription->username") }}" class="list">

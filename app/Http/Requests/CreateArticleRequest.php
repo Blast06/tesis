@@ -32,7 +32,7 @@ class CreateArticleRequest extends FormRequest
             'sub_category_id' => 'required|numeric',
             'status' => 'required|in:' .Article::STATUS_AVAILABLE. ',' .Article::STATUS_NOT_AVAILABLE. ',' .Article::STATUS_PRIVATE,
             'description' => 'required|min:20',
-            'file.*' => 'required|image:jpeg,png,gif,svg|max:5120'
+            'file.*' => 'nullable|image:jpeg,png,gif,svg|max:5120'
         ];
     }
 

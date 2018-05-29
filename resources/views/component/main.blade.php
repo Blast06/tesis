@@ -9,7 +9,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-{!! $scripts ?? null !!}
-@endpush

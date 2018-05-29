@@ -2,8 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Article;
-use App\User;
+use App\{Article, User};
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -32,7 +31,7 @@ class NewArticleNotification extends Notification implements ShouldQueue
      * @param \App\User $user
      * @param \App\Article $article
      */
-    public function __construct(User $user,Article $article)
+    public function __construct(User $user, Article $article)
     {
         $this->user = $user;
         $this->article = $article;
@@ -58,20 +57,20 @@ class NewArticleNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Verificación de correo electrónico')
-            ->greeting("Hola {$notifiable->name}, Un último paso.")
-            ->line("Solo necesitamos que confirmes tu dirección de correo electrónico para demostrar que eres humano. Lo entiendes, ¿verdad? Coo.")
-            ->action('Confirmar correo electrónico', '' )
+            ->subject("[{$this->article->website->name}] Nuevo articulo")
+            ->greeting("Hola {$notifiable->name}.")
+            ->line("{$this->article->website->name}, añadido un nuevo articulo {$this->article->name}")
+            ->action('Ver el articulo', $this->article->url->article)
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 
     public function toArray($notifiable)
     {
         return [
-            'icon' => 'far fa-envelope',
-            'subject' => 'Verificación de correo electrónico',
-            'body' => "necesitamos que confirmes tu dirección de correo electrónico...",
-            'url' => $this->article->slug,
+            'icon' => '<i class="fas fa-newspaper"></i>',
+            'subject' => 'Nuevo articulo',
+            'body' => "{$this->article->website->name},  Ha a añadido un nuevo articulo.",
+            'url' => $this->article->url->article,
         ];
     }
 

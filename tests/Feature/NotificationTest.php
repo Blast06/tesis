@@ -73,7 +73,7 @@ class NotificationTest extends TestCase
     }
 
     /** @test */
-    function user_cannot_see_read_notifications()
+    function a_user_cannot_see_read_notifications()
     {
         $this->be($user = $this->create(User::class));
 
@@ -91,6 +91,38 @@ class NotificationTest extends TestCase
             });
 
         $this->assertCount(0, $user->unreadNotifications);
+    }
+
+    /** @test */
+    function a_user_is_redirected_to_notification_path_if_notification_has_that_route()
+    {
+        $this->withExceptionHandling();
+
+        $this->be($user = $this->create(User::class));
+
+        $notification = $this->create(DatabaseNotification::class, [
+            'data' => [
+                'url' => url('home')
+            ]
+        ]);
+
+        $this->get(url("notifications/{$notification->id}"))
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/home');
+    }
+
+    /** @test */
+    function a_user_is_not_redirected_to_notification_path_if_notification_has_not_that_route()
+    {
+        $this->withExceptionHandling();
+
+        $this->be($user = $this->create(User::class));
+
+        $notification = $this->create(DatabaseNotification::class);
+
+        $this->get(url("notifications/{$notification->id}"))
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertRedirect('/');
     }
 
 }

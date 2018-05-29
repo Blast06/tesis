@@ -32,7 +32,7 @@ Vue.component("avatar-form", require("./components/user/AvatarForm"));
 Vue.component("website-create", require("./components/website/CreateForm"));
 Vue.component("website-update", require("./components/website/UpdateForm"));
 Vue.component("subscribe-button", require("./components/website/SubscribeButton"));
-Vue.component("product-create", require("./components/product/CreateForm"));
+Vue.component("article-create", require("./components/article/CreateForm"));
 
 new Vue({
     el: '#app',

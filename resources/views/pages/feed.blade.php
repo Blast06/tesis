@@ -1,13 +1,18 @@
 @component('component.main')
 
-    <div class="row justify-content-center">
-        <div class="col-md-10">
+    <div class="row">
 
-            @if($websites->count())
+        <div class="d-none d-md-block col-md-3 sidebar">
+            @include('partials.sidenav')
+        </div>
+
+        <div class="col-md-9">
+
+            @if($feeds->count())
 
                 <div class="row">
 
-                    @foreach($websites as $website)
+                    @foreach($feeds as $website)
                         <div class="col-sm-4">
                             <div class="card">
                                 <a href="{{ url("/{$website->username}") }}">
@@ -35,7 +40,8 @@
                 </div>
             @endif
 
-            {{ $websites->links() }}
+            {{ $feeds->links() }}
+
         </div>
     </div>
 

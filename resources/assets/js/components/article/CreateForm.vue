@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)" enctype="multipart/form-data">
 
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">Titulo</label>
@@ -8,7 +8,7 @@
                 <b-form-input :class="[{ 'is-invalid' : errors.has('titulo')  }]"
                               type="text"
                               name="name"
-                              v-model="name"
+                              v-model="form.name"
                               v-validate="'required|min:4|max:40'"
                               data-vv-name="titulo"
                 ></b-form-input>
@@ -37,7 +37,7 @@
                                data-vv-name="categoria"
                                :value="subcategory.id"
                                v-validate="'required'"
-                               v-model="sub_category_id">
+                               v-model="form.sub_category_id">
                         <label class="custom-control-label" :for="subcategory.id">{{ subcategory.name}}</label>
                     </div>
 
@@ -52,18 +52,14 @@
             <label class="col-md-4 col-form-label text-md-right">Imagenes</label>
 
             <b-col md="6">
-                <vue-dropzone ref="imageDropzone"
-                              id="dropzone"
-                              :options="dropzoneOptions"
-                              v-on:vdropzone-file-added="addedEvent"
-                              v-on:vdropzone-sending="sendingEvent"
-                              v-on:vdropzone-success="successEvent"
-                              v-on:vdropzone-error="errorEvent">
-                </vue-dropzone>
+                <input type="file"
+                       name="file"
+                       accept="image/*"
+                       class="form-control"
+                       multiple="true"
+                       @change="onChange">
             </b-col>
         </div>
-
-
 
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">Precio</label>
@@ -78,7 +74,7 @@
                         v-validate="'required|numeric|min_value:100|max_value:900000000'"
                         name="price"
                         data-vv-name="precio"
-                        v-model="price"
+                        v-model="form.price"
                 ></vue-numeric>
 
                 <span v-show="errors.has('precio')" class="invalid-feedback">
@@ -98,7 +94,7 @@
                         v-validate="'numeric|max_value:9999'"
                         name="stock"
                         data-vv-name="cantidad"
-                        v-model="stock"
+                        v-model="form.stock"
                 ></vue-numeric>
 
                 <span v-show="errors.has('cantidad')" class="invalid-feedback">
@@ -118,7 +114,7 @@
                         :options="options"
                         v-validate="'required'"
                         data-vv-name="estatus"
-                        v-model="status">
+                        v-model="form.status">
                 </b-form-select>
 
                 <span v-show="errors.has('estatus')" class="invalid-feedback">
@@ -134,9 +130,9 @@
                 <b-form-textarea :class="[{ 'is-invalid' : errors.has('descripcion')  }]"
                                  rows="4"
                                  name="description"
-                                 v-model="description"
                                  v-validate="'required|min:20'"
-                                 data-vv-name="descripcion">
+                                 data-vv-name="descripcion"
+                                 v-model="form.description">
                 </b-form-textarea>
 
                 <span v-show="errors.has('descripcion')" class="invalid-feedback">
@@ -158,16 +154,12 @@
 
 <script>
     import VueNumeric from 'vue-numeric'
-    import vueDropzone from 'vue2-dropzone'
-    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+    import ImageUpload from '../ImageUpload';
 
     export default {
         name: "prodcut-create",
         props: ['website'],
-        components: {
-            VueNumeric,
-            vueDropzone,
-        },
+        components: { VueNumeric, ImageUpload },
         data() {
             return {
                 categories: {},
@@ -177,26 +169,16 @@
                     { value: 'DISPONIBLE', text: 'Disponible' },
                     { value: 'PRIVADO', text: 'Privado' }
                 ],
-                dropzoneOptions: {
-                    url: `/client/${this.website.username}/articles`,
-                    thumbnailWidth: 150,
-                    maxFilesize: 5,
-                    maxFiles: 10,
-                    autoProcessQueue: false,
-                    uploadMultiple: true,
-                    parallelUploads: 100,
-                    addRemoveLinks: true,
-                    dictDefaultMessage: "<i class=\"fas fa-cloud-upload-alt\"></i> CARGAR IMAGEN",
-                    headers: {'X-CSRF-TOKEN': window.axios.defaults.headers.common['X-CSRF-TOKEN']}
-                },
-                name: '',
-                price: '',
-                sub_category_id: '',
-                description: '',
-                stock: '',
-                status: '',
                 loading: false,
-                hasIamge: false,
+                form: new Form({
+                    name: '',
+                    sub_category_id: '',
+                    file: '',
+                    price: '',
+                    stock: '',
+                    status: '',
+                    description: '',
+                }),
             }
         },
         created() {
@@ -208,59 +190,19 @@
             onSubmit() {
                 this.$validator.validateAll().then((valid) => {
                     if (valid) {
-                        if (this.hasIamge) {
-                            this.loading = true;
-                            this.$refs.imageDropzone.processQueue();
-                        }else {
-                            toastr.error('Debes subir al menos una imagen.');
-                        }
+                        this.loading = true;
+                        this.form.post(`/client/${this.website.username}/articles`)
+                            .then(() => {
+                                toastr.success("¡Creado correctamnet.!");
+                                this.$validator.reset();
+                                setTimeout(() => {
+                                    this.GoToArticles();
+                                }, 2000);
+                            });
                     }
                 });
             },
-            addedEvent(file) {
-                this.hasIamge = true;
-            },
-            sendingEvent(file, xhr, formData) {
-                formData.append("name", this.name);
-                formData.append("price", this.price);
-                formData.append("sub_category_id", this.sub_category_id);
-                formData.append("description", this.description);
-                formData.append("status", this.status);
-                if (this.stock > 0) {
-                    formData.append("stock", this.stock);
-                }
-            },
-            successEvent(file, response) {
-                toastr.success("¡Creado correctamnet.!");
-                this.clearForm();
-                setTimeout(() => {
-                    this.GoToProduct();
-                }, 2000);
-            },
-            errorEvent(file, message, xhr) {
-                toastr.error('Ha ocurrido un error');
-                this.$refs.imageDropzone.removeAllFiles();
-
-                if('undefined' === typeof xhr) {
-                    console.log(message);
-                }else {
-                    this.loading = false;
-                    console.log(xhr.response);
-                }
-            },
-            clearForm() {
-                this.$validator.reset();
-                this.$refs.imageDropzone.removeAllFiles();
-                this.name = '';
-                this.price = '';
-                this.sub_category_id = '';
-                this.description = '';
-                this.stock = '',
-                this.status = '',
-                this.loading = false;
-                this.hasIamge = false;
-            },
-            GoToProduct() {
+            GoToArticles() {
                 swal({
                     title: "Seras redireccionado",
                     text: "Si quieres seguir aquí \"creando productos\", ¡Precione ok!",
@@ -272,17 +214,15 @@
                     }
                 });
             },
+            onChange(e) {
+                if (! e.target.files.length) return;
+                let files = [];
+                for (let index = 0; index < e.target.files.length; index++) {
+                    files.push(e.target.files[index]);
+                }
+                this.form.file = files;
+            },
         },
 
     }
 </script>
-
-<style>
-    [data-toggle="collapse"] .fa:before {
-        content: "\f139";
-    }
-
-    [data-toggle="collapse"].collapsed .fa:before {
-        content: "\f13a";
-    }
-</style>

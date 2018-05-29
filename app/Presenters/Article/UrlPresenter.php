@@ -16,7 +16,7 @@ class UrlPresenter
      */
     private $article;
 
-    public function __construct(Website $website, Article $article)
+    public function __construct(Website $website = null, Article $article)
     {
         $this->website = $website;
         $this->article = $article;
@@ -50,5 +50,10 @@ class UrlPresenter
     public function update()
     {
         return route('articles.update', $this->website, $this->article);
+    }
+
+    public function article()
+    {
+        return route('article.show.public', $this->article->slug);
     }
 }

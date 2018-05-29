@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 class PleaseConfirmYourEmailTest extends TestCase
 {
     /** @test */
-    public function it_builds_a_mail_message()
+    function it_builds_a_mail_message()
     {
         $user = new User([
             'token' => User::generateToken(),

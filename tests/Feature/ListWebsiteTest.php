@@ -49,7 +49,7 @@ class ListWebsiteTest extends TestCase
         $website = $this->create(Website::class, ['user_id' => $user->id]);
 
         $this->actingAs($user)->get("/{$website->username}")
-            ->assertViewIs('client.website.public')
+            ->assertViewIs('pages.website_client')
             ->assertSee($website->name);
     }
 

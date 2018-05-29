@@ -46,14 +46,20 @@ Route::get('search', 'HomeController@search');
 /*
  * Public Website Route
  */
-Route::get('websites', 'PublicWebsiteController@index')->name('websites.index');
-Route::get('websites/create', 'PublicWebsiteController@create')->name('websites.create');
-Route::post('websites', 'PublicWebsiteController@store')->name('websites.store');
-Route::get('{website}', 'PublicWebsiteController@show')->name('websites.show')->fallback();
-Route::post('{website}/unsubscribe', 'PublicWebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
-Route::post('{website}/subscribe', 'PublicWebsiteController@subscribe')->name('websites.subscribe')->fallback();
+Route::get('websites', 'Client\WebsiteController@index')->name('websites.index');
+Route::post('websites', 'Client\WebsiteController@store')->name('websites.store');
+Route::get('websites/feed', 'Client\WebsiteController@feed')->name('websites.feed');
+Route::get('websites/create', 'Client\WebsiteController@create')->name('websites.create');
+Route::get('{website}', 'Client\WebsiteController@show')->name('websites.show')->fallback();
+Route::post('{website}/unsubscribe', 'Client\WebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
+Route::post('{website}/subscribe', 'Client\WebsiteController@subscribe')->name('websites.subscribe')->fallback();
+
+/*
+ * Public Articles Route
+ */
+Route::get('articles/{slug}', 'Client\ArticleController@showPublicArticle')->name('article.show.public');
 
 /*
  * Recursos API Web
  */
-Route::get('web/api/categories', 'ApiCategoryController@categories')->middleware('auth');
+Route::get('web/api/categories', 'CategoryController@categories')->middleware('auth');

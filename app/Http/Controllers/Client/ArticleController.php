@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Website;
+use App\{Website, Article};
 use App\Http\Controllers\Controller;
-use App\DataTables\ClientArticleDataTable;
 use App\Http\Requests\CreateArticleRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,15 +12,15 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \App\DataTables\ClientArticleDataTable $dataTable
      * @param \App\Website $website
      * @return \Illuminate\Http\Response
      */
-    public function index(ClientArticleDataTable $dataTable, Website $website)
+    public function index(Website $website)
     {
-        $header = $dataTable->getTableName($website);
+        $header = 'Todos los articulos de '. $website->name;
         $breadcrumb_name = 'article';
-        return $dataTable->render('datatables.index', compact('header', 'breadcrumb_name', 'website'));
+        $articles = Article::category()->ownsWebsite(request()->website)->paginate();
+        return view('client.article.index', compact('header', 'breadcrumb_name', 'website', 'articles'));
     }
 
     /**
@@ -90,5 +89,11 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showPublicArticle($slug)
+    {
+        $article = Article::where('slug', $slug)->firstOrFail();
+        return view('pages.article', compact('article'));
     }
 }

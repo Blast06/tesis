@@ -13,7 +13,7 @@
                         </div>
                         <div class="col-lg-6">
                             <h3 class="mt-5">{{ $website->name }}</h3>
-                            <p>1.284.696 suscriptores</p>
+                            <p>{{ $website->subscribedUsers()->count() }} suscriptores</p>
                         </div>
                     </div>
                 </div>
@@ -37,26 +37,24 @@
 
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
+                    <a class="nav-link active" href="#">Informacion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">Preguntas Frecuentes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link" href="#">Contacto</a>
                 </li>
             </ul>
 
-            @component('component.card')
-                @slot('header','Header.....')
 
-                #asdsadad asd dasdsadsa sd asdsa asdasdsdsdasdsdsddsadsadsdasdasdsdasdasdsd
-                sadasdasdasdadsdsdasdsdsadasdsadsdasd sdsa dsad sadas dsfjjjrejflkjfljdfldjsfjdfjdfjl
-                sd;fkdfl;d;lfkdfkl;dskf;dkf; dflkj;ljtlj;lljkl.
-            @endcomponent
+            @if($website->articles->count())
+                @each('partials.article', $website->articles, 'article')
+            @else
+                <div class="alert alert-info" role="alert">
+                    Parece que {{ $website->name }} no tienen ninguna publicación.
+                </div>
+            @endif
         </div>
     </div>
 @endcomponent

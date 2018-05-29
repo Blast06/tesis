@@ -16,9 +16,7 @@
         "laravel/tinker": "^1.0",
         "pusher/pusher-php-server": "~3.0",
         "spatie/laravel-medialibrary": "^7.0.0",
-        "spatie/laravel-sluggable": "^2.1",
-        "yajra/laravel-datatables-buttons": "^3.0",
-        "yajra/laravel-datatables-oracle": "~8.0"
+        "spatie/laravel-sluggable": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
