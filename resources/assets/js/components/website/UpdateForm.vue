@@ -13,11 +13,12 @@
                            type="text"
                            name="name"
                            v-model="form.name"
-                           v-validate="'required|alpha_spaces|min:4|max:40'"
+                           v-validate="'required|min:4|max:40'"
                            data-vv-name="sitio"/>
 
-                    <span v-show="errors.has('sitio')" class="invalid-feedback"><strong v-text="errors.first('sitio')"></strong></span>
-                    <span v-show="form.errors.has('name')" class="invalid-feedback"><strong v-text="form.errors.first('name')"></strong></span>
+                    <span v-show="errors.has('sitio') || form.errors.has('name')" class="invalid-feedback">
+                        <strong v-text="errors.first('sitio') || form.errors.first('name')"></strong>
+                    </span>
                 </div>
             </div>
 

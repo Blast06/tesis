@@ -67,7 +67,7 @@ class NewArticleNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'icon' => '<i class="fas fa-newspaper"></i>',
+            'icon' => 'fas fa-newspaper',
             'subject' => 'Nuevo articulo',
             'body' => "{$this->article->website->name},  Ha a añadido un nuevo articulo.",
             'url' => $this->article->url->article,

@@ -30,14 +30,33 @@ export default class Form {
     }
 
     /**
-     * Reset the form fields.
+     * Fetch all relevant data for the form.
      */
-    reset() {
-        /*for (let field in this.originalData) {
-            this[field] = '';
-        }*/
+    formData() {
+        let data = new FormData();
+
+        for (let property in this.originalData) {
+            data.append(`${property}`,  this[property]);
+        }
+
+        return data;
+    }
+
+    /**
+     * Reset the form errors.
+     */
+    resetErrors() {
 
         this.errors.clear();
+    }
+
+    /**
+     * Reset the form input.
+     */
+    resetInput() {
+        for (let field in this.originalData) {
+            this[field] = '';
+        }
     }
 
     /**
@@ -102,12 +121,34 @@ export default class Form {
     }
 
     /**
+     * Submit the form.
+     *
+     * @param {string} requestType
+     * @param {string} url
+     */
+    submitFomData(requestType, url) {
+        return new Promise((resolve, reject) => {
+            axios[requestType](url, this.formData())
+                .then(response => {
+                    this.onSuccess(response.data);
+
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    this.onFail(error.response.data);
+
+                    reject(error.response.data);
+                });
+        });
+    }
+
+    /**
      * Handle a successful form submission.
      *
      * @param {object} data
      */
     onSuccess(data) {
-        this.reset();
+        this.resetErrors();
     }
 
     /**

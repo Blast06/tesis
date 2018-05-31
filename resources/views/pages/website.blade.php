@@ -9,7 +9,7 @@
 
                     @foreach($websites as $website)
                         <div class="col-sm-4">
-                            <div class="card">
+                            <div class="card mb-4">
                                 <a href="{{ url("/{$website->username}") }}">
                                     <img class="card-img-top" src="{{ $website->image_path }}" alt="{{$website->name}}">
                                 </a>

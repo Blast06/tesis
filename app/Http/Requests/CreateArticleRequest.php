@@ -32,7 +32,7 @@ class CreateArticleRequest extends FormRequest
             'sub_category_id' => 'required|numeric',
             'status' => 'required|in:' .Article::STATUS_AVAILABLE. ',' .Article::STATUS_NOT_AVAILABLE. ',' .Article::STATUS_PRIVATE,
             'description' => 'required|min:20',
-            'file.*' => 'nullable|image:jpeg,png,gif,svg|max:5120'
+            'file' => 'nullable|image:jpeg,png,gif,svg|max:5120'
         ];
     }
 
@@ -69,9 +69,7 @@ class CreateArticleRequest extends FormRequest
     private function uploadImage(Article $article)
     {
         if($this->hasFile('file')) {
-            foreach (request()->file as $file) {
-                $article->addMedia($file)->toMediaCollection('articles');
-            }
+            $article->addMedia(request()->file)->toMediaCollection('articles');
         }
     }
 

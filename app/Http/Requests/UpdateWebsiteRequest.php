@@ -33,7 +33,6 @@ class UpdateWebsiteRequest extends FormRequest
     {
         return [
             'name' => 'sitio',
-            'username' => 'usuario'
         ];
     }
 

@@ -13,8 +13,9 @@
                        v-validate="'required|alpha_spaces|min:4|max:40'"
                        data-vv-name="sitio"/>
 
-                <span v-show="errors.has('sitio')" class="invalid-feedback"><strong v-text="errors.first('sitio')"></strong></span>
-                <span v-show="form.errors.has('name')" class="invalid-feedback"><strong v-text="form.errors.first('name')"></strong></span>
+                <span v-show="errors.has('sitio') || form.errors.has('name')" class="invalid-feedback">
+                    <strong v-text="errors.first('sitio') || form.errors.first('name')"></strong>
+                </span>
             </div>
         </div>
 
@@ -30,8 +31,9 @@
                        v-validate="'required|alpha_dash|min:4|max:40'"
                        data-vv-name="usuario"/>
 
-                <span v-show="errors.has('usuario')" class="invalid-feedback"><strong v-text="errors.first('usuario')"></strong></span>
-                <span v-show="form.errors.has('username')" class="invalid-feedback"><strong v-text="form.errors.first('username')"></strong></span>
+                <span v-show="errors.has('usuario') || form.errors.has('username')" class="invalid-feedback">
+                    <strong v-text="errors.first('usuario') || form.errors.first('username')"></strong>
+                </span>
             </div>
         </div>
 

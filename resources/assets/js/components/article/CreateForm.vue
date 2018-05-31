@@ -5,7 +5,7 @@
             <label class="col-md-4 col-form-label text-md-right">Titulo</label>
 
             <b-col md="6">
-                <b-form-input :class="[{ 'is-invalid' : errors.has('titulo')  }]"
+                <b-form-input :class="[{ 'is-invalid' : errors.has('titulo')  }, { 'is-invalid' : form.errors.has('name') }]"
                               type="text"
                               name="name"
                               v-model="form.name"
@@ -13,8 +13,8 @@
                               data-vv-name="titulo"
                 ></b-form-input>
 
-                <span v-show="errors.has('titulo')" class="invalid-feedback">
-                    <b v-text="errors.first('titulo')"></b>
+                <span v-show="errors.has('titulo') || form.errors.has('name')" class="invalid-feedback">
+                    <b v-text="errors.first('titulo') || form.errors.first('name')"></b>
                 </span>
             </b-col>
         </div>
@@ -31,7 +31,7 @@
                     <div class="custom-control custom-radio pl-4" v-for="subcategory in category.sub_category">
                         <input type="radio"
                                class="custom-control-input"
-                               :class="[{ 'is-invalid' : errors.has('categoria')  }]"
+                               :class="[{ 'is-invalid' : errors.has('categoria')  }, { 'is-invalid' : form.errors.has('sub_category_id') }]"
                                :id="subcategory.id"
                                name="sub_category_id"
                                data-vv-name="categoria"
@@ -42,8 +42,8 @@
                     </div>
 
                 </div>
-                <small v-show="errors.has('categoria')" style="color: #dc3545">
-                    <b v-text="errors.first('categoria')"></b>
+                <small v-show="errors.has('categoria') || form.errors.has('sub_category_id')" style="color: #dc3545">
+                    <b v-text="errors.first('categoria') || form.errors.first('sub_category_id')"></b>
                 </small>
             </b-col>
         </div>
@@ -54,10 +54,15 @@
             <b-col md="6">
                 <input type="file"
                        name="file"
-                       accept="image/*"
                        class="form-control"
+                       ref="files"
+                       accept="image/*"
                        multiple="true"
                        @change="onChange">
+
+                <span v-show="form.errors.has('file')" class="invalid-feedback">
+                    <b v-text="form.errors.first('file')"></b>
+                </span>
             </b-col>
         </div>
 
@@ -67,7 +72,7 @@
             <b-col md="6">
                 <vue-numeric
                         class="form-control"
-                        :class="[{ 'is-invalid' : errors.has('precio')  }]"
+                        :class="[{ 'is-invalid' : errors.has('precio')  }, { 'is-invalid' : form.errors.has('price') }]"
                         currency="RD $"
                         separator=","
                         v-bind:precision="2"
@@ -77,8 +82,8 @@
                         v-model="form.price"
                 ></vue-numeric>
 
-                <span v-show="errors.has('precio')" class="invalid-feedback">
-                    <b v-text="errors.first('precio')"></b>
+                <span v-show="errors.has('precio') || form.errors.has('price')" class="invalid-feedback">
+                    <b v-text="errors.first('precio') || form.errors.first('price')"></b>
                 </span>
             </b-col>
         </div>
@@ -89,16 +94,17 @@
             <b-col md="6">
                 <vue-numeric
                         class="form-control"
-                        :class="[{ 'is-invalid' : errors.has('cantidad')  }]"
+                        :class="[{ 'is-invalid' : errors.has('cantidad')  }, { 'is-invalid' : form.errors.has('stock') }]"
+                        :disabled="disableStock"
                         separator=","
-                        v-validate="'numeric|max_value:9999'"
                         name="stock"
+                        v-validate="'numeric|max_value:9999'"
                         data-vv-name="cantidad"
                         v-model="form.stock"
                 ></vue-numeric>
 
-                <span v-show="errors.has('cantidad')" class="invalid-feedback">
-                    <b v-text="errors.first('cantidad')"></b>
+                <span v-show="errors.has('cantidad') || form.errors.has('stock')" class="invalid-feedback">
+                    <b v-text="errors.first('cantidad') || form.errors.first('stock')"></b>
                 </span>
             </b-col>
         </div>
@@ -109,7 +115,7 @@
             <b-col md="6">
                 <b-form-select
                         class="mb-3"
-                        :class="[{ 'is-invalid' : errors.has('estatus')  }]"
+                        :class="[{ 'is-invalid' : errors.has('estatus')  }, { 'is-invalid' : form.errors.has('stock') }]"
                         name="status"
                         :options="options"
                         v-validate="'required'"
@@ -117,8 +123,8 @@
                         v-model="form.status">
                 </b-form-select>
 
-                <span v-show="errors.has('estatus')" class="invalid-feedback">
-                    <b v-text="errors.first('estatus')"></b>
+                <span v-show="errors.has('estatus') || form.errors.has('status')" class="invalid-feedback">
+                    <b v-text="errors.first('estatus') || form.errors.first('status')"></b>
                 </span>
             </b-col>
         </div>
@@ -127,7 +133,7 @@
             <label class="col-md-4 col-form-label text-md-right">Descripcion</label>
 
             <b-col md="6">
-                <b-form-textarea :class="[{ 'is-invalid' : errors.has('descripcion')  }]"
+                <b-form-textarea :class="[{ 'is-invalid' : errors.has('descripcion')  }, { 'is-invalid' : form.errors.has('description') }]"
                                  rows="4"
                                  name="description"
                                  v-validate="'required|min:20'"
@@ -135,8 +141,8 @@
                                  v-model="form.description">
                 </b-form-textarea>
 
-                <span v-show="errors.has('descripcion')" class="invalid-feedback">
-                    <b v-text="errors.first('descripcion')"></b>
+                <span v-show="errors.has('descripcion') || form.errors.has('description')" class="invalid-feedback">
+                    <b v-text="errors.first('descripcion') || form.errors.first('description')"></b>
                 </span>
             </b-col>
         </div>
@@ -163,22 +169,22 @@
         data() {
             return {
                 categories: {},
-                options: [
-                    { value: null, text: '-- Por favor seleccione una opción --', disabled: true },
-                    { value: 'NO_DISPONIBLE', text: 'No disponible' },
-                    { value: 'DISPONIBLE', text: 'Disponible' },
-                    { value: 'PRIVADO', text: 'Privado' }
-                ],
                 loading: false,
+                disableStock: false,
                 form: new Form({
                     name: '',
                     sub_category_id: '',
-                    file: '',
                     price: '',
                     stock: '',
                     status: '',
                     description: '',
+                    file: '',
                 }),
+                options: [
+                    { value: 'NO_DISPONIBLE', text: 'No disponible' },
+                    { value: 'DISPONIBLE', text: 'Disponible' },
+                    { value: 'PRIVADO', text: 'Privado' }
+                ],
             }
         },
         created() {
@@ -191,16 +197,21 @@
                 this.$validator.validateAll().then((valid) => {
                     if (valid) {
                         this.loading = true;
-                        this.form.post(`/client/${this.website.username}/articles`)
-                            .then(() => {
-                                toastr.success("¡Creado correctamnet.!");
-                                this.$validator.reset();
-                                setTimeout(() => {
-                                    this.GoToArticles();
-                                }, 2000);
-                            });
+                        this.sendForm();
                     }
                 });
+            },
+            sendForm() {
+                this.form.submitFomData('post', `/client/${this.website.username}/articles`)
+                    .then(() => {
+                        toastr.success("¡Creado correctamnet.!");
+                        this.loading = false;
+                        this.$validator.reset();
+                        this.form.resetInput();
+                        setTimeout(() => {
+                            this.GoToArticles();
+                            }, 2000);
+                    });
             },
             GoToArticles() {
                 swal({
@@ -214,14 +225,11 @@
                     }
                 });
             },
-            onChange(e) {
-                if (! e.target.files.length) return;
-                let files = [];
-                for (let index = 0; index < e.target.files.length; index++) {
-                    files.push(e.target.files[index]);
-                }
-                this.form.file = files;
-            },
+            onChange() {
+                let uploadedFiles = this.$refs.files.files;
+
+                this.form.file = uploadedFiles[0];
+            }
         },
 
     }

@@ -29,7 +29,6 @@
             persist(image) {
                 let data = new FormData();
                 data.append('image', image);
-                console.log(data);
                 axios.post(`/client/${this.username}/image`, data)
                     .then(() => toastr.success('¡Cambió la imagen exitosamente!'));
             }

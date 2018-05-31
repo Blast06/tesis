@@ -16,9 +16,9 @@ class MainSidebarComposer
     {
         $website = request()->website ?? null;
 
-        $websites = auth()->user()->websites()->take(10)->get();
+        $websites = auth()->check() ? auth()->user()->websites()->take(10)->get() : [];
 
-        $subscriptions = auth()->user()->subscribedWebsite()->take(10)->get();
+        $subscriptions = auth()->check() ? auth()->user()->subscribedWebsite()->take(10)->get() : [];
 
         $view->with(compact('website', 'websites', 'subscriptions'));
     }

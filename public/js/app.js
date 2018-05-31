@@ -10658,6 +10658,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10669,17 +10675,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             categories: {},
-            options: [{ value: null, text: '-- Por favor seleccione una opción --', disabled: true }, { value: 'NO_DISPONIBLE', text: 'No disponible' }, { value: 'DISPONIBLE', text: 'Disponible' }, { value: 'PRIVADO', text: 'Privado' }],
             loading: false,
+            disableStock: false,
             form: new Form({
                 name: '',
                 sub_category_id: '',
-                file: '',
                 price: '',
                 stock: '',
                 status: '',
-                description: ''
-            })
+                description: '',
+                file: ''
+            }),
+            options: [{ value: 'NO_DISPONIBLE', text: 'No disponible' }, { value: 'DISPONIBLE', text: 'Disponible' }, { value: 'PRIVADO', text: 'Privado' }]
         };
     },
     created: function created() {
@@ -10697,18 +10704,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$validator.validateAll().then(function (valid) {
                 if (valid) {
                     _this2.loading = true;
-                    _this2.form.post('/client/' + _this2.website.username + '/articles').then(function () {
-                        toastr.success("¡Creado correctamnet.!");
-                        _this2.$validator.reset();
-                        setTimeout(function () {
-                            _this2.GoToArticles();
-                        }, 2000);
-                    });
+                    _this2.sendForm();
                 }
             });
         },
-        GoToArticles: function GoToArticles() {
+        sendForm: function sendForm() {
             var _this3 = this;
+
+            this.form.submitFomData('post', '/client/' + this.website.username + '/articles').then(function () {
+                toastr.success("¡Creado correctamnet.!");
+                _this3.loading = false;
+                _this3.$validator.reset();
+                _this3.form.resetInput();
+                setTimeout(function () {
+                    _this3.GoToArticles();
+                }, 2000);
+            });
+        },
+        GoToArticles: function GoToArticles() {
+            var _this4 = this;
 
             swal({
                 title: "Seras redireccionado",
@@ -10717,17 +10731,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 dangerMode: true
             }).then(function (redirect) {
                 if (!redirect) {
-                    window.location.href = '/client/' + _this3.website.username + '/articles';
+                    window.location.href = '/client/' + _this4.website.username + '/articles';
                 }
             });
         },
-        onChange: function onChange(e) {
-            if (!e.target.files.length) return;
-            var files = [];
-            for (var index = 0; index < e.target.files.length; index++) {
-                files.push(e.target.files[index]);
-            }
-            this.form.file = files;
+        onChange: function onChange() {
+            var uploadedFiles = this.$refs.files.files;
+
+            this.form.file = uploadedFiles[0];
         }
     }
 
@@ -10776,6 +10787,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -10965,6 +10978,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -11038,7 +11052,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         persist: function persist(image) {
             var data = new FormData();
             data.append('image', image);
-            console.log(data);
             axios.post('/client/' + this.username + '/image', data).then(function () {
                 return toastr.success('¡Cambió la imagen exitosamente!');
             });
@@ -88677,8 +88690,8 @@ var render = function() {
                   {
                     name: "validate",
                     rawName: "v-validate",
-                    value: "required|alpha_spaces|min:4|max:40",
-                    expression: "'required|alpha_spaces|min:4|max:40'"
+                    value: "required|min:4|max:40",
+                    expression: "'required|min:4|max:40'"
                   }
                 ],
                 staticClass: "form-control",
@@ -88705,28 +88718,10 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.errors.has("sitio"),
-                      expression: "errors.has('sitio')"
-                    }
-                  ],
-                  staticClass: "invalid-feedback"
-                },
-                [
-                  _c("strong", {
-                    domProps: { textContent: _vm._s(_vm.errors.first("sitio")) }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.form.errors.has("name"),
-                      expression: "form.errors.has('name')"
+                      value:
+                        _vm.errors.has("sitio") || _vm.form.errors.has("name"),
+                      expression:
+                        "errors.has('sitio') || form.errors.has('name')"
                     }
                   ],
                   staticClass: "invalid-feedback"
@@ -88734,7 +88729,10 @@ var render = function() {
                 [
                   _c("strong", {
                     domProps: {
-                      textContent: _vm._s(_vm.form.errors.first("name"))
+                      textContent: _vm._s(
+                        _vm.errors.first("sitio") ||
+                          _vm.form.errors.first("name")
+                      )
                     }
                   })
                 ]
@@ -88862,35 +88860,19 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.errors.has("sitio"),
-                  expression: "errors.has('sitio')"
+                  value: _vm.errors.has("sitio") || _vm.form.errors.has("name"),
+                  expression: "errors.has('sitio') || form.errors.has('name')"
                 }
               ],
               staticClass: "invalid-feedback"
             },
             [
               _c("strong", {
-                domProps: { textContent: _vm._s(_vm.errors.first("sitio")) }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.form.errors.has("name"),
-                  expression: "form.errors.has('name')"
+                domProps: {
+                  textContent: _vm._s(
+                    _vm.errors.first("sitio") || _vm.form.errors.first("name")
+                  )
                 }
-              ],
-              staticClass: "invalid-feedback"
-            },
-            [
-              _c("strong", {
-                domProps: { textContent: _vm._s(_vm.form.errors.first("name")) }
               })
             ]
           )
@@ -88946,28 +88928,11 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.errors.has("usuario"),
-                  expression: "errors.has('usuario')"
-                }
-              ],
-              staticClass: "invalid-feedback"
-            },
-            [
-              _c("strong", {
-                domProps: { textContent: _vm._s(_vm.errors.first("usuario")) }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.form.errors.has("username"),
-                  expression: "form.errors.has('username')"
+                  value:
+                    _vm.errors.has("usuario") ||
+                    _vm.form.errors.has("username"),
+                  expression:
+                    "errors.has('usuario') || form.errors.has('username')"
                 }
               ],
               staticClass: "invalid-feedback"
@@ -88975,7 +88940,10 @@ var render = function() {
             [
               _c("strong", {
                 domProps: {
-                  textContent: _vm._s(_vm.form.errors.first("username"))
+                  textContent: _vm._s(
+                    _vm.errors.first("usuario") ||
+                      _vm.form.errors.first("username")
+                  )
                 }
               })
             ]
@@ -89098,7 +89066,10 @@ var render = function() {
                     expression: "'required|min:4|max:40'"
                   }
                 ],
-                class: [{ "is-invalid": _vm.errors.has("titulo") }],
+                class: [
+                  { "is-invalid": _vm.errors.has("titulo") },
+                  { "is-invalid": _vm.form.errors.has("name") }
+                ],
                 attrs: { type: "text", name: "name", "data-vv-name": "titulo" },
                 model: {
                   value: _vm.form.name,
@@ -89116,8 +89087,10 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.errors.has("titulo"),
-                      expression: "errors.has('titulo')"
+                      value:
+                        _vm.errors.has("titulo") || _vm.form.errors.has("name"),
+                      expression:
+                        "errors.has('titulo') || form.errors.has('name')"
                     }
                   ],
                   staticClass: "invalid-feedback"
@@ -89125,7 +89098,10 @@ var render = function() {
                 [
                   _c("b", {
                     domProps: {
-                      textContent: _vm._s(_vm.errors.first("titulo"))
+                      textContent: _vm._s(
+                        _vm.errors.first("titulo") ||
+                          _vm.form.errors.first("name")
+                      )
                     }
                   })
                 ]
@@ -89190,7 +89166,12 @@ var render = function() {
                             ],
                             staticClass: "custom-control-input",
                             class: [
-                              { "is-invalid": _vm.errors.has("categoria") }
+                              { "is-invalid": _vm.errors.has("categoria") },
+                              {
+                                "is-invalid": _vm.form.errors.has(
+                                  "sub_category_id"
+                                )
+                              }
                             ],
                             attrs: {
                               type: "radio",
@@ -89239,8 +89220,11 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.errors.has("categoria"),
-                      expression: "errors.has('categoria')"
+                      value:
+                        _vm.errors.has("categoria") ||
+                        _vm.form.errors.has("sub_category_id"),
+                      expression:
+                        "errors.has('categoria') || form.errors.has('sub_category_id')"
                     }
                   ],
                   staticStyle: { color: "#dc3545" }
@@ -89248,7 +89232,10 @@ var render = function() {
                 [
                   _c("b", {
                     domProps: {
-                      textContent: _vm._s(_vm.errors.first("categoria"))
+                      textContent: _vm._s(
+                        _vm.errors.first("categoria") ||
+                          _vm.form.errors.first("sub_category_id")
+                      )
                     }
                   })
                 ]
@@ -89272,6 +89259,7 @@ var render = function() {
           _vm._v(" "),
           _c("b-col", { attrs: { md: "6" } }, [
             _c("input", {
+              ref: "files",
               staticClass: "form-control",
               attrs: {
                 type: "file",
@@ -89280,7 +89268,29 @@ var render = function() {
                 multiple: "true"
               },
               on: { change: _vm.onChange }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.form.errors.has("file"),
+                    expression: "form.errors.has('file')"
+                  }
+                ],
+                staticClass: "invalid-feedback"
+              },
+              [
+                _c("b", {
+                  domProps: {
+                    textContent: _vm._s(_vm.form.errors.first("file"))
+                  }
+                })
+              ]
+            )
           ])
         ],
         1
@@ -89311,7 +89321,10 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                class: [{ "is-invalid": _vm.errors.has("precio") }],
+                class: [
+                  { "is-invalid": _vm.errors.has("precio") },
+                  { "is-invalid": _vm.form.errors.has("price") }
+                ],
                 attrs: {
                   currency: "RD $",
                   separator: ",",
@@ -89335,8 +89348,11 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.errors.has("precio"),
-                      expression: "errors.has('precio')"
+                      value:
+                        _vm.errors.has("precio") ||
+                        _vm.form.errors.has("price"),
+                      expression:
+                        "errors.has('precio') || form.errors.has('price')"
                     }
                   ],
                   staticClass: "invalid-feedback"
@@ -89344,7 +89360,10 @@ var render = function() {
                 [
                   _c("b", {
                     domProps: {
-                      textContent: _vm._s(_vm.errors.first("precio"))
+                      textContent: _vm._s(
+                        _vm.errors.first("precio") ||
+                          _vm.form.errors.first("price")
+                      )
                     }
                   })
                 ]
@@ -89380,8 +89399,12 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                class: [{ "is-invalid": _vm.errors.has("cantidad") }],
+                class: [
+                  { "is-invalid": _vm.errors.has("cantidad") },
+                  { "is-invalid": _vm.form.errors.has("stock") }
+                ],
                 attrs: {
+                  disabled: _vm.disableStock,
                   separator: ",",
                   name: "stock",
                   "data-vv-name": "cantidad"
@@ -89402,8 +89425,11 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.errors.has("cantidad"),
-                      expression: "errors.has('cantidad')"
+                      value:
+                        _vm.errors.has("cantidad") ||
+                        _vm.form.errors.has("stock"),
+                      expression:
+                        "errors.has('cantidad') || form.errors.has('stock')"
                     }
                   ],
                   staticClass: "invalid-feedback"
@@ -89411,7 +89437,10 @@ var render = function() {
                 [
                   _c("b", {
                     domProps: {
-                      textContent: _vm._s(_vm.errors.first("cantidad"))
+                      textContent: _vm._s(
+                        _vm.errors.first("cantidad") ||
+                          _vm.form.errors.first("stock")
+                      )
                     }
                   })
                 ]
@@ -89447,7 +89476,10 @@ var render = function() {
                   }
                 ],
                 staticClass: "mb-3",
-                class: [{ "is-invalid": _vm.errors.has("estatus") }],
+                class: [
+                  { "is-invalid": _vm.errors.has("estatus") },
+                  { "is-invalid": _vm.form.errors.has("stock") }
+                ],
                 attrs: {
                   name: "status",
                   options: _vm.options,
@@ -89469,8 +89501,11 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.errors.has("estatus"),
-                      expression: "errors.has('estatus')"
+                      value:
+                        _vm.errors.has("estatus") ||
+                        _vm.form.errors.has("status"),
+                      expression:
+                        "errors.has('estatus') || form.errors.has('status')"
                     }
                   ],
                   staticClass: "invalid-feedback"
@@ -89478,7 +89513,10 @@ var render = function() {
                 [
                   _c("b", {
                     domProps: {
-                      textContent: _vm._s(_vm.errors.first("estatus"))
+                      textContent: _vm._s(
+                        _vm.errors.first("estatus") ||
+                          _vm.form.errors.first("status")
+                      )
                     }
                   })
                 ]
@@ -89513,7 +89551,10 @@ var render = function() {
                     expression: "'required|min:20'"
                   }
                 ],
-                class: [{ "is-invalid": _vm.errors.has("descripcion") }],
+                class: [
+                  { "is-invalid": _vm.errors.has("descripcion") },
+                  { "is-invalid": _vm.form.errors.has("description") }
+                ],
                 attrs: {
                   rows: "4",
                   name: "description",
@@ -89535,8 +89576,11 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.errors.has("descripcion"),
-                      expression: "errors.has('descripcion')"
+                      value:
+                        _vm.errors.has("descripcion") ||
+                        _vm.form.errors.has("description"),
+                      expression:
+                        "errors.has('descripcion') || form.errors.has('description')"
                     }
                   ],
                   staticClass: "invalid-feedback"
@@ -89544,7 +89588,10 @@ var render = function() {
                 [
                   _c("b", {
                     domProps: {
-                      textContent: _vm._s(_vm.errors.first("descripcion"))
+                      textContent: _vm._s(
+                        _vm.errors.first("descripcion") ||
+                          _vm.form.errors.first("description")
+                      )
                     }
                   })
                 ]
@@ -102013,17 +102060,42 @@ var Form = function () {
         }
 
         /**
-         * Reset the form fields.
+         * Fetch all relevant data for the form.
          */
 
     }, {
-        key: 'reset',
-        value: function reset() {
-            /*for (let field in this.originalData) {
-                this[field] = '';
-            }*/
+        key: 'formData',
+        value: function formData() {
+            var data = new FormData();
+
+            for (var property in this.originalData) {
+                data.append('' + property, this[property]);
+            }
+
+            return data;
+        }
+
+        /**
+         * Reset the form errors.
+         */
+
+    }, {
+        key: 'resetErrors',
+        value: function resetErrors() {
 
             this.errors.clear();
+        }
+
+        /**
+         * Reset the form input.
+         */
+
+    }, {
+        key: 'resetInput',
+        value: function resetInput() {
+            for (var field in this.originalData) {
+                this[field] = '';
+            }
         }
 
         /**
@@ -102100,6 +102172,31 @@ var Form = function () {
         }
 
         /**
+         * Submit the form.
+         *
+         * @param {string} requestType
+         * @param {string} url
+         */
+
+    }, {
+        key: 'submitFomData',
+        value: function submitFomData(requestType, url) {
+            var _this2 = this;
+
+            return new Promise(function (resolve, reject) {
+                axios[requestType](url, _this2.formData()).then(function (response) {
+                    _this2.onSuccess(response.data);
+
+                    resolve(response.data);
+                }).catch(function (error) {
+                    _this2.onFail(error.response.data);
+
+                    reject(error.response.data);
+                });
+            });
+        }
+
+        /**
          * Handle a successful form submission.
          *
          * @param {object} data
@@ -102108,7 +102205,7 @@ var Form = function () {
     }, {
         key: 'onSuccess',
         value: function onSuccess(data) {
-            this.reset();
+            this.resetErrors();
         }
 
         /**
