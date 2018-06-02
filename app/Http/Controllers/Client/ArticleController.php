@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\{Website, Article};
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateArticleRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\{Http\Requests\UpdateArticleRequest, Website, Article};
 
 class ArticleController extends Controller
 {
@@ -18,8 +18,11 @@ class ArticleController extends Controller
     public function index(Website $website)
     {
         $header = 'Todos los articulos de '. $website->name;
+
         $breadcrumb_name = 'article';
-        $articles = Article::category()->ownsWebsite(request()->website)->paginate();
+
+        $articles = Article::with(['subCategory'])->where('website_id', $website->id)->paginate();
+
         return view('client.article.index', compact('header', 'breadcrumb_name', 'website', 'articles'));
     }
 
@@ -43,57 +46,60 @@ class ArticleController extends Controller
      */
     public function store(CreateArticleRequest $request, Website $website)
     {
-        return $this->responseOne($request->createProduct($website), Response::HTTP_CREATED);
+        return $this->responseOne($request->createArticle($website), Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $article = Article::where('slug', $slug)->firstOrFail();
+        return view('pages.article', compact('article'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param \App\Website $website
+     * @param \App\Article $article
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Website $website, Article $article)
     {
-        //
+        return view('client.article.edit', compact('website', 'article'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateArticleRequest $request
+     * @param \App\Website $website
+     * @param \App\Article $article
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateArticleRequest $request, Website $website, Article $article)
     {
-        //
+        return $this->responseOne($request->updateArticle($article), Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \App\Website $website
+     * @param \App\Article $article
+     * @return \App\Article
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Website $website, Article $article)
     {
-        //
-    }
+        $article->delete();
 
-    public function showPublicArticle($slug)
-    {
-        $article = Article::where('slug', $slug)->firstOrFail();
-        return view('pages.article', compact('article'));
+        if (request()->ajax()) { return $this->responseOne($article, Response::HTTP_OK); }
+
+        return redirect()->route('articles.index', $website);
     }
 }

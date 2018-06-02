@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)" enctype="multipart/form-data">
+    <form @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
 
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">Titulo</label>
@@ -45,24 +45,6 @@
                 <small v-show="errors.has('categoria') || form.errors.has('sub_category_id')" style="color: #dc3545">
                     <b v-text="errors.first('categoria') || form.errors.first('sub_category_id')"></b>
                 </small>
-            </b-col>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-md-4 col-form-label text-md-right">Imagenes</label>
-
-            <b-col md="6">
-                <input type="file"
-                       name="file"
-                       class="form-control"
-                       ref="files"
-                       accept="image/*"
-                       multiple="true"
-                       @change="onChange">
-
-                <span v-show="form.errors.has('file')" class="invalid-feedback">
-                    <b v-text="form.errors.first('file')"></b>
-                </span>
             </b-col>
         </div>
 
@@ -150,7 +132,7 @@
         <div class="form-group row mb-0">
             <div class="col-md-8 offset-md-4">
                 <button type="submit" class="btn btn-primary" :class="loading ? 'loader' : ''">
-                    Crear
+                    Actualizar
                 </button>
             </div>
         </div>
@@ -160,25 +142,23 @@
 
 <script>
     import VueNumeric from 'vue-numeric'
-    import ImageUpload from '../ImageUpload';
 
     export default {
         name: "article-create",
-        props: ['website'],
-        components: { VueNumeric, ImageUpload },
+        props: ['website', 'article'],
+        components: { VueNumeric },
         data() {
             return {
                 categories: {},
                 loading: false,
                 disableStock: false,
                 form: new Form({
-                    name: '',
-                    sub_category_id: '',
-                    price: '',
-                    stock: '',
-                    status: '',
-                    description: '',
-                    file: '',
+                    name: this.article.name,
+                    sub_category_id: this.article.sub_category_id,
+                    price: this.article.price,
+                    stock: this.article.stock,
+                    status: this.article.status,
+                    description: this.article.description,
                 }),
                 options: [
                     { value: 'NO_DISPONIBLE', text: 'No disponible' },
@@ -188,48 +168,22 @@
             }
         },
         created() {
-          axios.get(`/web/api/categories`).then(response => {
-              this.categories = response.data.data;
-          });
+            axios.get(`/web/api/categories`).then(response => {
+                this.categories = response.data.data;
+            });
         },
         methods: {
             onSubmit() {
                 this.$validator.validateAll().then((valid) => {
                     if (valid) {
                         this.loading = true;
-                        this.sendForm();
+                        this.form.put(`/client/${this.website.username}/articles/${this.article.id}`).then(() => {
+                            toastr.success("¡Actualizado correctamnet.!");
+                            this.loading = false;
+                        });
                     }
                 });
             },
-            sendForm() {
-                this.form.submitFomData('post', `/client/${this.website.username}/articles`)
-                    .then(() => {
-                        toastr.success("¡Creado correctamnet.!");
-                        this.loading = false;
-                        this.$validator.reset();
-                        this.form.resetInput();
-                        setTimeout(() => {
-                            this.GoToArticles();
-                            }, 2000);
-                    });
-            },
-            GoToArticles() {
-                swal({
-                    title: "Seras redireccionado",
-                    text: "Si quieres seguir aquí \"creando productos\", ¡Precione ok!",
-                    buttons: true,
-                    dangerMode: true,
-                }).then((redirect) => {
-                    if (!redirect) {
-                        window.location.href= `/client/${this.website.username}/articles`;
-                    }
-                });
-            },
-            onChange() {
-                let uploadedFiles = this.$refs.files.files;
-
-                this.form.file = uploadedFiles[0];
-            }
         },
 
     }

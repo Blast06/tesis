@@ -63,14 +63,14 @@
         <div class="container-fluid p-0">
             <div class="row no-gutters">
 
-                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-215756.jpg');"></div>
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                     <h2>Fully Responsive Design</h2>
                     <p class="lead mb-0">When you use a theme created by Start Bootstrap, you know that the theme will look great on any device, whether it's a phone, tablet, or desktop the page will behave responsively!</p>
                 </div>
             </div>
             <div class="row no-gutters">
-                <div class="col-lg-6 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-27447.jpg');"></div>
+                <div class="col-lg-6 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
                 <div class="col-lg-6 my-auto showcase-text">
                     <h2>Updated For Bootstrap 4</h2>
                     <p class="lead mb-0">Newly improved, and full of great utility classes, Bootstrap 4 is leading the way in mobile responsive web development! All of the themes on Start Bootstrap are now using Bootstrap 4!</p>
@@ -93,21 +93,21 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-604034.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
                         <h5>Thanos</h5>
                         <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-345416.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
                         <h5>Melina S.</h5>
                         <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-564038.jpg" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
                         <h5>Sarah	W.</h5>
                         <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
                     </div>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\{SubCategory, User, Website, Article};
 
-class WebsiteSeeder extends Seeder
+class ArticlesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,7 @@ class WebsiteSeeder extends Seeder
 
         $user = factory(User::class)->create([
             'name' => 'cristian gomez',
-            'email' => 'cristiangomeze@example.com'
+            'email' => 'cristiangomeze@hotmail.com'
         ]);
 
          tap($user->websites()->create([

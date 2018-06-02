@@ -49,7 +49,7 @@ class Article extends Model implements HasMedia
 
     public function getUrlAttribute()
     {
-        return new UrlPresenter(request()->website, $this);
+        return new UrlPresenter($this->website, $this);
     }
 
     /**
@@ -60,18 +60,6 @@ class Article extends Model implements HasMedia
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
-    }
-
-    public function scopeCategory($query)
-    {
-        return $query->with(['subCategory']);
-    }
-
-    public function scopeOwnsWebsite($query, Website $website)
-    {
-        return $query->with(['website' => function ($q) use ($website){
-            $q->where('id', $website->id);
-        }]);
     }
 
     public function website()
@@ -93,7 +81,7 @@ class Article extends Model implements HasMedia
             'price' => $this->status !== Article::STATUS_PRIVATE ? $this->price : null,
             'updated_at' => $this->updated_at->format('l j F Y'),
             'sub_category' => $this->subCategory->name,
-            'slug' => $this->slug
+            'url_path' => $this->url->show
         ];
     }
 }

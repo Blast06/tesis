@@ -22,7 +22,7 @@
                         @if(auth()->check())
                             <subscribe-button
                                     subscribed="{{ auth()->user()->isSubscribedTo($website) }}"
-                                    website="{{ $website->username }}">
+                                    username="{{ $website->username }}">
                             </subscribe-button>
 
                             <br>

@@ -55,7 +55,7 @@ class CreateArticleRequest extends FormRequest
      * @param \App\Website $website
      * @return mixed
      */
-    public function createProduct(Website $website)
+    public function createArticle(Website $website)
     {
         return tap($website->articles()->create($this->validated()), function ($article) {
             $this->uploadImage($article);

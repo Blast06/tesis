@@ -1,7 +1,7 @@
 <div class="card shadow-sm mb-5">
    <div class="card-body">
        <div class="media">
-           <a href="{{ $article->url->article }}">
+           <a href="{{ $article->url->show }}">
                <img class="rounded img-fluid mr-2" src="{{ $article->image_path }}">
            </a>
            <div class="media-body">
@@ -21,6 +21,6 @@
    </div>
     <div class="card-footer">
         <small class="text-muted">Última actualización {{ $article->updated_at->diffForHumans() }}</small>
-        <a href="{{ $article->url->article }}" class="card-link float-right">Ver mas</a>
+        <a href="{{ $article->url->show }}" class="card-link float-right">Ver mas</a>
     </div>
 </div>

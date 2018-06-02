@@ -40,7 +40,7 @@ class CreateArticleTest extends TestCase
     }
 
     /** @test */
-    function an_client_can_create_a_article()
+    function a_client_can_create_a_article()
     {
         Notification::fake();
 
@@ -62,7 +62,7 @@ class CreateArticleTest extends TestCase
     }
 
     /** @test */
-    function an_client_can_see_validation_errors_form()
+    function a_client_can_see_validation_errors_form()
     {
         $this->handleValidationExceptions();
 

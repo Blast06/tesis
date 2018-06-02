@@ -34,26 +34,30 @@ class UrlPresenter
 
     public function delete()
     {
-        return route('articles.destroy', $this->website, $this->article);
+        return route('articles.destroy', [
+            'website' => $this->website,
+            'article' => $this->article
+        ]);
     }
 
     public function edit()
     {
-        return route('articles.edit', $this->website, $this->article);
+        return route('articles.edit', [
+            'website' => $this->website,
+            'article' => $this->article
+        ]);
     }
 
     public function show()
     {
-        return route('articles.show', $this->website, $this->article);
+        return route('articles.show', $this->article->slug);
     }
 
     public function update()
     {
-        return route('articles.update', $this->website, $this->article);
-    }
-
-    public function article()
-    {
-        return route('article.show.public', $this->article->slug);
+        return route('articles.update',[
+            'website' => $this->website,
+            'article' => $this->article
+        ]);
     }
 }

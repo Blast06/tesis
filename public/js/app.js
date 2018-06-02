@@ -10669,7 +10669,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "prodcut-create",
+    name: "article-create",
     props: ['website'],
     components: { VueNumeric: __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default.a, ImageUpload: __WEBPACK_IMPORTED_MODULE_1__ImageUpload___default.a },
     data: function data() {
@@ -10739,6 +10739,206 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var uploadedFiles = this.$refs.files.files;
 
             this.form.file = uploadedFiles[0];
+        }
+    }
+
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/article/UpdateForm.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_numeric__ = __webpack_require__("./node_modules/vue-numeric/dist/vue-numeric.min.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_numeric__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "article-create",
+    props: ['website', 'article'],
+    components: { VueNumeric: __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default.a },
+    data: function data() {
+        return {
+            categories: {},
+            loading: false,
+            disableStock: false,
+            form: new Form({
+                name: this.article.name,
+                sub_category_id: this.article.sub_category_id,
+                price: this.article.price,
+                stock: this.article.stock,
+                status: this.article.status,
+                description: this.article.description
+            }),
+            options: [{ value: 'NO_DISPONIBLE', text: 'No disponible' }, { value: 'DISPONIBLE', text: 'Disponible' }, { value: 'PRIVADO', text: 'Privado' }]
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/web/api/categories').then(function (response) {
+            _this.categories = response.data.data;
+        });
+    },
+
+    methods: {
+        onSubmit: function onSubmit() {
+            var _this2 = this;
+
+            this.$validator.validateAll().then(function (valid) {
+                if (valid) {
+                    _this2.loading = true;
+                    _this2.form.put('/client/' + _this2.website.username + '/articles/' + _this2.article.id).then(function () {
+                        toastr.success("¡Actualizado correctamnet.!");
+                        _this2.loading = false;
+                    });
+                }
+            });
         }
     }
 
@@ -10882,7 +11082,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "subscribe-button",
-    props: ['subscribed', 'website'],
+    props: ['subscribed', 'username'],
     data: function data() {
         return {
             isSubscribed: !Boolean(this.subscribed),
@@ -10896,7 +11096,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.loader();
 
-            axios.post('/' + this.website + '/subscribe').then(function () {
+            axios.post('/' + this.username + '/subscribe').then(function () {
                 _this.loader();
                 _this.subscribedChangeStatus();
             });
@@ -10906,7 +11106,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.loader();
 
-            axios.post('/' + this.website + '/unsubscribe').then(function () {
+            axios.post('/' + this.username + '/unsubscribe').then(function () {
                 _this2.loader();
                 _this2.subscribedChangeStatus();
             });
@@ -30195,7 +30395,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue":
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
@@ -30203,7 +30403,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.ais-highlight em {\n    background: yellow;\n}\n", ""]);
+exports.push([module.i, "\n.ais-highlight em {\n  background: yellow;\n}\n.ais-powered-by {\n  float: left;\n  line-height: 26px;\n}\n.ais-powered-by svg {\n    vertical-align: bottom;\n}\n.ais-stats {\n  float: right;\n  line-height: 36px;\n}\n", ""]);
 
 // exports
 
@@ -89021,6 +89221,566 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6391575d\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/article/UpdateForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.onSubmit($event)
+        },
+        keydown: function($event) {
+          _vm.form.errors.clear($event.target.name)
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "form-group row" },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-4 col-form-label text-md-right" },
+            [_vm._v("Titulo")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { md: "6" } },
+            [
+              _c("b-form-input", {
+                directives: [
+                  {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "required|min:4|max:40",
+                    expression: "'required|min:4|max:40'"
+                  }
+                ],
+                class: [
+                  { "is-invalid": _vm.errors.has("titulo") },
+                  { "is-invalid": _vm.form.errors.has("name") }
+                ],
+                attrs: { type: "text", name: "name", "data-vv-name": "titulo" },
+                model: {
+                  value: _vm.form.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "name", $$v)
+                  },
+                  expression: "form.name"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.errors.has("titulo") || _vm.form.errors.has("name"),
+                      expression:
+                        "errors.has('titulo') || form.errors.has('name')"
+                    }
+                  ],
+                  staticClass: "invalid-feedback"
+                },
+                [
+                  _c("b", {
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.errors.first("titulo") ||
+                          _vm.form.errors.first("name")
+                      )
+                    }
+                  })
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group row" },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-4 col-form-label text-md-right" },
+            [_vm._v("Categoria")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { md: "6" } },
+            [
+              _vm._l(_vm.categories, function(category) {
+                return _c(
+                  "div",
+                  { staticClass: "pt-1 pb-1" },
+                  [
+                    _c("label", { staticClass: "font-weight-bold" }, [
+                      _c("i", {
+                        staticClass: "fa",
+                        attrs: { "aria-hidden": "true" }
+                      }),
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(category.name) +
+                          "\n                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(category.sub_category, function(subcategory) {
+                      return _c(
+                        "div",
+                        { staticClass: "custom-control custom-radio pl-4" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              },
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.sub_category_id,
+                                expression: "form.sub_category_id"
+                              }
+                            ],
+                            staticClass: "custom-control-input",
+                            class: [
+                              { "is-invalid": _vm.errors.has("categoria") },
+                              {
+                                "is-invalid": _vm.form.errors.has(
+                                  "sub_category_id"
+                                )
+                              }
+                            ],
+                            attrs: {
+                              type: "radio",
+                              id: subcategory.id,
+                              name: "sub_category_id",
+                              "data-vv-name": "categoria"
+                            },
+                            domProps: {
+                              value: subcategory.id,
+                              checked: _vm._q(
+                                _vm.form.sub_category_id,
+                                subcategory.id
+                              )
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.$set(
+                                  _vm.form,
+                                  "sub_category_id",
+                                  subcategory.id
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-control-label",
+                              attrs: { for: subcategory.id }
+                            },
+                            [_vm._v(_vm._s(subcategory.name))]
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.errors.has("categoria") ||
+                        _vm.form.errors.has("sub_category_id"),
+                      expression:
+                        "errors.has('categoria') || form.errors.has('sub_category_id')"
+                    }
+                  ],
+                  staticStyle: { color: "#dc3545" }
+                },
+                [
+                  _c("b", {
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.errors.first("categoria") ||
+                          _vm.form.errors.first("sub_category_id")
+                      )
+                    }
+                  })
+                ]
+              )
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group row" },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-4 col-form-label text-md-right" },
+            [_vm._v("Precio")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { md: "6" } },
+            [
+              _c("vue-numeric", {
+                directives: [
+                  {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "required|numeric|min_value:100|max_value:900000000",
+                    expression:
+                      "'required|numeric|min_value:100|max_value:900000000'"
+                  }
+                ],
+                staticClass: "form-control",
+                class: [
+                  { "is-invalid": _vm.errors.has("precio") },
+                  { "is-invalid": _vm.form.errors.has("price") }
+                ],
+                attrs: {
+                  currency: "RD $",
+                  separator: ",",
+                  precision: 2,
+                  name: "price",
+                  "data-vv-name": "precio"
+                },
+                model: {
+                  value: _vm.form.price,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "price", $$v)
+                  },
+                  expression: "form.price"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.errors.has("precio") ||
+                        _vm.form.errors.has("price"),
+                      expression:
+                        "errors.has('precio') || form.errors.has('price')"
+                    }
+                  ],
+                  staticClass: "invalid-feedback"
+                },
+                [
+                  _c("b", {
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.errors.first("precio") ||
+                          _vm.form.errors.first("price")
+                      )
+                    }
+                  })
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group row" },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-4 col-form-label text-md-right" },
+            [_vm._v("Cantidad")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { md: "6" } },
+            [
+              _c("vue-numeric", {
+                directives: [
+                  {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "numeric|max_value:9999",
+                    expression: "'numeric|max_value:9999'"
+                  }
+                ],
+                staticClass: "form-control",
+                class: [
+                  { "is-invalid": _vm.errors.has("cantidad") },
+                  { "is-invalid": _vm.form.errors.has("stock") }
+                ],
+                attrs: {
+                  disabled: _vm.disableStock,
+                  separator: ",",
+                  name: "stock",
+                  "data-vv-name": "cantidad"
+                },
+                model: {
+                  value: _vm.form.stock,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "stock", $$v)
+                  },
+                  expression: "form.stock"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.errors.has("cantidad") ||
+                        _vm.form.errors.has("stock"),
+                      expression:
+                        "errors.has('cantidad') || form.errors.has('stock')"
+                    }
+                  ],
+                  staticClass: "invalid-feedback"
+                },
+                [
+                  _c("b", {
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.errors.first("cantidad") ||
+                          _vm.form.errors.first("stock")
+                      )
+                    }
+                  })
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group row" },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-4 col-form-label text-md-right" },
+            [_vm._v("Estatus")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { md: "6" } },
+            [
+              _c("b-form-select", {
+                directives: [
+                  {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "required",
+                    expression: "'required'"
+                  }
+                ],
+                staticClass: "mb-3",
+                class: [
+                  { "is-invalid": _vm.errors.has("estatus") },
+                  { "is-invalid": _vm.form.errors.has("stock") }
+                ],
+                attrs: {
+                  name: "status",
+                  options: _vm.options,
+                  "data-vv-name": "estatus"
+                },
+                model: {
+                  value: _vm.form.status,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "status", $$v)
+                  },
+                  expression: "form.status"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.errors.has("estatus") ||
+                        _vm.form.errors.has("status"),
+                      expression:
+                        "errors.has('estatus') || form.errors.has('status')"
+                    }
+                  ],
+                  staticClass: "invalid-feedback"
+                },
+                [
+                  _c("b", {
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.errors.first("estatus") ||
+                          _vm.form.errors.first("status")
+                      )
+                    }
+                  })
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group row" },
+        [
+          _c(
+            "label",
+            { staticClass: "col-md-4 col-form-label text-md-right" },
+            [_vm._v("Descripcion")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-col",
+            { attrs: { md: "6" } },
+            [
+              _c("b-form-textarea", {
+                directives: [
+                  {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "required|min:20",
+                    expression: "'required|min:20'"
+                  }
+                ],
+                class: [
+                  { "is-invalid": _vm.errors.has("descripcion") },
+                  { "is-invalid": _vm.form.errors.has("description") }
+                ],
+                attrs: {
+                  rows: "4",
+                  name: "description",
+                  "data-vv-name": "descripcion"
+                },
+                model: {
+                  value: _vm.form.description,
+                  callback: function($$v) {
+                    _vm.$set(_vm.form, "description", $$v)
+                  },
+                  expression: "form.description"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.errors.has("descripcion") ||
+                        _vm.form.errors.has("description"),
+                      expression:
+                        "errors.has('descripcion') || form.errors.has('description')"
+                    }
+                  ],
+                  staticClass: "invalid-feedback"
+                },
+                [
+                  _c("b", {
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.errors.first("descripcion") ||
+                          _vm.form.errors.first("description")
+                      )
+                    }
+                  })
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row mb-0" }, [
+        _c("div", { staticClass: "col-md-8 offset-md-4" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              class: _vm.loading ? "loader" : "",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("\n                Actualizar\n            ")]
+          )
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6391575d", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-66b0dc90\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/article/CreateForm.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -89893,23 +90653,23 @@ if(false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue":
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue");
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue");
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("3162f54c", content, false, {});
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("6cbb3106", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchPage.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchPage.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchPage.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SearchPage.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -101289,6 +102049,7 @@ Vue.component("website-create", __webpack_require__("./resources/assets/js/compo
 Vue.component("website-update", __webpack_require__("./resources/assets/js/components/website/UpdateForm.vue"));
 Vue.component("subscribe-button", __webpack_require__("./resources/assets/js/components/website/SubscribeButton.vue"));
 Vue.component("article-create", __webpack_require__("./resources/assets/js/components/article/CreateForm.vue"));
+Vue.component("article-update", __webpack_require__("./resources/assets/js/components/article/UpdateForm.vue"));
 
 new Vue({
     el: '#app',
@@ -101534,7 +102295,7 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue")
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e21f1b64\",\"scoped\":false,\"hasInlineConfig\":true}!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/SearchPage.vue")
 }
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
@@ -101669,6 +102430,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-66b0dc90", Component.options)
   } else {
     hotAPI.reload("data-v-66b0dc90", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/article/UpdateForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/article/UpdateForm.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6391575d\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/article/UpdateForm.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/article/UpdateForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6391575d", Component.options)
+  } else {
+    hotAPI.reload("data-v-6391575d", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

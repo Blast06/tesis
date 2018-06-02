@@ -33,6 +33,7 @@ Vue.component("website-create", require("./components/website/CreateForm"));
 Vue.component("website-update", require("./components/website/UpdateForm"));
 Vue.component("subscribe-button", require("./components/website/SubscribeButton"));
 Vue.component("article-create", require("./components/article/CreateForm"));
+Vue.component("article-update", require("./components/article/UpdateForm"));
 
 new Vue({
     el: '#app',

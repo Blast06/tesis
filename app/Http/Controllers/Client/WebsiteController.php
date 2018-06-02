@@ -21,8 +21,7 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-        $websites = Website::paginate();
-        return view('pages.website', compact('websites'));
+        return view('pages.website');
     }
 
     /**
@@ -54,7 +53,9 @@ class WebsiteController extends Controller
      */
     public function show(Website $website)
     {
-        $website->load('articles');
+        $website->load(['articles' => function($query) {
+            $query->with(['media', 'website']);
+        }]);
         return view('pages.website_client', compact('website'));
     }
 

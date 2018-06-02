@@ -1,11 +1,11 @@
 <h5 class="title">Articulos</h5>
 <div class="list-group mb-5">
     <a href="{{ url("/client/{$website->username}/articles/create") }}" class="list">
-        <i class="fas fa-dot-circle"></i>
+        <i class="far fa-circle"></i>
         Crear Articulos
     </a>
     <a href="{{ url("/client/{$website->username}/articles") }}" class="list">
-        <i class="fas fa-dot-circle"></i>
+        <i class="far fa-circle"></i>
         Todos los Articulos
     </a>
 </div>

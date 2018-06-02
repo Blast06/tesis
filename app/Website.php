@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use App\Presenters\Website\UrlPresenter;
@@ -11,7 +12,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Website extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes, Searchable, HasMediaTrait;
 
     protected $fillable = ['name', 'username', 'phone', 'address', 'private', 'domain'];
 
@@ -64,7 +65,7 @@ class Website extends Model implements HasMedia
     {
         return !empty($this->getFirstMediaUrl('websites', 'thumb'))
             ?  $this->getFirstMediaUrl('websites', 'thumb')
-            : asset('img/default.png');
+            : asset('img/website.png');
     }
 
     // Relationships
@@ -82,5 +83,16 @@ class Website extends Model implements HasMedia
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'image_path' => $this->image_path,
+            'name' => $this->name,
+            'username' => $this->username,
+            'created_at' => $this->created_at->format('F Y'),
+            'url_path' => $this->url->show
+        ];
     }
 }

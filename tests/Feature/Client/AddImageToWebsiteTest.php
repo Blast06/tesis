@@ -26,7 +26,7 @@ class AddImageToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function an_guest_cannot_change_website_image()
+    function a_guest_cannot_change_website_image()
     {
         $this->withExceptionHandling();
 
@@ -36,7 +36,7 @@ class AddImageToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function an_client_can_change_website_image()
+    function a_client_can_change_website_image()
     {
         Storage::fake('public');
 
@@ -49,7 +49,7 @@ class AddImageToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function a_unathorized_user_cannot_change_website_image()
+    function an_unathorized_user_cannot_change_website_image()
     {
         $this->actingAs($this->create(User::class))
             ->post($this->website->url->image, [])
@@ -58,7 +58,7 @@ class AddImageToWebsiteTest extends TestCase
     }
 
     /** @test */
-    function an_client_cannot_upload_others_file()
+    function a_client_cannot_upload_others_file()
     {
         $this->handleValidationExceptions();
 

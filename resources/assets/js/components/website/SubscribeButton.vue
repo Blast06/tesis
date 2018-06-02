@@ -8,7 +8,7 @@
 <script>
     export default {
         name: "subscribe-button",
-        props: ['subscribed', 'website'],
+        props: ['subscribed', 'username'],
         data() {
             return {
                 isSubscribed: ! Boolean(this.subscribed),
@@ -19,7 +19,7 @@
             subscribe(){
                 this.loader();
 
-                axios.post(`/${this.website}/subscribe`)
+                axios.post(`/${this.username}/subscribe`)
                     .then(() => {
                         this.loader();
                         this.subscribedChangeStatus();
@@ -28,7 +28,7 @@
             unsubscribe(){
                 this.loader();
 
-                axios.post(`/${this.website}/unsubscribe`)
+                axios.post(`/${this.username}/unsubscribe`)
                     .then(() => {
                         this.loader();
                         this.subscribedChangeStatus();

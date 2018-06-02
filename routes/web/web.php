@@ -57,7 +57,12 @@ Route::post('{website}/subscribe', 'Client\WebsiteController@subscribe')->name('
 /*
  * Public Articles Route
  */
-Route::get('articles/{slug}', 'Client\ArticleController@showPublicArticle')->name('article.show.public');
+Route::get('articles/{slug}', 'Client\ArticleController@show')->name('articles.show');
+
+/*
+ *  Public Chat
+ */
+Route::get('chat', 'Client\ChatController@chatUser')->name('chats.user');
 
 /*
  * Recursos API Web

@@ -15,6 +15,11 @@ Breadcrumbs::for('create-article', function ($breadcrumbs, $website) {
     $breadcrumbs->push('Create', route('articles.create', $website));
 });
 
+Breadcrumbs::for('edit-article', function ($breadcrumbs, $website, $article) {
+    $breadcrumbs->parent('article', $website);
+    $breadcrumbs->push($article->name, $article->url->edit);
+});
+
 Breadcrumbs::for('website_config', function ($breadcrumbs, $website) {
     $breadcrumbs->parent('dashboard', $website);
     $breadcrumbs->push($website->name, route('websites.edit', $website));

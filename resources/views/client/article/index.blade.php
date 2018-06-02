@@ -47,12 +47,21 @@
                                 <td>{{ $article->created_at->format('l j F Y') }}</td>
                                 <td>{{ $article->updated_at->format('l j F Y') }}</td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm">
+                                    <a href="{{ $article->url->edit }}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit text-white"></i>
                                     </a>
-                                    <a class="btn btn-danger btn-sm">
+                                    <a class="btn btn-danger btn-sm"
+                                       href="{{ $article->url->delete }}"
+                                       onclick="event.preventDefault();
+                                       document.getElementById('{{ 'article-delete-'. $article->id  }}').submit();">
                                         <i class="fas fa-trash-alt text-white"></i>
                                     </a>
+                                    <form id="article-delete-{{ $article->id }}"
+                                          action="{{ $article->url->delete }}"
+                                          method="POST" style="display: none;">
+                                        @csrf
+                                        {{ method_field('DELETE') }}
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

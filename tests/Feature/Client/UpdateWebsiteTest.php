@@ -24,7 +24,7 @@ class UpdateWebsiteTest extends TestCase
     }
 
     /** @test */
-    function a_aguest_cannot_update_website()
+    function a_guest_cannot_update_website()
     {
         $this->withExceptionHandling();
 
