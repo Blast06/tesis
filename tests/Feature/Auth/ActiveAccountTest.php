@@ -26,7 +26,7 @@ class ActiveAccountTest extends TestCase
         ]);
 
         $this->url = URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes(30), ['token' => $this->user->token]
+            'activate.account', now()->addMinutes(30), ['token' => $this->user->token]
         );
     }
 
@@ -65,7 +65,7 @@ class ActiveAccountTest extends TestCase
         $this->withExceptionHandling();
 
         $url = URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes(30), ['token' => strtolower($this->user->token)]
+            'activate.account', now()->addMinutes(30), ['token' => strtolower($this->user->token)]
         );
 
         $this->get($url)

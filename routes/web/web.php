@@ -19,10 +19,11 @@ Route::get('/login/twitter/callback', 'LoginSocialiteController@handleTwitterCal
 /**
  *  Active account
 */
-Route::get('account/activate/{token}', 'Auth\ActivationController@activate')->name('account.activate');
-Route::get('account/activation/request', 'Auth\ActivationController@request')->name('account.activation.request')->middleware(['auth']);
-Route::post('account/activation/email', 'Auth\ActivationController@changeEmailResend')->name('account.activation.change.email')->middleware(['auth','throttle:0,1']);
-Route::post('account/resend/activation', 'Auth\ActivationController@resend')->name('account.activation.resend')->middleware(['auth','throttle:0,1']);
+Route::get('activate/{token}', 'Auth\ActivationController@activate')->name('activate.account')->fallback();
+Route::get('activate/resend/code', 'Auth\ActivationController@indexResendActivationCode')->name('activate.resend.index');
+Route::post('activate/resend/code', 'Auth\ActivationController@resendActivationCode')->name('activate.resend.code')->middleware(['throttle:0,1']);
+Route::get('activate/change/email', 'Auth\ActivationController@indexChangeEmail')->name('activate.change.email.index');
+Route::post('activate/change/email', 'Auth\ActivationController@changeEmailAndResendActivationCode')->name('activate.change.email')->middleware(['throttle:0,1']);
 
 /*
 * Auth User Route
@@ -62,7 +63,9 @@ Route::get('articles/{slug}', 'Client\ArticleController@show')->name('articles.s
 /*
  *  Public Chat
  */
-Route::get('chat', 'Client\ChatController@chatUser')->name('chats.user');
+Route::get('messages', 'Client\MessageController@index')->name('messages.index');
+Route::post('messages', 'Client\MessageController@messageToWebsite')->name('messages.website');
+Route::get('/messages/conversation', 'Client\MessageController@conversation')->middleware('auth');
 
 /*
  * Recursos API Web

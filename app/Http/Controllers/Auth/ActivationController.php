@@ -9,6 +9,11 @@ use App\Notifications\PleaseConfirmYourEmail;
 
 class ActivationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('activate');
+    }
+
     /**
      * @param $token
      * @return \Illuminate\Http\RedirectResponse
@@ -29,14 +34,14 @@ class ActivationController extends Controller
         return redirect('/home')->with(['flash_danger' => 'Token desconocido']);
     }
 
-    public function request()
+    public function indexResendActivationCode()
     {
         if (auth()->user()->isActive()) return redirect('/home');
 
-        return view('auth.activation');
+        return view('auth.resend_activation_code');
     }
 
-    public function resend()
+    public function resendActivationCode()
     {
         if (auth()->user()->isActive()) return redirect('/home');
 
@@ -46,10 +51,17 @@ class ActivationController extends Controller
             $user->notify(new PleaseConfirmYourEmail($user));
         });
 
-        return back()->with('flash_success', 'Por favor revisa tu correo electrónico para ver el enlace de activación');
+        return back()->with('flash_success', 'Se a reenviado el enlace de activación, por favor revisa tu correo electrónico.');
     }
 
-    public function changeEmailResend()
+    public function indexChangeEmail()
+    {
+        if (auth()->user()->isActive()) return redirect('/home');
+
+        return view('auth.change_email');
+    }
+
+    public function changeEmailAndResendActivationCode()
     {
         if (auth()->user()->isActive()) return redirect('/home');
 
@@ -64,15 +76,16 @@ class ActivationController extends Controller
             $user->notify(new PleaseConfirmYourEmail($user));
         });
 
-        return redirect()->route('account.activation.request')->with('flash_success', 'Por favor revisa tu correo electrónico para ver el enlace de activación');
+        return back()
+            ->with('flash_success', 'Se a cambiado tu correo electrónico, Por favor revisa tu correo electrónico para ver el enlace de activación.');
     }
 
-    private function findUserByCode($token)
+    protected function findUserByCode($token)
     {
         return User::where('token', $token)->whereNull('verified_at')->firstOrFail();
     }
 
-    private function findUserAuth()
+    protected function findUserAuth()
     {
         return User::where('id', auth()->id())->whereNull('verified_at')->firstOrFail();
     }

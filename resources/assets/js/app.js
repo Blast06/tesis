@@ -18,6 +18,8 @@ Vue.use(VeeValidate);
 Vue.use(BootstrapVue);
 Vue.use(InstantSearch);
 
+Vue.use(require('vue-moment'));
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -34,6 +36,7 @@ Vue.component("website-update", require("./components/website/UpdateForm"));
 Vue.component("subscribe-button", require("./components/website/SubscribeButton"));
 Vue.component("article-create", require("./components/article/CreateForm"));
 Vue.component("article-update", require("./components/article/UpdateForm"));
+Vue.component("message-index", require("./components/message/Index"));
 
 new Vue({
     el: '#app',

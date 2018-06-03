@@ -85,6 +85,11 @@ class Website extends Model implements HasMedia
         return $this->hasMany(Article::class);
     }
 
+    public function conversation()
+    {
+        return $this->hasMany(Conversation::class);
+    }
+
     public function toSearchableArray()
     {
         return [

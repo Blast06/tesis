@@ -57,3 +57,24 @@ a {
 .app-content{
   min-height: 100vh;
 }
+
+.alert-danger {
+  color: #d63031;
+  background-color: #f8d7da;
+  border-color: transparent;
+  border-left: 6px solid #d63031;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: transparent;
+  border-left: 6px solid #155724;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: transparent;
+  border-left: 6px solid #856404;
+}

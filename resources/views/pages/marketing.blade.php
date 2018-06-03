@@ -2,7 +2,7 @@
 
     @slot('body_class', 'marketing')
 
-    @slot('content_style', 'container-fluid')
+    @slot('container', 'container-fluid')
 
     <!-- Masthead -->
     <header class="text-center mb-5">

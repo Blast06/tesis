@@ -8,7 +8,7 @@
 | Website | :heavy_check_mark: | :x: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Article | :heavy_check_mark: | :x: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Search | :heavy_check_mark: | :x: | :x: | :x: | :heavy_check_mark: |
-| Chat | :x: | :x: | :x: | :x: | :x: |
+| Chat | :x: | :x: | :x: | :x: | :heavy_check_mark: |
 | Notifications | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :heavy_check_mark: |
 | Client panel | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
 | Admin panel | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |
@@ -26,13 +26,13 @@
 	 - Todos los procesos pesados son procesados en colas como **email, notificaciones, conversion y subida de imagenes** debes utilizar **php artisan queue:listen** o algun servicio que maneje las colas de trabajo.
 
 ## Imágenes
-![enter image description here](https://image.ibb.co/iuboGJ/image.png)
+![enter image description here](https://image.ibb.co/hCymcd/image.png)
 
-![enter image description here](https://image.ibb.co/fqab3y/image.png)
+![enter image description here](https://image.ibb.co/nByV3J/image.png)
 
-![enter image description here](https://image.ibb.co/d6sOiy/image.png)
+![enter image description here](https://image.ibb.co/iqPEVy/image.png)
 
-![enter image description here](https://image.ibb.co/hkP8GJ/image.png)
+![enter image description here](https://image.ibb.co/gGHbAy/image.png)
 
 ![enter image description here](https://image.ibb.co/nKaLVd/image.png)
 

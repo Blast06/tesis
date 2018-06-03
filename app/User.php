@@ -84,7 +84,7 @@ class User extends Authenticatable implements HasMedia
         if ($this->isActive()) return null;
 
         return URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes(30), ['token' => $this->token]
+            'activate.account', now()->addMinutes(30), ['token' => $this->token]
         );
     }
 
@@ -126,6 +126,11 @@ class User extends Authenticatable implements HasMedia
     public function isSubscribedTo(Website $website): bool
     {
         return $this->subscribedWebsite()->where('website_id', $website->id)->count() > 0;
+    }
+
+    public function conversation()
+    {
+        return $this->hasMany(Conversation::class);
     }
 
     /**

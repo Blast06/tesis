@@ -22,8 +22,9 @@ class ResendActiveCodeTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->post(route('account.activation.resend'), [])
-            ->assertStatus(Response::HTTP_FOUND);
+            ->post(route('activate.resend.code'), [])
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertSessionHas(['flash_success' => 'Se a reenviado el enlace de activación, por favor revisa tu correo electrónico.']);
 
         $user->refresh();
 
@@ -37,7 +38,7 @@ class ResendActiveCodeTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->post(route('account.activation.resend'), [])
+        $this->post(route('activate.resend.code'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
     }
@@ -46,7 +47,7 @@ class ResendActiveCodeTest extends TestCase
     function user_with_active_account_cannot_forwarded_activation_code_account()
     {
         $this->actingAs($this->create(User::class))
-            ->post(route('account.activation.resend'), [])
+            ->post(route('activate.resend.code'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }

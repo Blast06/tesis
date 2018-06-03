@@ -26,8 +26,9 @@ class SendActiveCodeToAnotherEmailTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->post(route('account.activation.change.email'), $this->defaultData)
-            ->assertStatus(Response::HTTP_FOUND);
+            ->post(route('activate.change.email'), $this->defaultData)
+            ->assertStatus(Response::HTTP_FOUND)
+            ->assertSessionHas(['flash_success' => 'Se a cambiado tu correo electrónico, Por favor revisa tu correo electrónico para ver el enlace de activación.']);
 
         $this->assertDatabaseHas('users', $this->withData([
             'id' => $user->id,
@@ -39,7 +40,7 @@ class SendActiveCodeToAnotherEmailTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->post(route('account.activation.change.email'), [])
+        $this->post(route('activate.change.email'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/login');
     }
@@ -48,7 +49,7 @@ class SendActiveCodeToAnotherEmailTest extends TestCase
     function user_with_active_account_cannot_forwarded_activation_code_account()
     {
         $this->actingAs($this->create(User::class))
-            ->post(route('account.activation.change.email'), [])
+            ->post(route('activate.change.email'), [])
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }

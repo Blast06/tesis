@@ -64,7 +64,7 @@ class UserSignedTokenUrlTest extends TestCase
     private function generateSignedUrl($token, $minutes = 30)
     {
         return URL::temporarySignedRoute(
-            'account.activate', now()->addMinutes($minutes), ['token' => $token]
+            'activate.account', now()->addMinutes($minutes), ['token' => $token]
         );
     }
 }
