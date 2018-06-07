@@ -59,7 +59,20 @@ $factory->define(App\Article::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Conversation::class, function (Faker $faker) {
+    return [
+        'user_id' => factory(\App\User::class)->create(),
+        'website_id' => factory(\App\Website::class)->create(),
+    ];
+});
 
+$factory->define(App\Message::class, function (Faker $faker) {
+    return [
+        'conversation_id' => factory(\App\Conversation::class)->create(),
+        'user_send' => factory(\App\User::class)->create(),
+        'message' => $faker->paragraph(1),
+    ];
+});
 
 $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function (Faker $faker) {
     return [

@@ -13,10 +13,12 @@ import VeeValidate from "vee-validate";
 import es from "vee-validate/dist/locale/es";
 import BootstrapVue from "bootstrap-vue";
 import InstantSearch from "vue-instantsearch";
+import VModal from 'vue-js-modal';
 
 Vue.use(VeeValidate);
 Vue.use(BootstrapVue);
 Vue.use(InstantSearch);
+Vue.use(VModal);
 
 Vue.use(require('vue-moment'));
 
@@ -36,7 +38,7 @@ Vue.component("website-update", require("./components/website/UpdateForm"));
 Vue.component("subscribe-button", require("./components/website/SubscribeButton"));
 Vue.component("article-create", require("./components/article/CreateForm"));
 Vue.component("article-update", require("./components/article/UpdateForm"));
-Vue.component("message-index", require("./components/message/Index"));
+Vue.component("message-main", require("./components/message/Main"));
 
 new Vue({
     el: '#app',

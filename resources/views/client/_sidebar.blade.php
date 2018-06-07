@@ -10,6 +10,14 @@
     </a>
 </div>
 
+<h5 class="title">Mensajes</h5>
+<div class="list-group mb-5">
+    <a href="{{ url("/client/{$website->username}/messages") }}" class="list">
+        <i class="far fa-circle"></i>
+        Mensajes de clientes
+    </a>
+</div>
+
 @if($websites->count())
     <h5 class="title">Sitios De Trabajo</h5>
     <div class="list-group mb-5">

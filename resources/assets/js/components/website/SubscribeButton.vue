@@ -19,7 +19,7 @@
             subscribe(){
                 this.loader();
 
-                axios.post(`/${this.username}/subscribe`)
+                axios.get(`/${this.username}/subscribe`)
                     .then(() => {
                         this.loader();
                         this.subscribedChangeStatus();
@@ -28,7 +28,7 @@
             unsubscribe(){
                 this.loader();
 
-                axios.post(`/${this.username}/unsubscribe`)
+                axios.get(`/${this.username}/unsubscribe`)
                     .then(() => {
                         this.loader();
                         this.subscribedChangeStatus();

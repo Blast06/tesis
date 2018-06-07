@@ -14,7 +14,13 @@ class Website extends Model implements HasMedia
 {
     use SoftDeletes, Searchable, HasMediaTrait;
 
-    protected $fillable = ['name', 'username', 'phone', 'address', 'private', 'domain'];
+    protected $fillable = [
+        'name', 'username', 'phone', 'address', 'private', 'domain'
+    ];
+
+    protected $hidden = [
+        'url'
+    ];
 
     protected $appends = [
         'image_path', 'url'

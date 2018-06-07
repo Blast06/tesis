@@ -18,7 +18,7 @@ class AddAvatarTest extends TestCase
    {
        $this->withExceptionHandling();
 
-       $this->json('POST', route('profiles.avatar'), [])
+       $this->json('POST', route('profiles.update'), [])
            ->assertStatus(Response::HTTP_UNAUTHORIZED);
    }
 
@@ -30,7 +30,7 @@ class AddAvatarTest extends TestCase
         $user = $this->create(User::class);
 
         $this->actingAs($user)
-            ->json('POST', route('profiles.avatar'), [
+            ->json('POST', route('profiles.update'), [
                 'avatar' => UploadedFile::fake()->image('avatar.jpg')
             ])
             ->assertSuccessful()
@@ -49,7 +49,7 @@ class AddAvatarTest extends TestCase
         Storage::fake($user->id);
 
         $this->actingAs($user)
-            ->json('POST', route('profiles.avatar'), [
+            ->json('POST', route('profiles.update'), [
                 'avatar' => UploadedFile::fake()->image('avatar.pdf')
             ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)

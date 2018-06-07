@@ -25,6 +25,10 @@ class Article extends Model implements HasMedia
         'name', 'price', 'stock', 'sub_category_id', 'status', 'website_id', 'description', 'slug'
     ];
 
+    protected $hidden = [
+        'url'
+    ];
+
     protected $appends = [
         'image_path', 'url'
     ];

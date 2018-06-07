@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use DB;
+use App\Events\NewMessage;
+use App\{Conversation, Website};
 use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
@@ -13,34 +15,60 @@ class MessageController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Website $website = null)
     {
-        return view('pages.message');
+        return view('pages.message', compact('website'));
     }
 
     /**
      * @return mixed
      * @throws \Throwable
      */
-    public function messageToWebsite()
+    public function storeUser()
     {
-        return DB::transaction(function () {
+        $newMessage = DB::transaction(function () {
             $conversation = auth()->user()->conversation()->firstOrCreate([
                 'website_id' => request()->website_id,
             ]);
 
-            $conversation->messages()->create([
+            return $conversation->messages()->create([
                 'user_send' => auth()->id(),
                 'message' => request()->message,
             ]);
         });
 
+        broadcast(new NewMessage($newMessage->conversation, $newMessage))->toOthers();
+
+        return $this->responseOne($newMessage, 201);
     }
 
-    public function conversation()
+    /**
+     * @param \App\Website $website
+     * @return mixed
+     * @throws \Throwable
+     */
+    public function storeWebsite(Website $website)
+    {
+        $newMessage = DB::transaction(function () use ($website){
+            $conversation = $website->conversation()->firstOrCreate([
+                'user_id' => request()->user_id,
+            ]);
+
+            return $conversation->messages()->create([
+                'user_send' => auth()->id(),
+                'message' => request()->message,
+            ]);
+        });
+
+        broadcast(new NewMessage($newMessage->conversation, $newMessage))->toOthers();
+
+        return $this->responseOne($newMessage, 201);
+    }
+
+    public function conversationUser()
     {
         $conversations = auth()->user()->conversation()
-            ->select('id', 'website_id')
+            ->select('id', 'website_id', 'user_id')
             ->orderBy('created_at', 'DESC')
             ->get()
             ->load(['messages' => function ($q) {
@@ -51,4 +79,25 @@ class MessageController extends Controller
 
         return $this->responseOne($conversations, 200);
     }
+
+    public function conversationWebsite(Website $website)
+    {
+        $conversations = $website->conversation()
+            ->select('id', 'website_id', 'user_id')
+            ->orderBy('created_at', 'DESC')
+            ->get()
+            ->load(['messages' => function ($q) {
+                $q->orderBy('created_at', 'DESC');
+            }, 'user' => function ($q) {
+                $q->select('id', 'name');
+            }]);
+
+        return $this->responseOne($conversations, 200);
+    }
+
+    public function showConversation(Conversation $conversation)
+    {
+        return $this->responseOne($conversation->messages, 200);
+    }
+
 }

@@ -34,7 +34,7 @@ class SubscribeToWebsiteTest extends TestCase
     function an_user_can_subscribe_to_a_website()
     {
         $this->actingAs($this->user)
-            ->json('POST', $this->website->url->subscribe)
+            ->json('GET', $this->website->url->subscribe)
             ->assertSuccessful()
             ->assertExactJson(['message' => 'subscribe']);
 
@@ -50,7 +50,7 @@ class SubscribeToWebsiteTest extends TestCase
         $this->user->subscribeTo($this->website);
 
         $this->actingAs($this->user)
-            ->json('POST', $this->website->url->unsubscribe)
+            ->json('GET', $this->website->url->unsubscribe)
             ->assertSuccessful()
             ->assertExactJson(['message' => 'unsubscribe']);
 
@@ -65,7 +65,7 @@ class SubscribeToWebsiteTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->json('POST', $this->website->url->subscribe)
+        $this->json('GET', $this->website->url->subscribe)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -74,7 +74,7 @@ class SubscribeToWebsiteTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->json('POST', $this->website->url->unsubscribe)
+        $this->json('GET', $this->website->url->unsubscribe)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }

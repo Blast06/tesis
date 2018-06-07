@@ -47,21 +47,25 @@
                                 <td>{{ $article->created_at->format('l j F Y') }}</td>
                                 <td>{{ $article->updated_at->format('l j F Y') }}</td>
                                 <td>
-                                    <a href="{{ $article->url->edit }}" class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit text-white"></i>
-                                    </a>
-                                    <a class="btn btn-danger btn-sm"
-                                       href="{{ $article->url->delete }}"
-                                       onclick="event.preventDefault();
-                                       document.getElementById('{{ 'article-delete-'. $article->id  }}').submit();">
-                                        <i class="fas fa-trash-alt text-white"></i>
-                                    </a>
-                                    <form id="article-delete-{{ $article->id }}"
-                                          action="{{ $article->url->delete }}"
-                                          method="POST" style="display: none;">
-                                        @csrf
-                                        {{ method_field('DELETE') }}
-                                    </form>
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        Acciones
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href=""><i class="fas fa-image"> Imagenes</i></a>
+                                        <a class="dropdown-item" href="{{ $article->url->edit }}"><i class="fas fa-edit"> Editar</i></a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ $article->url->delete }}"
+                                           onclick="event.preventDefault();
+                                                   document.getElementById('{{ 'article-delete-'. $article->id  }}').submit();">
+                                            <i class="fas fa-trash-alt"> Eliminar</i>
+                                        </a>
+                                        <form id="article-delete-{{ $article->id }}"
+                                              action="{{ $article->url->delete }}"
+                                              method="POST" style="display: none;">
+                                            @csrf
+                                            {{ method_field('DELETE') }}
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

@@ -3,7 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\{User, Website};
+use Illuminate\Http\Response;
+use App\{Message, User, Website};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserContactToWebsiteTest extends TestCase
@@ -60,7 +61,14 @@ class UserContactToWebsiteTest extends TestCase
     /** @test */
     function a_guest_cannot_contact_a_website()
     {
-        $this->markTestIncomplete();
+        $this->withExceptionHandling();
+        
+        $website = $this->create(Website::class);
+
+        $this->json('POST', route('messages.store', [
+            'message' => 'Hola tengo una pregunta',
+            'website_id' => $website->id
+        ]))->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     /**
@@ -72,13 +80,13 @@ class UserContactToWebsiteTest extends TestCase
     {
         if (is_array($messages)) {
             foreach ($messages as $message) {
-                $this->json('POST', route('messages.website', [
+                $this->json('POST', route('messages.store', [
                     'message' => $message,
                     'website_id' => $website->id
                 ]))->assertSuccessful();
             }
         }else{
-            $this->json('POST', route('messages.website', [
+            $this->json('POST', route('messages.store', [
                 'message' => $messages,
                 'website_id' => $website->id
             ]))->assertSuccessful();

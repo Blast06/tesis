@@ -2,10 +2,9 @@
     <div class="wrap">
         <section class="left">
             <div class="profile">
-                <img :src="avatar">
+                <img :src="user.avatar">
                 <div class="icons">
-                    <i class="fa fa-commenting fa-lg" aria-hidden="true"></i>
-                    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+                    <i class="fas fa-comment-alt fa-lg" @click="$modal.show('send-message')"></i>
                 </div>
             </div>
             <div class="wrap-search">
@@ -14,77 +13,60 @@
                     <input type="text" class="input-search" placeholder="Buscar chat">
                 </div>
             </div>
-
-            <conversation
-                    :conversations="conversations">
-            </conversation>
-        </section>
-
-        <section class="right">
-            <div class="chat-head">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/user.jpg">
-                <div class="chat-name">
-                    <h1 class="font-name"></h1>
-                    <p class="font-online"></p>
+            <div class="contact-list">
+                <div v-for="conversation in conversations">
+                    <contact
+                            :conversation="conversation"
+                            v-on:contactClick="openConversation">
+                    </contact>
                 </div>
-                <i class="fa fa-bars fa-lg" aria-hidden="true" id="show-contact-information"></i>
-
-            </div>
-            <div class="wrap-chat">
-                <div class="chat">
-                    <div class="chat">
-                        <div class="chat-bubble you">
-                            <div class="your-mouth"></div>
-                            <h6>Linda Gahleitner</h6>
-                            <div class="content">Hallo! Wie gehts euch?</div>
-                            <div class="time">17:40</div>
-                        </div>
-
-                        <div class="chat-bubble me">
-                            <div class="my-mouth"></div>
-                            <div class="content">Hallo :) Mir gehts auch gut. Kaffee trinken geht bei mir morgen leider nicht, weil bin noch bis Freitag in Hasdsadasdasdsad asdasdsadsadsadsdsagenberg :(</div>
-                            <div class="time">17:48</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="information"></div>
-            </div>
-            <div class="wrap-message">
-                <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
-                <div class="message">
-                    <input type="text" class="input-message" placeholder="Escribe un mensaje aquí">
-                </div>
-                <i class="fas fa-play"></i>
             </div>
         </section>
+
+        <messages
+                v-if="initalConversation"
+                :website="website"
+                :user="user"
+                :current_conversation="current_conversation">
+        </messages>
+
+        <section class="right"  v-else="initalConversation"><div class="chat-head"></div></section>
     </div>
 </template>
 
 <script>
-    import conversation from './conversation';
+    import contact from './_contact';
+    import messages from './_messages';
 
     export default {
-        name: "index-message",
-        props: ['avatar'],
+        name: "main-component",
+        props: ['website', 'user'],
         components: {
-            'conversation': conversation,
+            contact,
+            messages,
         },
         data() {
           return {
-              conversations: []
+              current_conversation: [],
+              conversations: [],
+              initalConversation: false,
           }
         },
         created() {
-           this.getConversations();
+            this.getConversations();
         },
         methods: {
             getConversations(){
-                axios.get(window.location.href + '/conversation').then(response => {
+                axios.get(window.location.href + '/conversations').then(response => {
                     this.conversations = response.data.data;
                 }).catch(error => {
-                   console.log(error);
+                    console.log(error);
                 });
-            }
+            },
+            openConversation(conversation){
+                this.initalConversation = true;
+                this.current_conversation = conversation;
+            },
         }
     }
 </script>

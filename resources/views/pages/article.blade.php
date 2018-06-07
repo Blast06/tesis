@@ -18,9 +18,9 @@
                 </button>
                 {{ $article->price }}
                 <br>
-                <button>
+                <a class="btn btn-info btn-sm" @click="$modal.show('send-message')">
                     Contactar Proveedor
-                </button>
+                </a>
                 {{ $article->website->name }}
                 <br>
                 {{ $article->description }}

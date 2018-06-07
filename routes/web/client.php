@@ -13,10 +13,15 @@ Route::catch(function (){
 Route::middleware(['client'])->group(function () {
 
     Route::get('{website}/dashboard', 'Client\DashboardClientController@index')->name('client.dashboard');
+
     Route::get('{website}/edit', 'Client\WebsiteController@edit')->name('websites.edit');
     Route::put('{website}/update', 'Client\WebsiteController@update')->name('websites.update');
     Route::post('{website}/image', 'Client\WebsiteController@image')->name('websites.image');
 
     Route::resource('{website}/articles', 'Client\ArticleController')->except('show');
+
+    Route::get('{website}/messages', 'Client\MessageController@index');
+    Route::post('{website}/messages', 'Client\MessageController@storeWebsite');
+    Route::get('{website}/messages/conversations', 'Client\MessageController@conversationWebsite');
 });
 

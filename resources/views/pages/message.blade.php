@@ -1,11 +1,16 @@
 @component('component.main')
 
-    @slot('content_class', 'app-content')
-
     @slot('container', 'container-fluid')
 
-    <message-index
-            avatar="{{ auth()->user()->avatar }}">
-    </message-index>
+    @isset($website)
+        <div class="mr-5 ml-5 pl-3 pr-3">
+            {{ Breadcrumbs::render('message', $website) }}
+        </div>
+    @endisset
+
+    <message-main
+            :website="{{ $website ?? 'false' }}"
+            :user="{{ auth()->user() }}">
+    </message-main>
 
 @endcomponent
