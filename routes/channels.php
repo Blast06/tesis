@@ -16,6 +16,5 @@ Broadcast::channel('User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('Conversation.{id}', function ($conversation, $id) {
-    return true;
-    //return (int) $conversation->id === (int) $id;
+    return (int) $conversation->id === (int) $id;
 });

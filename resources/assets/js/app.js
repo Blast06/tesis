@@ -14,6 +14,7 @@ import es from "vee-validate/dist/locale/es";
 import BootstrapVue from "bootstrap-vue";
 import InstantSearch from "vue-instantsearch";
 import VModal from 'vue-js-modal';
+import vSelect from 'vue-select';
 
 Vue.use(VeeValidate);
 Vue.use(BootstrapVue);
@@ -39,6 +40,8 @@ Vue.component("subscribe-button", require("./components/website/SubscribeButton"
 Vue.component("article-create", require("./components/article/CreateForm"));
 Vue.component("article-update", require("./components/article/UpdateForm"));
 Vue.component("message-main", require("./components/message/Main"));
+Vue.component("message-create", require("./components/message/Send_message"));
+Vue.component('v-select', vSelect);
 
 new Vue({
     el: '#app',

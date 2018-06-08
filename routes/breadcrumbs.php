@@ -27,6 +27,6 @@ Breadcrumbs::for('website_config', function ($breadcrumbs, $website) {
 
 Breadcrumbs::for('message', function ($breadcrumbs, $website) {
     $breadcrumbs->parent('dashboard', $website);
-    $breadcrumbs->push('Articles', url("/client/{$website->username}/messages"));
+    $breadcrumbs->push('Message', url("/client/{$website->username}/messages"));
 });
 

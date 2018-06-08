@@ -3,8 +3,8 @@
         <section class="left">
             <div class="profile">
                 <img :src="user.avatar">
-                <div class="icons">
-                    <i class="fas fa-comment-alt fa-lg" @click="$modal.show('send-message')"></i>
+                <div class="icons" @click="create">
+                    <i class="fas fa-comment-alt fa-lg" v-if="!website"></i>
                 </div>
             </div>
             <div class="wrap-search">
@@ -37,7 +37,6 @@
 <script>
     import contact from './_contact';
     import messages from './_messages';
-
     export default {
         name: "main-component",
         props: ['website', 'user'],
@@ -56,6 +55,9 @@
             this.getConversations();
         },
         methods: {
+            create(){
+                $(location).attr('href', '/messages/create');
+            },
             getConversations(){
                 axios.get(window.location.href + '/conversations').then(response => {
                     this.conversations = response.data.data;

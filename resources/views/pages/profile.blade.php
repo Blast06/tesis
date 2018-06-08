@@ -17,7 +17,19 @@
 
                             <div class="col-md-6">
                                 <img :src="avatar" class="rounded-circle mx-auto d-block mb-2 " width="86" height="86">
-                                <form method="POST" enctype="multipart/form-data">
+
+                                <div class="progress" v-if="uploading">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                         role="progressbar"
+                                         aria-valuenow="75"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100"
+                                         :style="{width: percentage + '%'}">
+                                        @{{ percentage }} %
+                                    </div>
+                                </div>
+
+                                <form v-else method="POST" enctype="multipart/form-data">
                                     <image-upload name="avatar" class="form-control" @loaded="onLoad"></image-upload>
                                 </form>
                             </div>

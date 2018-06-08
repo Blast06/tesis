@@ -20,6 +20,18 @@ class MessageController extends Controller
         return view('pages.message', compact('website'));
     }
 
+    public function createMessage()
+    {
+        $websites = Website::select('id', 'name', 'username')->get()->map(function ($website) {
+            return [
+                'label' => $website->name . " (@{$website->username})",
+                'value' => $website->id
+            ];
+        });
+
+        return view('pages.new_message', compact('websites'));
+    }
+
     /**
      * @return mixed
      * @throws \Throwable

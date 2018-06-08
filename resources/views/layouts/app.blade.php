@@ -51,8 +51,6 @@
             @yield('content')
         </main>
 
-        @include('modals.all')
-
         <footer class="main">
             <p>Tesis. Copyright &copy; Tesis.</p>
         </footer>

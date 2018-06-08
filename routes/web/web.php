@@ -64,6 +64,7 @@ Route::get('articles/{slug}', 'Client\ArticleController@show')->name('articles.s
  *  Public Chat
  */
 Route::get('messages', 'Client\MessageController@index')->name('messages.index');
+Route::get('messages/create', 'Client\MessageController@createMessage');
 Route::post('messages', 'Client\MessageController@storeUser')->name('messages.store');
 Route::get('messages/conversations', 'Client\MessageController@conversationUser');
 Route::get('messages/conversations/{conversation}', 'Client\MessageController@showConversation')->name('messages.show.conversation');

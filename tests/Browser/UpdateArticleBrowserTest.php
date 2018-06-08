@@ -23,7 +23,9 @@ class UpdateArticleBrowserTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($article, $subCategory) {
             $browser->loginAs($article->website->user)
                 ->visit("/client/{$article->website->username}/articles")
-                ->click('a.btn-warning')
+                ->maximize()
+                ->press('Acciones')
+                ->click('i.fas.fa-edit')
                 ->pause(10)
                 ->assertPathIs("/client/{$article->website->username}/articles/{$article->id}/edit")
                 ->type('name', 'Titulo de prueba')

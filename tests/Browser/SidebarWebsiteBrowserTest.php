@@ -29,6 +29,7 @@ class SidebarWebsiteBrowserTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user, $websites) {
             $browser->loginAs($user)
                 ->visit('/home')
+                ->maximize()
                 ->assertSee('SUBSCRIPCIONES')
                 ->assertSee($websites[0]->name)
                 ->assertSee($websites[1]->name)
@@ -58,6 +59,7 @@ class SidebarWebsiteBrowserTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user, $websites) {
             $browser->loginAs($user)
                 ->visit('/home')
+                ->maximize()
                 ->assertSee('SITIOS DE TRABAJO')
                 ->assertSee($websites[0]->name)
                 ->assertSee($websites[1]->name)

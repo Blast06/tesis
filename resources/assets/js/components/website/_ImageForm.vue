@@ -4,7 +4,19 @@
 
         <div class="col-md-6">
             <img :src="image" class="rounded mx-auto d-block mb-2 " width="286" height="180">
-            <form method="POST" enctype="multipart/form-data">
+
+            <div class="progress" v-if="uploading">
+                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                     role="progressbar"
+                     aria-valuenow="75"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     :style="{width: percentage + '%'}">
+                    @{{ percentage }} %
+                </div>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" v-else>
                 <image-upload name="image" class="form-control" @loaded="onLoad"></image-upload>
             </form>
         </div>
@@ -18,7 +30,9 @@
         components: { ImageUpload },
         data() {
             return {
-                image: this.image_path
+                image: this.image_path,
+                uploading: false,
+                percentage: 0,
             };
         },
         methods: {
@@ -27,10 +41,17 @@
                 this.persist(image.file);
             },
             persist(image) {
+                this.uploading = true;
                 let data = new FormData();
                 data.append('image', image);
-                axios.post(`/client/${this.username}/image`, data)
-                    .then(() => toastr.success('¡Cambió la imagen exitosamente!'));
+                axios.post(`/client/${this.username}/image`, data, {
+                    onUploadProgress: (progressEvent) => {
+                        this.percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    },
+                }).then(() => {
+                    this.uploading = false;
+                    toastr.success('¡Cambió la imagen exitosamente!')
+                });
             }
         }
     }

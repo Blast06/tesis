@@ -5,7 +5,9 @@
         components: { ImageUpload },
         data() {
             return {
-                avatar: this.avatar_path
+                avatar: this.avatar_path,
+                uploading: false,
+                percentage: 0,
             };
         },
         methods: {
@@ -14,10 +16,17 @@
                 this.persist(avatar.file);
             },
             persist(avatar) {
+                this.uploading = true;
                 let data = new FormData();
                 data.append('avatar', avatar);
-                axios.post(`/profiles`, data)
-                    .then(() => toastr.success('¡Cambió la imagen exitosamente!'));
+                axios.post(`/profiles`, data, {
+                    onUploadProgress: (progressEvent) => {
+                        this.percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    },
+                }).then(() => {
+                    this.uploading = false;
+                    toastr.success('¡Cambió la imagen exitosamente!')
+                });
             }
         }
     }
