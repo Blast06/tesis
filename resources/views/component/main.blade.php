@@ -14,3 +14,9 @@
     </div>
 
 @endsection
+
+@isset($scripts)
+    @push('scripts')
+        {{ $scripts }}
+    @endpush
+@endisset

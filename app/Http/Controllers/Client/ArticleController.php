@@ -5,25 +5,24 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateArticleRequest;
 use Symfony\Component\HttpFoundation\Response;
-use App\{Http\Requests\UpdateArticleRequest, Website, Article};
+use App\{DataTables\ClientArticleDataTable, Http\Requests\UpdateArticleRequest, Website, Article};
 
 class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param \App\DataTables\ClientArticleDataTable $dataTable
      * @param \App\Website $website
      * @return \Illuminate\Http\Response
      */
-    public function index(Website $website)
+    public function index(ClientArticleDataTable $dataTable, Website $website)
     {
         $header = 'Todos los articulos de '. $website->name;
 
         $breadcrumb_name = 'article';
 
-        $articles = Article::with(['subCategory'])->where('website_id', $website->id)->paginate();
-
-        return view('client.article.index', compact('header', 'breadcrumb_name', 'website', 'articles'));
+        return $dataTable->render('datatables.index', compact('header', 'breadcrumb_name', 'website'));
     }
 
     /**

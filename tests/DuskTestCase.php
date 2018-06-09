@@ -31,7 +31,7 @@ abstract class DuskTestCase extends BaseTestCase
     {
         $options = (new ChromeOptions)->addArguments([
             '--disable-gpu',
-            '--headless'
+            //'--headless'
         ]);
 
         return RemoteWebDriver::create(
@@ -39,5 +39,17 @@ abstract class DuskTestCase extends BaseTestCase
                 ChromeOptions::CAPABILITY, $options
             )
         );
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->browse(function (\Laravel\Dusk\Browser $browser) {
+            $browser->driver->manage()->deleteAllCookies();
+        });
     }
 }

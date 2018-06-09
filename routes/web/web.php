@@ -7,10 +7,7 @@ Route::get('/', 'MarketingController@index')->name('marketing.index');
  */
 Auth::routes();
 
-Route::get('logoutOthers', function () {
-   auth()->logoutOtherDevices('password');
-   return redirect()->back()->with(['flash_success' => 'las sesiónes activas en otros dispositivos ha sido cerrada']);
-})->middleware('auth');
+Route::post('logoutOthers', 'Auth\LogoutOtherController@logoutOtherDevices');
 
 Route::get('login/facebook', 'LoginSocialiteController@redirectToFacebook')->name('login.facebook');
 Route::get('login/facebook/callback', 'LoginSocialiteController@handleFacebookCallback')->name('login.facebook.callback');

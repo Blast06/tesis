@@ -52,7 +52,7 @@
         </main>
 
         <footer class="main">
-            <p>Tesis. Copyright &copy; Tesis.</p>
+            <p>{{ config('app.name') }}. Copyright &copy; {{ config('app.name') }}.</p>
         </footer>
     </div>
 </body>

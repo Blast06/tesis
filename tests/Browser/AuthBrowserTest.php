@@ -12,29 +12,25 @@ class AuthBrowserTest extends DuskTestCase
     use DatabaseMigrations;
 
     /**
-     *
      * @test
      * @return void
      * @throws \Throwable
      */
     function a_guest_can_login()
     {
-        $user = $this->create(User::class, [
-            'password' => 'secreto'
-        ]);
+        $user = $this->create(User::class);
 
         $this->browse(function (Browser $browser) use ($user){
             $browser->visit('/login')
                 ->type('email', $user->email)
-                ->type('password', 'secreto')
+                ->type('password', 'secret')
                 ->press('Acceder')
-                ->pause(10)
+                ->pause(50)
                 ->assertAuthenticated();
         });
     }
 
     /**
-     *
      * @test
      * @return void
      * @throws \Throwable
@@ -48,13 +44,12 @@ class AuthBrowserTest extends DuskTestCase
                 ->type('password', 'L@ravel1')
                 ->type('password_confirmation', 'L@ravel1')
                 ->press('Registro')
-                ->pause(10)
+                ->pause(50)
                 ->assertAuthenticated();
         });
     }
 
     /**
-     *
      * @test
      * @return void
      * @throws \Throwable
@@ -68,7 +63,7 @@ class AuthBrowserTest extends DuskTestCase
                 ->visit('/home')
                 ->clickLink($user->name)
                 ->clickLink('Cerrar sesión')
-                ->pause(10)
+                ->pause(50)
                 ->assertGuest();
         });
     }

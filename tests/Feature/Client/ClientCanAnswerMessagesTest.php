@@ -22,8 +22,10 @@ class ClientCanAnswerMessagesTest extends TestCase
                 'message' => "Como puedo Ayudarle?"
             ])->assertStatus(Response::HTTP_CREATED);
 
+        request()->session()->flush();
+
         $this->actingAs($message->conversation->user)
-            ->json('GET', "messages/conversations/{$message->conversation->id}")
+            ->json('GET', "/messages/conversations/{$message->conversation->id}")
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment([
                 'message' => $message->message,

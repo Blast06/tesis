@@ -17,7 +17,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$T85ChmrmSuGEjb0dznWiGeJM.Z5RsSZWzeIUGaEqoLp2QUwMMtaFW', // 1
+        'password' => 'secret',
         'verified_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
         'remember_token' => str_random(10),
     ];

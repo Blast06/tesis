@@ -45,12 +45,29 @@
 
                 @component('component.card')
 
-                    @slot('header_style', 'bg-white')
+                    @slot('header', 'Cerrar session en otros dispositivos')
 
-                    <form method="GET" action="{{ url('/logoutOthers') }}">
-                        <div class="form-group row mb-0 justify-content-center">
+                    @slot('header_style', 'bg-white font-weight-bold')
+
+                    <form method="POST" action="{{ url('/logoutOthers') }}">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña actual</label>
+
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary btn-block">
+                                <input id="password" type="password" class="form-control{{ $errors->has('password_current') ? ' is-invalid' : '' }}" name="password_current" required>
+
+                                @if ($errors->has('password_current'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password_current') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
                                     cerrar sesión en otros dispositivos
                                 </button>
                             </div>
