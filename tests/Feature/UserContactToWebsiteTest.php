@@ -11,63 +11,76 @@ class UserContactToWebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $website;
+
+    private $user;
+
+    private $messages = [
+        'Hola tengo una pregunta',
+        'Como puedo instalar laravel'
+    ];
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->website = $this->create(Website::class, [], 2);
+        $this->user = $this->create(User::class, [], 2);
+    }
+
     /** @test */
     function an_user_can_contact_a_website()
     {
-        $website = $this->create(Website::class);
+        $this->actingAs($this->user[0])
+            ->messageTo($this->website[0], $this->messages);
 
-        $messages = [
-            'Hola tengo una pregunta',
-            'hahahahahha oky....'
-        ];
-
-        $this->actingAs($user = $this->create(User::class))
-            ->messageTo($website, $messages);
-
-        $this->messageIsSaved($user, $website, $messages);
+        $this->messageIsSaved($this->user[0], $this->website[0], $this->messages);
     }
 
     /** @test */
     function an_user_can_contact_to_many_website()
     {
-        $websites = $this->create(Website::class, [], 2);
+        $this->actingAs($this->user[0])
+            ->messageTo($this->website[0], $this->messages)
+            ->messageTo($this->website[1], $this->messages);
 
-        $messages = [
-            'Hola tengo una pregunta',
-            'Puedo comprar el articulo',
-        ];
+        $this->messageIsSaved($this->user[0], $this->website[0], $this->messages);
 
-        $this->actingAs($user = $this->create(User::class))
-            ->messageTo($websites[0], $messages)
-            ->messageTo($websites[1], $messages);
-
-        $this->messageIsSaved($user, $websites[0], $messages);
-
-        $this->messageIsSaved($user, $websites[1], $messages);
+        $this->messageIsSaved($this->user[0], $this->website[1], $this->messages);
     }
 
     /** @test */
     function an_user_cannot_see_others_conversation_of_others_users()
     {
-        $this->markTestIncomplete();
+        $message = $this->create(Message::class, [], 2);
+
+        $mensaje1 = $message[0]->conversation->user->conversation[0]->messages;
+
+        $mensaje2 = $message[1]->conversation->user->conversation[0]->messages;
+
+        $this->assertCount(1, $mensaje1);
+        $this->assertCount(1, $mensaje2);
+
+        $this->assertFalse($mensaje1[0]['message'] === $mensaje2[0]['message']);
     }
 
     /** @test */
     function unique_conversation_on_user_to_website()
     {
-        $this->markTestIncomplete();
+        $this->actingAs($this->user[0])
+            ->messageTo($this->website[0], $this->messages)
+            ->messageTo($this->website[0], $this->messages);
+
+        $this->assertCount(1, $this->user[0]->conversation);
     }
 
     /** @test */
     function a_guest_cannot_contact_a_website()
     {
         $this->withExceptionHandling();
-        
-        $website = $this->create(Website::class);
 
         $this->json('POST', route('messages.store', [
             'message' => 'Hola tengo una pregunta',
-            'website_id' => $website->id
+            'website_id' => $this->website[0]->id
         ]))->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -97,7 +110,6 @@ class UserContactToWebsiteTest extends TestCase
 
     protected function messageIsSaved(User $user, Website $website, $messages)
     {
-
         $this->assertDatabaseHas('conversations', [
             'user_id' => $user->id,
             'website_id' => $website->id

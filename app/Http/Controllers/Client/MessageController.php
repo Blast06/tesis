@@ -62,9 +62,9 @@ class MessageController extends Controller
     public function storeWebsite(Website $website)
     {
         $newMessage = DB::transaction(function () use ($website){
-            $conversation = $website->conversation()->firstOrCreate([
-                'user_id' => request()->user_id,
-            ]);
+            $conversation = $website->conversation()
+                ->where('user_id', request()->user_id)
+                ->firstOrFail();
 
             return $conversation->messages()->create([
                 'user_send' => auth()->id(),

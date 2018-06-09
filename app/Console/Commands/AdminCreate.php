@@ -28,12 +28,13 @@ class AdminCreate extends Command
      */
     public function handle()
     {
-       User::create([
+        tap(User::create([
             'name' => 'Admin',
             'email' => 'admin@system.com',
             'password' => $this->secret('What is the password?'),
-        ]);
-
-        $this->info('Usuario admin creado correctamente!');
+            'verified_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+        ]),function ($user) {
+            $this->info("Usuario admin [{$user->email}] creado correctamente!");
+        });
     }
 }

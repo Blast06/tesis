@@ -1,9 +1,13 @@
 @component('component.main')
 
+    @include('partials.alert')
+
     <div class="row justify-content-center">
         <div class="col-md-8">
 
             @component('component.card')
+
+                @slot('card_style', 'mb-5')
 
                 @slot('header')
                    Perfil de {{ Auth::user()->name }}
@@ -38,6 +42,21 @@
                     </avatar-form>
 
             @endcomponent
+
+                @component('component.card')
+
+                    @slot('header_style', 'bg-white')
+
+                    <form method="GET" action="{{ url('/logoutOthers') }}">
+                        <div class="form-group row mb-0 justify-content-center">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    cerrar sesión en otros dispositivos
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                @endcomponent
 
         </div>
     </div>
