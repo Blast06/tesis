@@ -25,7 +25,7 @@ class AuthBrowserTest extends DuskTestCase
                 ->type('email', $user->email)
                 ->type('password', 'secret')
                 ->press('Acceder')
-                ->pause(50)
+                ->pause($this->pause_time)
                 ->assertAuthenticated();
         });
     }
@@ -44,7 +44,7 @@ class AuthBrowserTest extends DuskTestCase
                 ->type('password', 'L@ravel1')
                 ->type('password_confirmation', 'L@ravel1')
                 ->press('Registro')
-                ->pause(50)
+                ->pause($this->pause_time)
                 ->assertAuthenticated();
         });
     }
@@ -56,14 +56,12 @@ class AuthBrowserTest extends DuskTestCase
      */
     function an_user_can_logout()
     {
-        $user = $this->create(User::class);
-
-        $this->browse(function (Browser $browser) use ($user){
-            $browser->loginAs($user)
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($user = $this->create(User::class))
                 ->visit('/home')
                 ->clickLink($user->name)
                 ->clickLink('Cerrar sesión')
-                ->pause(50)
+                ->pause($this->pause_time)
                 ->assertGuest();
         });
     }

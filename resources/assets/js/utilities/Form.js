@@ -30,19 +30,6 @@ export default class Form {
     }
 
     /**
-     * Fetch all relevant data for the form.
-     */
-    formData() {
-        let data = new FormData();
-
-        for (let property in this.originalData) {
-            data.append(`${property}`,  this[property]);
-        }
-
-        return data;
-    }
-
-    /**
      * Reset the form errors.
      */
     resetErrors() {
@@ -65,7 +52,7 @@ export default class Form {
      * @param {string} url
      */
     post(url) {
-        return this.submit('post', url);
+        return this.submit("post", url);
     }
 
 
@@ -75,7 +62,7 @@ export default class Form {
      * @param {string} url
      */
     put(url) {
-        return this.submit('put', url);
+        return this.submit("put", url);
     }
 
 
@@ -85,7 +72,7 @@ export default class Form {
      * @param {string} url
      */
     patch(url) {
-        return this.submit('patch', url);
+        return this.submit("patch", url);
     }
 
 
@@ -95,7 +82,7 @@ export default class Form {
      * @param {string} url
      */
     delete(url) {
-        return this.submit('delete', url);
+        return this.submit("delete", url);
     }
 
     /**
@@ -107,28 +94,6 @@ export default class Form {
     submit(requestType, url) {
         return new Promise((resolve, reject) => {
             axios[requestType](url, this.data())
-                .then(response => {
-                    this.onSuccess(response.data);
-
-                    resolve(response.data);
-                })
-                .catch(error => {
-                    this.onFail(error.response.data);
-
-                    reject(error.response.data);
-                });
-        });
-    }
-
-    /**
-     * Submit the form.
-     *
-     * @param {string} requestType
-     * @param {string} url
-     */
-    submitFomData(requestType, url) {
-        return new Promise((resolve, reject) => {
-            axios[requestType](url, this.formData())
                 .then(response => {
                     this.onSuccess(response.data);
 

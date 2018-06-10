@@ -19,6 +19,13 @@
             </b-col>
         </div>
 
+        <ImageUpload :website="website"
+                     :article_id="article_id"
+                     v-on:successEvent="imageUploadEvent"
+                     v-on:errorEvent="imageUploadEvent"
+                     v-on:defaultEvent="imageUploadEvent">
+        </ImageUpload>
+
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">Categoria</label>
             <b-col md="6">
@@ -45,24 +52,6 @@
                 <small v-show="errors.has('categoria') || form.errors.has('sub_category_id')" style="color: #dc3545">
                     <b v-text="errors.first('categoria') || form.errors.first('sub_category_id')"></b>
                 </small>
-            </b-col>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-md-4 col-form-label text-md-right">Imagenes</label>
-
-            <b-col md="6">
-                <input type="file"
-                       name="file"
-                       class="form-control"
-                       ref="files"
-                       accept="image/*"
-                       multiple="true"
-                       @change="onChange">
-
-                <span v-show="form.errors.has('file')" class="invalid-feedback">
-                    <b v-text="form.errors.first('file')"></b>
-                </span>
             </b-col>
         </div>
 
@@ -160,7 +149,7 @@
 
 <script>
     import VueNumeric from 'vue-numeric'
-    import ImageUpload from '../ImageUpload';
+    import ImageUpload from './_ImageArticle';
 
     export default {
         name: "article-create",
@@ -171,6 +160,7 @@
                 categories: {},
                 loading: false,
                 disableStock: false,
+                article_id: '',
                 form: new Form({
                     name: '',
                     sub_category_id: '',
@@ -178,7 +168,6 @@
                     stock: '',
                     status: '',
                     description: '',
-                    file: '',
                 }),
                 options: [
                     { value: 'NO_DISPONIBLE', text: 'No disponible' },
@@ -197,26 +186,25 @@
                 this.$validator.validateAll().then((valid) => {
                     if (valid) {
                         this.loading = true;
-                        this.sendForm();
+                        this.form.post(`/client/${this.website.username}/articles`)
+                            .then((response) => {
+                                toastr.success("¡Articulo creado correctamente!");
+                                this.article_id = response.data.id;
+                            });
                     }
                 });
             },
-            sendForm() {
-                this.form.submitFomData('post', `/client/${this.website.username}/articles`)
-                    .then(() => {
-                        toastr.success("¡Creado correctamnet.!");
-                        this.loading = false;
-                        this.$validator.reset();
-                        this.form.resetInput();
-                        setTimeout(() => {
-                            this.GoToArticles();
-                            }, 2000);
-                    });
+            imageUploadEvent(message) {
+                toastr.info(message);
+                setTimeout(() => {
+                    this.goToArticles();
+                }, 2000);
             },
-            GoToArticles() {
+            goToArticles() {
+                this.clear();
                 swal({
                     title: "Seras redireccionado",
-                    text: "Si quieres seguir aquí \"creando productos\", ¡Precione ok!",
+                    text: "Si quieres seguir aquí \"creando articulos\", ¡Precione ok!",
                     buttons: true,
                     dangerMode: true,
                 }).then((redirect) => {
@@ -225,10 +213,11 @@
                     }
                 });
             },
-            onChange() {
-                let uploadedFiles = this.$refs.files.files;
-
-                this.form.file = uploadedFiles[0];
+            clear() {
+                this.loading = false;
+                this.article_id = '';
+                this.$validator.reset();
+                this.form.resetInput();
             }
         },
 

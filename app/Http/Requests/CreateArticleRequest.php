@@ -32,7 +32,6 @@ class CreateArticleRequest extends FormRequest
             'sub_category_id' => 'required|numeric',
             'status' => 'required|in:' .Article::STATUS_AVAILABLE. ',' .Article::STATUS_NOT_AVAILABLE. ',' .Article::STATUS_PRIVATE,
             'description' => 'required|min:20',
-            'file' => 'nullable|image:jpeg,png,gif,svg|max:5120'
         ];
     }
 
@@ -58,19 +57,8 @@ class CreateArticleRequest extends FormRequest
     public function createArticle(Website $website)
     {
         return tap($website->articles()->create($this->validated()), function ($article) {
-            $this->uploadImage($article);
             $this->usersNotificationToArticle($article);
         });
-    }
-
-    /**
-     * @param \App\Article $article
-     */
-    private function uploadImage(Article $article)
-    {
-        if($this->hasFile('file')) {
-            $article->addMedia(request()->file)->toMediaCollection('articles');
-        }
     }
 
     /**

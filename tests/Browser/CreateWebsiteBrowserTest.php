@@ -20,15 +20,13 @@ class CreateWebsiteBrowserTest extends DuskTestCase
      */
     function auth_user_can_create_website()
     {
-        $user = factory(User::class)->create();
-
-        $this->browse(function (Browser $browser) use ($user) {
-            $browser->loginAs($user)
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(factory(User::class)->create())
                 ->visit('/websites/create')
                 ->type('name',$this->name)
                 ->type('username',$this->username)
                 ->press('Crear Sitio')
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertPathIs('/client/newusername/dashboard');
         });
 
@@ -46,7 +44,7 @@ class CreateWebsiteBrowserTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/websites/create')
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertDontSee('Crear Sitio Web')
                 ->assertPathIs('/login');
         });
@@ -58,13 +56,11 @@ class CreateWebsiteBrowserTest extends DuskTestCase
      */
     function auth_user_can_see_errors_on_website_form()
     {
-        $user = factory(User::class)->create();
-
-        $this->browse(function (Browser $browser) use ($user) {
-            $browser->loginAs($user)
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(factory(User::class)->create())
                 ->visit('/websites/create')
                 ->press('Crear Sitio')
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertSee('El campo sitio es obligatorio.')
                 ->assertSee('El campo usuario es obligatorio.');
         });

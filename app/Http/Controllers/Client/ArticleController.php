@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateArticleRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\{CreateArticleRequest, UploadImageArticleRequest};
 use App\{DataTables\ClientArticleDataTable, Http\Requests\UpdateArticleRequest, Website, Article};
 
 class ArticleController extends Controller
@@ -100,5 +100,17 @@ class ArticleController extends Controller
         if (request()->ajax()) { return $this->responseOne($article, Response::HTTP_OK); }
 
         return redirect()->route('articles.index', $website);
+    }
+
+    /**
+     * Upload Image to the specified resource from storage.
+     *
+     * @param \App\Http\Requests\UploadImageArticleRequest $request
+     * @param \App\Website $website
+     * @return void
+     */
+    public function images(UploadImageArticleRequest $request, Website $website)
+    {
+        $this->responseOne($request->uploadImage($website), Response::HTTP_OK);
     }
 }

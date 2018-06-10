@@ -1,12 +1,17 @@
 @component('component.main')
     <div class="row">
-        <div class="col-md-12">
+
+        <div class="col-md-3 sidebar">
+            @include('client._sidebar')
+        </div>
+
+        <div class="col-md-9">
 
             {{ Breadcrumbs::render('create-article', $website) }}
 
             @component('component.card')
 
-                @slot('header','Describe tu producto, articulo o servicio')
+                @slot('header','Describeles a todos lo que les ofreces')
 
                 @slot('header_style', 'bg-white font-weight-bold')
 

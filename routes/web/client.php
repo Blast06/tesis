@@ -18,6 +18,7 @@ Route::middleware(['client'])->group(function () {
     Route::put('{website}/update', 'Client\WebsiteController@update')->name('websites.update');
     Route::post('{website}/image', 'Client\WebsiteController@image')->name('websites.image');
 
+    Route::post('{website}/articles/images', 'Client\ArticleController@images');
     Route::resource('{website}/articles', 'Client\ArticleController')->except('show');
 
     Route::get('{website}/messages', 'Client\MessageController@index');

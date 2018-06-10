@@ -2,7 +2,6 @@
     Acciones
 </button>
 <div class="dropdown-menu">
-    <a class="dropdown-item" href=""><i class="fas fa-image"> Imagenes</i></a>
     <a class="dropdown-item" href="{{ $article->url->edit }}"><i class="fas fa-edit"> Editar</i></a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="{{ $article->url->delete }}"

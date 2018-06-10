@@ -2,8 +2,7 @@
 
 namespace Tests;
 
-use App\User;
-use App\Website;
+use App\{User, Website};
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 

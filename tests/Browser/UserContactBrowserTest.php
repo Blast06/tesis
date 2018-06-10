@@ -2,12 +2,9 @@
 
 namespace Tests\Browser;
 
-use App\Conversation;
-use App\Message;
-use App\User;
-use App\Website;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+use App\{Conversation, User, Website};
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserContactBrowserTest extends DuskTestCase
@@ -33,7 +30,7 @@ class UserContactBrowserTest extends DuskTestCase
                 ->click('.v-select ul li', $website->username)
                 ->type('message', $message)
                 ->press('Enviar Mensaje')
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertPathIs('/messages')
                 ->assertSee($website->name)
                 ->assertSee($message);
@@ -67,7 +64,7 @@ class UserContactBrowserTest extends DuskTestCase
                 ->clickLink($conversation->user->name, 'h1')
                 ->type('.message input', $message)
                 ->click('.fa-play')
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertSee($message);
 
             $browser->loginAs($conversation->user)

@@ -18,10 +18,8 @@ class AddAvatarBrowserTest extends DuskTestCase
      */
     function an_user_can_change_avatar()
     {
-        $user = $this->create(User::class);
-
-        $this->browse(function (Browser $browser) use ($user){
-            $browser->loginAs($user)
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->create(User::class))
                 ->visit('/profiles')
                 ->attach('avatar', '/home/cristian/Imágenes/goku_blue_kaio_ken.png')
                 ->whenAvailable('.toast-success', function ($toast) {

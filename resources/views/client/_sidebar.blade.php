@@ -14,7 +14,7 @@
 <div class="list-group mb-5">
     <a href="{{ url("/client/{$website->username}/messages") }}" class="list">
         <i class="far fa-circle"></i>
-        Mensajes de clientes
+        Recibidos
     </a>
 </div>
 

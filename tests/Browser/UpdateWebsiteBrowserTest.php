@@ -2,9 +2,8 @@
 
 namespace Tests\Browser;
 
-use App\User;
-use App\Website;
 use Tests\DuskTestCase;
+use App\{User, Website};
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -26,7 +25,7 @@ class UpdateWebsiteBrowserTest extends DuskTestCase
                 ->assertSee("Editar {$website->name}")
                 ->type('name', 'New name')
                 ->press('Actualizar')
-                ->pause(100);
+                ->pause($this->pause_time);
         });
 
         $this->assertDatabaseHas('websites',[
@@ -47,7 +46,7 @@ class UpdateWebsiteBrowserTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($website, $user) {
             $browser->loginAs($user)
                 ->visit("client/{$website->username}/edit")
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertPathIs('/home');
         });
     }

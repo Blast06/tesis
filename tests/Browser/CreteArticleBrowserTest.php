@@ -2,10 +2,9 @@
 
 namespace Tests\Browser;
 
-use App\Website;
-use App\SubCategory;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+use App\{Website, SubCategory};
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CreteArticleBrowserTest extends DuskTestCase
@@ -35,7 +34,7 @@ class CreteArticleBrowserTest extends DuskTestCase
                 ->whenAvailable('.swal-modal', function ($swal) {
                     $swal->press('Cancel');
                 })
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertPathIs("/client/{$website->username}/articles");
         });
 
@@ -73,7 +72,7 @@ class CreteArticleBrowserTest extends DuskTestCase
                 ->whenAvailable('.swal-modal', function ($swal) {
                     $swal->press('OK');
                 })
-                ->pause(100)
+                ->pause($this->pause_time)
                 ->assertPathIs("/client/{$website->username}/articles/create");
         });
 
