@@ -26,7 +26,7 @@ class SubCategorySeeder extends Seeder
         // Deportes y Aire libre  ---- ID = 2
         SubCategory::insert([
             ['created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'category_id' => 2, 'name' => 'Deportes y Actividad Física', 'slug' => 'deportes-y-actividad-fisica'],
-            ['created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'category_id' => 2, 'name' => 'ropa-deportiva', 'slug' => 'ropa-deportiva'],
+            ['created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'category_id' => 2, 'name' => 'Ropa Deportiva', 'slug' => 'ropa-deportiva'],
         ]);
 
 

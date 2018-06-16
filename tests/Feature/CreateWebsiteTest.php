@@ -36,9 +36,10 @@ class CreateWebsiteTest extends TestCase
 
         $this->assertDatabaseHas('websites', $this->withData());
 
-        $this->assertDatabaseHas('user_website', [
+        $this->assertDatabaseHas('favorites', [
             'user_id' => $this->user->id,
-            'website_id' => (\App\Website::first())->id
+            'favorites_type' => "App\\Website",
+            'favorites_id' => $this->user->subscribedWebsite[0]->id,
         ]);
     }
 

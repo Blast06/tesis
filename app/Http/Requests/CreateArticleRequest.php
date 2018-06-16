@@ -78,7 +78,7 @@ class CreateArticleRequest extends FormRequest
     private function getUsersSubscribe(Article $article)
     {
         return $article->website->subscribedUsers()
-            ->where('id', '<>', $article->website->user_id)
+            ->where('user_id', '<>', $article->website->user_id)
             ->get();
     }
 

@@ -82,7 +82,9 @@ class Article extends Model implements HasMedia
             'image_path' => $this->image_path,
             'name' => $this->name,
             'website' => $this->website->name,
-            'price' => $this->status !== Article::STATUS_PRIVATE ? $this->price : null,
+            'price' => $this->status !== Article::STATUS_PRIVATE ? (int) $this->price : null,
+            'description' => $this->description,
+            'status' => $this->status,
             'updated_at' => $this->updated_at->format('l j F Y'),
             'sub_category' => $this->subCategory->name,
             'url_path' => $this->url->show

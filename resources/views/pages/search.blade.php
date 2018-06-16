@@ -24,6 +24,21 @@
                         </h5>
                     </ais-refinement-list>
 
+                    <ais-price-range attribute-name="price"
+                                     from-placeholder="Minimo"
+                                     to-placeholder="Maximo"
+                                     currency="RD$"
+                                     class="mt-5"
+                                     :class-names="{
+                                     'ais-price-range__input': 'form-control',
+                                     }">
+                        <slot>a</slot>
+                        <h5 slot="header">
+                            <i class="fas fa-dollar-sign"></i>
+                            Precio
+                        </h5>
+                    </ais-price-range>
+
                 </div>
 
                 <div class="col-md-9">
@@ -51,6 +66,20 @@
                                         @{{ totalResults }} encontrados en @{{ processingTime }}ms
                                     </template>
                                 </ais-stats>
+
+                                <ais-sort-by-selector :indices="[
+                                                        {name: 'articles', label: 'Relevancia'},
+                                                        {name: 'articles_price_asc', label: 'El precio más bajo'},
+                                                        {name: 'articles_price_desc', label: 'Precio más alto'}
+                                                        ]"
+                                                      class="mb-2"
+                                                      :class-names="{'ais-sort-by-selector': 'form-control' }"
+                                ></ais-sort-by-selector>
+
+                                <ais-results-per-page-selector :options="[10, 30, 50]"
+                                                               class="mb-2"
+                                                               :class-names="{'ais-results-per-page-selector': 'form-control' }">
+                                </ais-results-per-page-selector>
                             </div>
                         </div>
 
@@ -64,9 +93,42 @@
                                             <img class="rounded img-fluid mr-2" :src="result.image_path">
                                         </a>
                                         <div class="media-body">
-                                            <h5 class="mt-0">
+                                            <h5 class="mt-0 text-uppercase">
                                                 <ais-highlight :result="result" attribute-name="name"></ais-highlight>
                                             </h5>
+
+                                            <dl class="item-property">
+                                                <dt>Vendedor</dt>
+                                                <dd>
+                                                    <div class="float-md-right">
+                                                        <div class="stars">
+                                                            <span class="fa fa-star text-warning"></span>
+                                                            <span class="fa fa-star text-warning"></span>
+                                                            <span class="fa fa-star text-warning"></span>
+                                                            <span class="fa fa-star text-warning"></span>
+                                                            <span class="fa fa-star"></span>
+                                                        </div>
+                                                    </div>
+                                                    <p v-text="result.website"></p>
+                                                </dd>
+                                            </dl>
+
+                                            <p v-show="result.price !== null">
+                                               <span class="price h3" style="color: #e74430;">
+                                                    <span class="currency">RD$</span>
+                                                    <span class="num" v-text="result.price"></span>
+                                                </span>
+                                            </p>
+
+                                            <dl>
+                                                <dt>Estado</dt>
+                                                <dd><span class="badge badge-success" v-text="result.status"></span></dd>
+                                            </dl>
+
+                                            <dl>
+                                                <dt>Descripcion</dt>
+                                                <dd><p v-text="result.description"></p></dd>
+                                            </dl>
                                         </div>
                                     </div>
                                 </div>

@@ -10742,6 +10742,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_numeric__ = __webpack_require__("./node_modules/vue-numeric/dist/vue-numeric.min.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_numeric__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ImageArticle__ = __webpack_require__("./resources/assets/js/components/article/_ImageArticle.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ImageArticle___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ImageArticle__);
 //
 //
 //
@@ -10884,23 +10886,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "article-create",
+    name: "article-update",
     props: ['website', 'article'],
-    components: { VueNumeric: __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default.a },
+    components: { VueNumeric: __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default.a, ImageUpload: __WEBPACK_IMPORTED_MODULE_1__ImageArticle___default.a },
     data: function data() {
         return {
             categories: {},
             loading: false,
             disableStock: false,
+            article_id: '',
             form: new Form({
                 name: this.article.name,
                 sub_category_id: this.article.sub_category_id,
                 price: this.article.price,
-                stock: this.article.stock,
+                stock: this.article.stock !== null ? this.article.stock : 0,
                 status: this.article.status,
                 description: this.article.description
             }),
@@ -10923,11 +10934,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (valid) {
                     _this2.loading = true;
                     _this2.form.put('/client/' + _this2.website.username + '/articles/' + _this2.article.id).then(function () {
-                        toastr.success("¡Actualizado correctamnet.!");
+                        toastr.success("¡Actualizado correctamnet!");
                         _this2.loading = false;
+                        _this2.article_id = _this2.article.id;
                     });
                 }
             });
+        },
+        imageUploadEvent: function imageUploadEvent(message) {
+            toastr.info(message);
+            this.article_id = '';
+            setTimeout(function () {
+                window.location.reload();
+            }, 3000);
         }
     }
 
@@ -11009,11 +11028,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         successEvent: function successEvent(file, response) {
             this.clear();
-            this.$emit('successEvent', 'Imagenes subidas correctamente');
+            this.$emit('successEvent', 'Imagen subida correctamente');
         },
         errorEvent: function errorEvent(file, message, xhr) {
             this.clear();
-            this.$emit('errorEvent', 'Ha ocurrido un error al subir las imagenes');
+            this.$emit('errorEvent', 'Ha ocurrido un error al subir la imagen');
         },
         clear: function clear() {
             this.$refs.imageDropzone.removeAllFiles();
@@ -30913,7 +30932,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.sbx-custom {\n  display: inline-block;\n  position: relative;\n  width: 350px;\n  height: 30px;\n  white-space: nowrap;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  font-size: 12px;\n}\n.sbx-custom__wrapper {\n    width: 100%;\n    height: 100%;\n}\n.sbx-custom__input {\n    display: inline-block;\n    -webkit-transition: background .4s ease, -webkit-box-shadow .4s ease;\n    transition: background .4s ease, -webkit-box-shadow .4s ease;\n    transition: box-shadow .4s ease, background .4s ease;\n    transition: box-shadow .4s ease, background .4s ease, -webkit-box-shadow .4s ease;\n    border: 0;\n    border-radius: 14px;\n    -webkit-box-shadow: inset 0 0 0 0 #FFFFFF;\n            box-shadow: inset 0 0 0 0 #FFFFFF;\n    background: #FFFFFF;\n    padding: 0;\n    padding-left: 30px;\n    width: 100%;\n    height: 100%;\n    vertical-align: middle;\n    white-space: normal;\n    font-size: inherit;\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n}\n.sbx-custom__input::-webkit-search-decoration, .sbx-custom__input::-webkit-search-cancel-button, .sbx-custom__input::-webkit-search-results-button, .sbx-custom__input::-webkit-search-results-decoration {\n      display: none;\n}\n.sbx-custom__input:hover {\n      -webkit-box-shadow: inset 0 0 0 0 #e6e6e6;\n              box-shadow: inset 0 0 0 0 #e6e6e6;\n}\n.sbx-custom__input:focus, .sbx-custom__input:active {\n      outline: 0;\n      -webkit-box-shadow: inset 0 0 0 0 #FFFFFF;\n              box-shadow: inset 0 0 0 0 #FFFFFF;\n      background: #FFFFFF;\n}\n.sbx-custom__input::-webkit-input-placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__input:-ms-input-placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__input::-ms-input-placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__input::placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__submit {\n    position: absolute;\n    top: 0;\n    right: inherit;\n    left: 0;\n    margin: 0;\n    border: 0;\n    border-radius: 14.4px 0 0 14.4px;\n    background-color: rgba(255, 255, 255, 0);\n    padding: 0;\n    width: 30px;\n    height: 100%;\n    vertical-align: middle;\n    text-align: center;\n    font-size: inherit;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.sbx-custom__submit::before {\n      display: inline-block;\n      margin-right: -4px;\n      height: 100%;\n      vertical-align: middle;\n      content: '';\n}\n.sbx-custom__submit:hover, .sbx-custom__submit:active {\n      cursor: pointer;\n}\n.sbx-custom__submit:focus {\n      outline: 0;\n}\n.sbx-custom__submit svg {\n      width: 20px;\n      height: 20px;\n      vertical-align: middle;\n      fill: #CCCCCC;\n}\n.sbx-custom__reset {\n    display: none;\n    position: absolute;\n    top: 2px;\n    right: 2px;\n    margin: 0;\n    border: 0;\n    background: none;\n    cursor: pointer;\n    padding: 0;\n    font-size: inherit;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    fill: rgba(0, 0, 0, 0.5);\n}\n.sbx-custom__reset:focus {\n      outline: 0;\n}\n.sbx-custom__reset svg {\n      display: block;\n      margin: 4px;\n      width: 18px;\n      height: 18px;\n}\n.sbx-custom__input:valid ~ .sbx-custom__reset {\n    display: block;\n    -webkit-animation-name: sbx-reset-in;\n            animation-name: sbx-reset-in;\n    -webkit-animation-duration: .15s;\n            animation-duration: .15s;\n}\n@-webkit-keyframes sbx-reset-in {\n0% {\n    -webkit-transform: translate3d(-20%, 0, 0);\n            transform: translate3d(-20%, 0, 0);\n    opacity: 0;\n}\n100% {\n    -webkit-transform: none;\n            transform: none;\n    opacity: 1;\n}\n}\n@keyframes sbx-reset-in {\n0% {\n    -webkit-transform: translate3d(-20%, 0, 0);\n            transform: translate3d(-20%, 0, 0);\n    opacity: 0;\n}\n100% {\n    -webkit-transform: none;\n            transform: none;\n    opacity: 1;\n}\n}\n", ""]);
+exports.push([module.i, "\n.sbx-custom {\n  display: inline-block;\n  position: relative;\n  width: 350px;\n  height: 30px;\n  white-space: nowrap;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  font-size: 12px;\n}\n.sbx-custom__wrapper {\n    width: 100%;\n    height: 100%;\n}\n.sbx-custom__input {\n    display: inline-block;\n    -webkit-transition: background .4s ease, -webkit-box-shadow .4s ease;\n    transition: background .4s ease, -webkit-box-shadow .4s ease;\n    transition: box-shadow .4s ease, background .4s ease;\n    transition: box-shadow .4s ease, background .4s ease, -webkit-box-shadow .4s ease;\n    border: 0;\n    border-radius: 14px;\n    -webkit-box-shadow: inset 0 0 0 0 #FFFFFF;\n            box-shadow: inset 0 0 0 0 #FFFFFF;\n    background: #FFFFFF;\n    padding: 0;\n    padding-left: 30px;\n    width: 100%;\n    height: 100%;\n    vertical-align: middle;\n    white-space: normal;\n    font-size: inherit;\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n}\n.sbx-custom__input::-webkit-search-decoration, .sbx-custom__input::-webkit-search-cancel-button, .sbx-custom__input::-webkit-search-results-button, .sbx-custom__input::-webkit-search-results-decoration {\n      display: none;\n}\n.sbx-custom__input:hover {\n      -webkit-box-shadow: inset 0 0 0 0 #e6e6e6;\n              box-shadow: inset 0 0 0 0 #e6e6e6;\n}\n.sbx-custom__input:focus, .sbx-custom__input:active {\n      outline: 0;\n      -webkit-box-shadow: inset 0 0 0 0 #FFFFFF;\n              box-shadow: inset 0 0 0 0 #FFFFFF;\n      background: #FFFFFF;\n}\n.sbx-custom__input::-webkit-input-placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__input:-ms-input-placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__input::-ms-input-placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__input::placeholder {\n      color: #CCCCCC;\n}\n.sbx-custom__submit {\n    position: absolute;\n    top: 0;\n    right: inherit;\n    left: 0;\n    margin: 0;\n    border: 0;\n    border-radius: 14.4px 0 0 14.4px;\n    background-color: rgba(255, 255, 255, 0);\n    padding: 0;\n    width: 30px;\n    height: 100%;\n    vertical-align: middle;\n    text-align: center;\n    font-size: inherit;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.sbx-custom__submit::before {\n      display: inline-block;\n      margin-right: -4px;\n      height: 100%;\n      vertical-align: middle;\n      content: '';\n}\n.sbx-custom__submit:hover, .sbx-custom__submit:active {\n      cursor: pointer;\n}\n.sbx-custom__submit:focus {\n      outline: 0;\n}\n.sbx-custom__submit svg {\n      width: 20px;\n      height: 20px;\n      vertical-align: middle;\n      fill: #CCCCCC;\n}\n.sbx-custom__reset {\n    display: none;\n    position: absolute;\n    top: 2px;\n    right: 2px;\n    margin: 0;\n    border: 0;\n    background: none;\n    cursor: pointer;\n    padding: 0;\n    font-size: inherit;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n    fill: rgba(0, 0, 0, 0.5);\n}\n.sbx-custom__reset:focus {\n      outline: 0;\n}\n.sbx-custom__reset svg {\n      display: block;\n      margin: 4px;\n      width: 18px;\n      height: 18px;\n}\n.sbx-custom__input:valid ~ .sbx-custom__reset {\n    display: block;\n    -webkit-animation-name: sbx-reset-in;\n            animation-name: sbx-reset-in;\n    -webkit-animation-duration: .15s;\n            animation-duration: .15s;\n}\n@-webkit-keyframes sbx-reset-in {\n0% {\n    -webkit-transform: translate3d(-20%, 0, 0);\n            transform: translate3d(-20%, 0, 0);\n    opacity: 0;\n}\n100% {\n    -webkit-transform: none;\n            transform: none;\n    opacity: 1;\n}\n}\n@keyframes sbx-reset-in {\n0% {\n    -webkit-transform: translate3d(-20%, 0, 0);\n            transform: translate3d(-20%, 0, 0);\n    opacity: 0;\n}\n100% {\n    -webkit-transform: none;\n            transform: none;\n    opacity: 1;\n}\n}\n@media only screen and (max-width: 600px) {\n.sbx-custom {\n      width: 0 !important;\n}\n}\n@media only screen and (min-width: 600px) {\n.sbx-custom {\n      width: 0 !important;\n}\n}\n@media only screen and (min-width: 768px) {\n.sbx-custom {\n      width: 200px !important;\n}\n}\n@media only screen and (min-width: 992px) {\n.sbx-custom {\n      width: 250px !important;\n}\n}\n@media only screen and (min-width: 1200px) {\n.sbx-custom {\n      width: 300px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -108001,6 +108020,15 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _c("ImageUpload", {
+        attrs: { website: _vm.website, article_id: _vm.article_id },
+        on: {
+          successEvent: _vm.imageUploadEvent,
+          errorEvent: _vm.imageUploadEvent,
+          defaultEvent: _vm.imageUploadEvent
+        }
+      }),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "form-group row" },
@@ -108455,7 +108483,8 @@ var render = function() {
           )
         ])
       ])
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []

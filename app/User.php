@@ -23,7 +23,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'token'
+        'name', 'email', 'password', 'token', 'verified_at'
     ];
 
     /**
@@ -110,7 +110,7 @@ class User extends Authenticatable implements HasMedia
 
     public function subscribedWebsite()
     {
-        return $this->belongsToMany(Website::class);
+        return $this->morphedByMany(Website::class, 'favorites');
     }
 
     public function subscribeTo(Website $website)
@@ -125,7 +125,7 @@ class User extends Authenticatable implements HasMedia
 
     public function isSubscribedTo(Website $website): bool
     {
-        return $this->subscribedWebsite()->where('website_id', $website->id)->count() > 0;
+        return $this->subscribedWebsite()->where('favorites_id', $website->id)->count() > 0;
     }
 
     public function conversation()

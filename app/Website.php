@@ -83,7 +83,7 @@ class Website extends Model implements HasMedia
 
     public function subscribedUsers()
     {
-        return $this->belongsToMany(User::class);
+        return $this->morphToMany(User::class, 'favorites');
     }
 
     public function articles()

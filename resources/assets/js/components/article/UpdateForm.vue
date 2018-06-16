@@ -19,6 +19,13 @@
             </b-col>
         </div>
 
+        <ImageUpload :website="website"
+                     :article_id="article_id"
+                     v-on:successEvent="imageUploadEvent"
+                     v-on:errorEvent="imageUploadEvent"
+                     v-on:defaultEvent="imageUploadEvent">
+        </ImageUpload>
+
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">Categoria</label>
             <b-col md="6">
@@ -141,22 +148,24 @@
 </template>
 
 <script>
-    import VueNumeric from 'vue-numeric'
+    import VueNumeric from 'vue-numeric';
+    import ImageUpload from './_ImageArticle';
 
     export default {
-        name: "article-create",
+        name: "article-update",
         props: ['website', 'article'],
-        components: { VueNumeric },
+        components: { VueNumeric, ImageUpload },
         data() {
             return {
                 categories: {},
                 loading: false,
                 disableStock: false,
+                article_id: '',
                 form: new Form({
                     name: this.article.name,
                     sub_category_id: this.article.sub_category_id,
                     price: this.article.price,
-                    stock: this.article.stock,
+                    stock: this.article.stock !== null ? this.article.stock : 0,
                     status: this.article.status,
                     description: this.article.description,
                 }),
@@ -178,11 +187,19 @@
                     if (valid) {
                         this.loading = true;
                         this.form.put(`/client/${this.website.username}/articles/${this.article.id}`).then(() => {
-                            toastr.success("¡Actualizado correctamnet.!");
+                            toastr.success("¡Actualizado correctamnet!");
                             this.loading = false;
+                            this.article_id = this.article.id;
                         });
                     }
                 });
+            },
+            imageUploadEvent(message) {
+                toastr.info(message);
+                this.article_id = '';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
             },
         },
 

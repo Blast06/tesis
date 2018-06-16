@@ -62,11 +62,11 @@
             },
             successEvent(file, response) {
                 this.clear();
-                this.$emit('successEvent', 'Imagenes subidas correctamente');
+                this.$emit('successEvent', 'Imagen subida correctamente');
             },
             errorEvent(file, message, xhr) {
                 this.clear();
-                this.$emit('errorEvent', 'Ha ocurrido un error al subir las imagenes');
+                this.$emit('errorEvent', 'Ha ocurrido un error al subir la imagen');
             },
             clear() {
                 this.$refs.imageDropzone.removeAllFiles();

@@ -38,9 +38,10 @@ class SubscribeToWebsiteTest extends TestCase
             ->assertSuccessful()
             ->assertExactJson(['message' => 'subscribe']);
 
-        $this->assertDatabaseHas('user_website', [
-            'user_id' => $this->user->id,
-            'website_id' =>$this->website->id
+        $this->assertDatabaseHas('favorites', [
+            'favorites_type' => "App\\Website",
+            'favorites_id' => $this->website->id,
+            'user_id' => $this->user->id
         ]);
     }
 
@@ -54,9 +55,10 @@ class SubscribeToWebsiteTest extends TestCase
             ->assertSuccessful()
             ->assertExactJson(['message' => 'unsubscribe']);
 
-        $this->assertDatabaseMissing('user_website', [
-            'user_id' => $this->user->id,
-            'website_id' =>$this->website->id
+        $this->assertDatabaseMissing('favorites', [
+            'favorites_type' => "App\\Website",
+            'favorites_id' => $this->website->id,
+            'user_id' => $this->user->id
         ]);
     }
 

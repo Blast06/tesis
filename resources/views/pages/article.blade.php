@@ -2,32 +2,128 @@
 
     <div class="row">
 
-        <div class="d-none d-md-block col-md-3 sidebar">
-            @include('partials.sidenav')
-        </div>
-
-        <div class="col-md-9">
+        <div class="col-md-12">
 
             @component('component.card')
-                @slot('header', $article->name)
+                @slot('header_style', 'bg-white')
 
-                <img class="" src="{{ $article->image_path }}">
-                <br>
-                <button>
-                    Perdir articulo
-                </button>
-                {{ $article->price }}
-                <br>
-                <a class="btn btn-info btn-sm" @click="$modal.show('send-message')">
-                    Contactar Proveedor
-                </a>
-                {{ $article->website->name }}
-                <br>
-                {{ $article->description }}
+                <div class="row">
+                    <aside class="col-sm-5 border-right">
+                        <article class="gallery-wrap">
+                            <div class="img-big-wrap">
+                                <div> <a href="#"><img src="{{ $article->image_path }}"></a></div>
+                            </div>
+                            <div class="img-small-wrap">
+                                <div class="item-gallery"> <img src="{{ $article->image_path }}"> </div>
+                                <div class="item-gallery"> <img src="{{ $article->image_path }}"> </div>
+                                <div class="item-gallery"> <img src="{{ $article->image_path }}"> </div>
+                                <div class="item-gallery"> <img src="{{ $article->image_path }}"> </div>
+                            </div>
+                        </article>
+                    </aside>
+                    <aside class="col-sm-7">
+                        <article class="card-body p-5">
+                            <h3 class="title mb-3">{{ $article->name }}</h3>
 
+                            <div class="rating">
+                                <div class="stars">
+                                    <span class="fa fa-star text-warning"></span>
+                                    <span class="fa fa-star text-warning"></span>
+                                    <span class="fa fa-star text-warning"></span>
+                                    <span class="fa fa-star text-warning"></span>
+                                    <span class="fa fa-star"></span>
+                                </div>
+                                <span class="review-no">41 opiniones</span>
+                            </div>
+                            <br>
+
+                            @if($article->status !== \App\Article::STATUS_PRIVATE)
+                                <p class="price-detail-wrap">
+                                    <span class="price h3" style="color: #e74430;">
+                                        <span class="currency">RD$</span>
+                                        <span class="num">{{ $article->price }}</span>
+                                    </span>
+                                </p>
+                            @endif
+
+                            <dl>
+                                <dt>Estado</dt>
+                                @php
+                                    $badge = [
+                                     \App\Article::STATUS_AVAILABLE => 'badge-success',
+                                     \App\Article::STATUS_NOT_AVAILABLE => 'badge-danger',
+                                     \App\Article::STATUS_PRIVATE => 'badge-info'];
+                                @endphp
+                                <dd><span class="badge {{ $badge[$article->status] }}">{{ $article->status }}</span></dd>
+                            </dl>
+
+                            <dl class="item-property">
+                                <dt>Description</dt>
+                                <dd><p>{{ $article->description }}</p></dd>
+                            </dl>
+
+                            <dl class="param param-feature">
+                                <dt>Entrega</dt>
+                                <dd>Sola la vega</dd>
+                            </dl>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <dl class="param param-inline">
+                                        <dt>Cantidad: </dt>
+                                        <dd>
+                                            <select class="form-control form-control-sm" style="width:70px;">
+                                                <option> 1 </option>
+                                                <option> 2 </option>
+                                                <option> 3 </option>
+                                            </select>
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <a href="#" class="btn btn-primary text-uppercase">Ordenar ahora </a>
+                            <a href="#" class="btn btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Añadir al carrito </a>
+                            <a href="#" class="btn btn-outline-info text-uppercase"> <i class="fas fa-heart"></i></a>
+                        </article>
+                    </aside>
+                </div>
             @endcomponent
 
         </div>
     </div>
 
+    @slot('scripts')
+        <style>
+            .gallery-wrap .img-big-wrap img {
+                height: 450px;
+                width: auto;
+                display: inline-block;
+                cursor: zoom-in;
+            }
+
+
+            .gallery-wrap .img-small-wrap .item-gallery {
+                width: 60px;
+                height: 60px;
+                border: 1px solid #ddd;
+                margin: 7px 2px;
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            .gallery-wrap .img-small-wrap {
+                text-align: center;
+            }
+            .gallery-wrap .img-small-wrap img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: cover;
+                border-radius: 4px;
+                cursor: zoom-in;
+            }
+        </style>
+    @endslot
 @endcomponent

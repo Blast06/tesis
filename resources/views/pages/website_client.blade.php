@@ -1,51 +1,64 @@
 @component('component.main')
+    @slot('content_class', 'app-content')
+
     <div class="row justify-content-center">
+
         <div class="col-md-10">
-            <div class="jumbotron">
-                <h1>Banner</h1>
+
+            <div class="jumbotron mb-0">
+                <h1 class="text-center">Foto de portada</h1>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <img src="{{ $website->image_path }}" class="rounded mr-3"width="200" height="200">
-                        </div>
-                        <div class="col-lg-6">
-                            <h3 class="mt-5">{{ $website->name }}</h3>
-                            <p>{{ $website->subscribedUsers()->count() }} suscriptores</p>
-                        </div>
+            @component('component.card')
+                @slot('card_style', 'mt-0 mb-5')
+
+                @slot('header_style', 'd-none')
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <img src="{{ $website->image_path }}" class="img-thumbnail rounded mx-auto d-block" width="200" height="200">
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="float-right mt-5">
-                        @if(auth()->check())
-                            <subscribe-button
-                                    subscribed="{{ auth()->user()->isSubscribedTo($website) }}"
-                                    username="{{ $website->username }}">
-                            </subscribe-button>
 
-                            <br>
+                    <div class="col-md-6 text-center">
+                        <h3 class="mt-5">
+                            {{ $website->name }}
+                            <small class="text-muted">{{ $website->subscribedUsers()->count() }} suscriptores</small>
+                        </h3>
 
-                            @if(auth()->id() === $website->user_id)
-                                <a href="{{ route('client.dashboard', $website) }}" class="btn btn-light">Dashboard</a>
+                        <p>A description list is perfect for defining terms.</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="mt-5 text-center">
+                            @if(auth()->check())
+                                <subscribe-button
+                                        subscribed="{{ auth()->user()->isSubscribedTo($website) }}"
+                                        username="{{ $website->username }}">
+                                </subscribe-button>
+
+                                <br>
+
+                                @if(auth()->id() === $website->user_id)
+                                    <a href="{{ route('client.dashboard', $website) }}" class="btn btn-light text-uppercase">Dashboard</a>
+                                @endif
                             @endif
-                        @endif
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Informacion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Preguntas Frecuentes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contacto</a>
-                </li>
-            </ul>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Informacion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Preguntas Frecuentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                </ul>
+            @endcomponent
 
 
             @if($website->articles->count())

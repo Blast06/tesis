@@ -24,5 +24,7 @@ Route::middleware(['client'])->group(function () {
     Route::get('{website}/messages', 'Client\MessageController@index');
     Route::post('{website}/messages', 'Client\MessageController@storeWebsite');
     Route::get('{website}/messages/conversations', 'Client\MessageController@conversationWebsite');
+
+    Route::delete('{website}/medias/{media}', 'Client\MediaController@destroy');
 });
 

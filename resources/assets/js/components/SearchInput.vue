@@ -250,5 +250,26 @@
 
     .sbx-custom{
         @include searchbox($custom...);
+
+
+        @media only screen and (max-width: 600px) {
+            width: 0 !important;
+        }
+
+        @media only screen and (min-width: 600px) {
+            width: 0 !important;
+        }
+
+        @media only screen and (min-width: 768px) {
+            width: 200px !important;
+        }
+
+        @media only screen and (min-width: 992px) {
+            width: 250px !important;
+        }
+
+        @media only screen and (min-width: 1200px) {
+            width: 300px !important;
+        }
     }
 </style>
