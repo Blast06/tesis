@@ -13,7 +13,7 @@ class CreateUserWebsiteTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_website', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('website_id');
             $table->unique(['user_id', 'website_id']);
