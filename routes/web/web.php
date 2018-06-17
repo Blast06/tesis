@@ -54,13 +54,17 @@ Route::post('websites', 'Client\WebsiteController@store')->name('websites.store'
 Route::get('websites/feed', 'Client\WebsiteController@feed')->name('websites.feed');
 Route::get('websites/create', 'Client\WebsiteController@create')->name('websites.create');
 Route::get('{website}', 'Client\WebsiteController@show')->name('websites.show')->fallback();
-Route::get('{website}/unsubscribe', 'Client\WebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
 Route::get('{website}/subscribe', 'Client\WebsiteController@subscribe')->name('websites.subscribe')->fallback();
+Route::get('{website}/unsubscribe', 'Client\WebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
 
 /*
  * Public Articles Route
  */
 Route::get('articles/{slug}', 'Client\ArticleController@show')->name('articles.show');
+Route::get('{article}/favorite', 'Client\ArticleController@favorite')->name('articles.favorite')->fallback();
+Route::get('{article}/unfavorite', 'Client\ArticleController@unfavorite')->name('articles.unfavorite')->fallback();
+Route::get('{article}/add/{quantity}/car', 'Client\ArticleController@addToCar')->name('articles.add.car')->fallback();
+Route::get('{article}/remove/car', 'Client\ArticleController@removeToCar')->name('articles.remove.car')->fallback();
 
 /*
  *  Public Chat

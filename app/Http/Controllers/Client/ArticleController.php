@@ -9,6 +9,11 @@ use App\{DataTables\ClientArticleDataTable, Http\Requests\UpdateArticleRequest, 
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -112,5 +117,41 @@ class ArticleController extends Controller
     public function images(UploadImageArticleRequest $request, Website $website)
     {
         $this->responseOne($request->uploadImage($website), Response::HTTP_OK);
+    }
+
+    /**
+     * Favorite Article to user
+     *
+     * @param \App\Article $article
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function favorite(Article $article)
+    {
+        auth()->user()->favoriteTo($article);
+        return $this->responseMessage("Article {$article->name} is now favorited");
+    }
+
+    /**
+     * Unfavorite Article to user
+     *
+     * @param \App\Article $article
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function unfavorite(Article $article)
+    {
+        auth()->user()->unfavoriteTo($article);
+        return $this->responseMessage("Article {$article->name} is now unfavorited");
+    }
+
+    public function addToCar(Article $article, $quantity)
+    {
+        auth()->user()->addArticleToCar($article, $quantity);
+        return $this->responseMessage("Article {$article->name} add to shopping car");
+    }
+
+    public function removeToCar(Article $article)
+    {
+        auth()->user()->removeArticleToCar($article);
+        return $this->responseMessage("Article {$article->name} remove to shopping car");
     }
 }

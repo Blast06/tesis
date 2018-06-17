@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\{Notifications\NewArticleNotification, User, Website, Article, SubCategory};
 
-class subscribersReceiveNotificationArticleTest extends TestCase
+class SubscribersReceiveNotificationArticleTest extends TestCase
 {
     use RefreshDatabase;
 

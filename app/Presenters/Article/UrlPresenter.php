@@ -60,4 +60,14 @@ class UrlPresenter
             'article' => $this->article
         ]);
     }
+
+    public function favorite()
+    {
+        return route('articles.favorite', $this->article);
+    }
+
+    public function unfavorite()
+    {
+        return route('articles.unfavorite', $this->article);
+    }
 }

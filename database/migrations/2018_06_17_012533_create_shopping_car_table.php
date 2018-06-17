@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFavoriteTable extends Migration
+class CreateShoppingCarTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateFavoriteTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->morphs('favorites');
+        Schema::create('shopping_car', function (Blueprint $table) {
+            $table->integer('quantity');
             $table->unsignedInteger('user_id');
-            $table->unique(['favorites_type', 'favorites_id', 'user_id']);
+            $table->unsignedInteger('article_id');
+            $table->unique(['user_id', 'article_id']);
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('article_id')->references('id')->on('articles');
         });
     }
 
@@ -29,6 +31,6 @@ class CreateFavoriteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorites');
+        Schema::dropIfExists('shopping_car');
     }
 }

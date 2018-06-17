@@ -42,6 +42,8 @@ Vue.component("article-update", require("./components/article/UpdateForm"));
 Vue.component("message-main", require("./components/message/Main"));
 Vue.component("message-create", require("./components/message/Send_message"));
 Vue.component('v-select', vSelect);
+Vue.component("favorite-button", require("./components/article/FavoriteButton"));
+Vue.component("shopping-button", require("./components/article/ShoppingButton"));
 
 new Vue({
     el: '#app',

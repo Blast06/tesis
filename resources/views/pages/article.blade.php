@@ -68,25 +68,13 @@
                             </dl>
 
                             <hr>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <dl class="param param-inline">
-                                        <dt>Cantidad: </dt>
-                                        <dd>
-                                            <select class="form-control form-control-sm" style="width:70px;">
-                                                <option> 1 </option>
-                                                <option> 2 </option>
-                                                <option> 3 </option>
-                                            </select>
-                                        </dd>
-                                    </dl>
-                                </div>
 
-                            </div>
-                            <hr>
-                            <a href="#" class="btn btn-primary text-uppercase">Ordenar ahora </a>
-                            <a href="#" class="btn btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Añadir al carrito </a>
-                            <a href="#" class="btn btn-outline-info text-uppercase"> <i class="fas fa-heart"></i></a>
+                            @if(auth()->check())
+                                <shopping-button
+                                    :favorited="{{ json_encode(auth()->user()->isFavoritedTo($article)) }}"
+                                    :article="{{ json_encode($article) }}">
+                                </shopping-button>
+                            @endif
                         </article>
                     </aside>
                 </div>

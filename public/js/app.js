@@ -10735,6 +10735,125 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/article/FavoriteButton.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "favorite-button",
+    props: ['favorited', 'article'],
+    data: function data() {
+        return {
+            isFavorited: !Boolean(this.favorited),
+            loading: false
+        };
+    },
+
+    methods: {
+        favorite: function favorite() {
+            var _this = this;
+
+            this.loading = true;
+
+            axios.get('/' + this.article.id + '/favorite').then(function () {
+                _this.loading = false;
+                _this.favoritedChangeStatus();
+            });
+        },
+        unfavorite: function unfavorite() {
+            var _this2 = this;
+
+            this.loading = true;
+
+            axios.get('/' + this.article.id + '/unfavorite').then(function () {
+                _this2.loading = false;
+                _this2.favoritedChangeStatus();
+            });
+        },
+        favoritedChangeStatus: function favoritedChangeStatus() {
+            this.isFavorited = !this.isFavorited;
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/article/ShoppingButton.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "shopping-button",
+    props: ['article', 'favorited'],
+    data: function data() {
+        return {
+            quantity: this.article.stock !== null ? this.article.stock : 100,
+            selectQuantity: 1,
+            loading: false
+        };
+    },
+
+    methods: {
+        addCar: function addCar() {
+            var _this = this;
+
+            this.loading = true;
+
+            axios.get('/' + this.article.id + '/add/' + this.selectQuantity + '/car').then(function () {
+                _this.loading = false;
+            });
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/article/UpdateForm.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -107886,6 +108005,57 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4c9164c4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/article/FavoriteButton.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("main", { staticStyle: { display: "inline" } }, [
+    _vm.isFavorited
+      ? _c(
+          "button",
+          {
+            staticClass: "btn btn-light",
+            class: _vm.loading ? "loader" : "",
+            on: { click: _vm.favorite }
+          },
+          [
+            _c("i", {
+              staticClass: "far fa-heart",
+              staticStyle: { color: "#495057" }
+            })
+          ]
+        )
+      : _c(
+          "button",
+          {
+            staticClass: "btn btn-light",
+            class: _vm.loading ? "loader" : "",
+            on: { click: _vm.unfavorite }
+          },
+          [
+            _c("i", {
+              staticClass: "fas fa-heart",
+              staticStyle: { color: "#e74430" }
+            })
+          ]
+        )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4c9164c4", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-5eec1dc1\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/website/SubscribeButton.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -109065,6 +109235,100 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-66b0dc90", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7087266a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/article/ShoppingButton.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "main",
+    [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-5" }, [
+          _c("dl", { staticClass: "param param-inline" }, [
+            _c("dt", [_vm._v("Cantidad: ")]),
+            _vm._v(" "),
+            _c("dd", [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectQuantity,
+                      expression: "selectQuantity"
+                    }
+                  ],
+                  staticClass: "form-control form-control-sm",
+                  staticStyle: { width: "70px" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectQuantity = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                _vm._l(_vm.quantity, function(number) {
+                  return _c("option", [_vm._v(_vm._s(number))])
+                })
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c(
+        "a",
+        { staticClass: "btn btn-primary text-uppercase", attrs: { href: "#" } },
+        [_vm._v("Ordenar ahora ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-primary text-uppercase",
+          class: _vm.loading ? "loader" : "",
+          on: { click: _vm.addCar }
+        },
+        [
+          _c("i", { staticClass: "fas fa-shopping-cart" }),
+          _vm._v(" Añadir al carrito\n    ")
+        ]
+      ),
+      _vm._v(" "),
+      _c("favorite-button", {
+        attrs: { favorited: _vm.favorited, article: _vm.article }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7087266a", module.exports)
   }
 }
 
@@ -121227,6 +121491,8 @@ Vue.component("article-update", __webpack_require__("./resources/assets/js/compo
 Vue.component("message-main", __webpack_require__("./resources/assets/js/components/message/Main.vue"));
 Vue.component("message-create", __webpack_require__("./resources/assets/js/components/message/Send_message.vue"));
 Vue.component('v-select', __WEBPACK_IMPORTED_MODULE_5_vue_select___default.a);
+Vue.component("favorite-button", __webpack_require__("./resources/assets/js/components/article/FavoriteButton.vue"));
+Vue.component("shopping-button", __webpack_require__("./resources/assets/js/components/article/ShoppingButton.vue"));
 
 new Vue({
     el: '#app',
@@ -121607,6 +121873,102 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-66b0dc90", Component.options)
   } else {
     hotAPI.reload("data-v-66b0dc90", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/article/FavoriteButton.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/article/FavoriteButton.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4c9164c4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/article/FavoriteButton.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/article/FavoriteButton.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4c9164c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-4c9164c4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/article/ShoppingButton.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/article/ShoppingButton.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7087266a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/article/ShoppingButton.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/article/ShoppingButton.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7087266a", Component.options)
+  } else {
+    hotAPI.reload("data-v-7087266a", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

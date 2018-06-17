@@ -128,9 +128,49 @@ class User extends Authenticatable implements HasMedia
         return $this->subscribedWebsite()->where('favorites_id', $website->id)->count() > 0;
     }
 
+    public function favoriteArticle()
+    {
+        return $this->morphedByMany(Article::class, 'favorites');
+    }
+
+    public function favoriteTo(Article $article)
+    {
+        $this->favoriteArticle()->attach($article);
+    }
+
+    public function unfavoriteTo(Article $article)
+    {
+        $this->favoriteArticle()->detach($article);
+    }
+
+    public function isFavoritedTo(Article $article): bool
+    {
+        return $this->favoriteArticle()->where('favorites_id', $article->id)->count() > 0;
+    }
+
     public function conversation()
     {
         return $this->hasMany(Conversation::class);
+    }
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class, 'shopping_car');
+    }
+
+    public function addArticleToCar(Article $article, $quantity)
+    {
+        try{
+            $this->articles()->attach($article, ['quantity' => $quantity]);
+        } catch (\Exception $exception) {
+            $this->articles()->updateExistingPivot($article, ['quantity' => $quantity]);
+        }
+
+    }
+
+    public function removeArticleToCar(Article $article)
+    {
+        $this->articles()->detach($article);
     }
 
     /**
