@@ -44,6 +44,8 @@ Vue.component("message-create", require("./components/message/Send_message"));
 Vue.component('v-select', vSelect);
 Vue.component("favorite-button", require("./components/article/FavoriteButton"));
 Vue.component("shopping-button", require("./components/article/ShoppingButton"));
+Vue.component("shopping-cart", require("./components/car/shopping_car"));
+Vue.component("cart-notification", require("./components/UserCartNotifications"));
 
 new Vue({
     el: '#app',

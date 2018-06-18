@@ -10,7 +10,7 @@
 
     <li><a href="{{ route('messages.index') }}"><i class="fas fa-comment fa-lg"></i></a></li>
 
-    <li><a href=""><i class="fas fa-shopping-cart fa-lg"></i></a></li>
+    <cart-notification ::user_id="{{auth()->id()}}"></cart-notification>
 
     <li class="dropdown community-dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="padding: 22px 10px; !important;">

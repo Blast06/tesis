@@ -10447,6 +10447,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/UserCartNotifications.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "user-cart-notifications",
+    props: ['user_id'],
+    data: function data() {
+        return {
+            count: 0
+        };
+    },
+    created: function created() {
+        this.countShoppinCarItems();
+        this.listEvent();
+    },
+
+    methods: {
+        countShoppinCarItems: function countShoppinCarItems() {
+            var _this = this;
+
+            axios.get('/shopping/cart/count').then(function (response) {
+                _this.count = response.data.count;
+            });
+        },
+        listEvent: function listEvent() {}
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/UserNotifications.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -11156,6 +11198,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         clear: function clear() {
             this.$refs.imageDropzone.removeAllFiles();
             this.hasIamge = false;
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/car/shopping_car.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_numeric__ = __webpack_require__("./node_modules/vue-numeric/dist/vue-numeric.min.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_numeric__);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "shopping_car",
+    props: ['articles'],
+    components: { VueNumeric: __WEBPACK_IMPORTED_MODULE_0_vue_numeric___default.a },
+    data: function data() {
+        return {
+            items: this.articles
+        };
+    },
+
+    methods: {
+        quantityChange: function quantityChange(article) {
+            axios.get('/' + article.pivot.article_id + '/add/' + article.pivot.quantity + '/car').catch(function (error) {
+                console.log(error);
+            });
+        },
+        removeArticleToCar: function removeArticleToCar(article) {
+            var _this = this;
+
+            axios.get('/' + article.pivot.article_id + '/remove/car').then(function () {
+                var index = _this.items.findIndex(function (item) {
+                    return item.id === article.id;
+                });
+                _this.items.splice(index, 1);
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 });
@@ -31007,21 +31092,6 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "/* ------ FONTS ------ */\n.font-name {\n  color: #000000;\n  font-size: 1em;\n  font-weight: inherit;\n  padding-bottom: 3px;\n}\n.font-preview {\n  color: #444444;\n  font-size: 0.9em;\n  font-weight: inherit;\n}\n.font-online {\n  color: #777777;\n  font-size: 0.8em;\n  font-weight: inherit;\n}\n.wrap {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  height: 100vh;\n  min-width: 600px;\n  max-width: 1200px;\n  margin: auto;\n  -webkit-box-shadow: 0 2px 2px #aaaaaa;\n          box-shadow: 0 2px 2px #aaaaaa;\n}\n.wrap i {\n    width: 60px;\n    margin: auto;\n}\n@media (min-width: 1200px) {\n.wrap {\n      margin-bottom: 2vh;\n      margin-top: 25px;\n      height: calc(98vh - 25px);\n}\n}\n@media (max-width: 600px) {\n.wrap {\n      height: calc(100vh - 0.4em);\n}\n}\n\n/* ------ LEFT SIDE ------ */\n.left {\n  width: 400px;\n}\n.left .profile {\n    width: 100%;\n    height: 60px;\n    background: #eeeeee;\n    border-right: 1px solid #dbdbdb;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n}\n.left .profile img {\n      width: 40px;\n      height: 40px;\n      margin: 10px;\n      border-radius: 50%;\n}\n.left .profile .icons {\n      color: #777777;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n.left .wrap-search {\n    width: 100%;\n    height: 45px;\n    background: #fbfbfb;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n.left .wrap-search .search {\n      width: calc(100% - 20px);\n      height: 30px;\n      background: #ffffff;\n      margin: auto;\n      border: 1px solid #eeeeee;\n      border-radius: 5px;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n.search i {\n  widht: 60px;\n}\n.search i, .wrap-message i {\n  color: #aaaaaa;\n  text-align: center;\n}\n.input-search {\n  width: 100%;\n  border: none;\n}\n.input-search:focus {\n  outline: none;\n}\n.contact-list {\n  background-color: #ffffff;\n  width: 100%;\n  height: calc(100% - 105px);\n  overflow-y: auto;\n}\n.contact, .active-contact, .new-message-contact {\n  height: 70px;\n  background-color: #ffffff;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.contact img, .active-contact img, .new-message-contact img {\n  width: 50px;\n  height: 50px;\n  margin: 10px;\n  border-radius: 50%;\n}\n.active-contact {\n  background-color: #ebebeb;\n}\n.contact:hover, .new-message-contact:hover {\n  background-color: #f5f5f5;\n}\n.new-message-contact {\n  font-weight: bold;\n}\n.contact-preview {\n  width: 100%;\n  height: 70px;\n  border-bottom: 1px solid #eeeeee;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  overflow: hidden;\n}\n.contact-text {\n  height: 40px;\n  margin: auto 0;\n}\n.contact-text h1 {\n    margin-bottom: 0.5rem;\n    font-family: inherit;\n    font-weight: 500;\n    line-height: 0.9;\n    color: inherit;\n}\n.contact-time {\n  width: 55px;\n  color: rgba(0, 0, 0, 0.4);\n  font-size: 0.8em;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  padding: 10px;\n  border-bottom: 1px solid #eeeeee;\n}\n.new-message {\n  background: #09d261;\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: auto;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  color: white;\n}\n.new-message p {\n  margin: auto;\n}\n\n/* ------ RIGHT SIDE ------ */\n.right {\n  min-width: calc(100% - 400px);\n}\n.right .chat-head {\n    background-color: #eeeeee;\n    width: 100%;\n    height: 60px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n.right .chat-head img {\n      width: 40px;\n      height: 40px;\n      margin: 10px;\n      border-radius: 50%;\n}\n.right .chat-head i {\n      color: #aaaaaa;\n      width: 60px;\n      margin: auto;\n      text-align: center;\n}\n.right .chat-head .chat-name {\n      width: 100%;\n      margin: auto;\n}\n.right .wrap-chat {\n    height: calc(100% - 120px);\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n.right .wrap-chat .chat {\n      background-color: #e5ddd5;\n      background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/background.png);\n      width: 100%;\n      padding: 0px 10%;\n      padding-top: 7px;\n      overflow-y: auto;\n}\n.right .wrap-chat .information {\n      width: 100%;\n      position: relative;\n      background: #f7f7f7;\n      display: none;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      overflow: auto;\n}\n.right .wrap-chat .information div {\n        background: #ffffff;\n        padding: 10px;\n        margin-bottom: 20px;\n}\n.right .wrap-chat .information img {\n        width: 200px;\n        height: 200px;\n        margin: 20px auto;\n        border-radius: 50%;\n        float: left;\n}\n.right .wrap-chat .information h1 {\n        color: #009688;\n        font-size: 14px;\n        margin-bottom: 5px;\n}\n.listGroups {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 0px !important;\n}\n.listGroups img {\n  width: 40px;\n  height: 40px;\n  margin: 0px 10px 0px 0px;\n}\n.listGroups p {\n  margin: auto 0px;\n}\n\n/* ------ CHAT ------ */\n.chat-bubble {\n  border-radius: 7px;\n  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);\n  padding: 5px 7px;\n  width: 350px;\n  max-width: 100%;\n  position: relative;\n}\n.you {\n  background: #ffffff;\n  margin: 0px auto 10px 0px;\n}\n.me {\n  background: #dcf8c6;\n  margin: 0px 0px 10px auto;\n}\n.your-mouth {\n  width: 0;\n  height: 0;\n  border-bottom: 10px solid white;\n  border-left: 10px solid transparent;\n  position: absolute;\n  bottom: 10px;\n  left: -10px;\n}\n.my-mouth {\n  width: 0;\n  height: 0;\n  border-bottom: 10px solid #dcf8c6;\n  border-right: 10px solid transparent;\n  position: absolute;\n  bottom: 10px;\n  left: 100%;\n}\n.content {\n  margin: 0.5em 0;\n  line-height: 120%;\n  font-size: 0.9em;\n}\n.content img {\n  width: 100%;\n}\n.time {\n  color: rgba(0, 0, 0, 0.4);\n  font-size: 0.6em;\n  text-align: right;\n  margin-top: -10px;\n}\n.pink {\n  color: #EE33AA;\n}\n.green {\n  color: #44FF66;\n}\n.orange {\n  color: #FF8811;\n}\n.wrap-message {\n  width: 100%;\n  height: 60px;\n  background: #f1f1f1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.message {\n  width: 100%;\n  height: 45px;\n  background: #ffffff;\n  margin: auto;\n  border: 1px solid #eeeeee;\n  border-radius: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.input-message {\n  width: 100%;\n  margin: 0px 10px;\n  border: none;\n}\n.input-message:focus {\n  outline: none;\n}\n\n/* ------ SCROLLBAR ------ */\nbody::-webkit-scrollbar, .contact-list::-webkit-scrollbar, .chat::-webkit-scrollbar, .information::-webkit-scrollbar {\n  width: 0.4em;\n  height: 0.4em;\n}\nbody::-webkit-scrollbar-thumb, .contact-list::-webkit-scrollbar-thumb, .chat::-webkit-scrollbar-thumb, .information::-webkit-scrollbar-thumb {\n  background-color: rgba(0, 0, 0, 0.2);\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0045994\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/UserNotifications.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -107399,6 +107469,37 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-14fb1e14\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserCartNotifications.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", [
+    _c("a", { attrs: { href: "/shopping/cart" } }, [
+      _c("i", { staticClass: "fas fa-shopping-cart fa-lg" }),
+      _vm._v(" "),
+      _vm.count > 0
+        ? _c("span", { staticClass: "badge badge-pill badge-danger" }, [
+            _vm._v(_vm._s(_vm.count))
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-14fb1e14", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b795a0f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/message/Send_message.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -109422,7 +109523,7 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-c0045994\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserNotifications.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-c0045994\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserNotifications.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -110004,33 +110105,6 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ce1a810\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ce1a810\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0045994\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/UserNotifications.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0045994\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/UserNotifications.vue");
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("3b663886", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0045994\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UserNotifications.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0045994\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UserNotifications.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -121493,6 +121567,8 @@ Vue.component("message-create", __webpack_require__("./resources/assets/js/compo
 Vue.component('v-select', __WEBPACK_IMPORTED_MODULE_5_vue_select___default.a);
 Vue.component("favorite-button", __webpack_require__("./resources/assets/js/components/article/FavoriteButton.vue"));
 Vue.component("shopping-button", __webpack_require__("./resources/assets/js/components/article/ShoppingButton.vue"));
+Vue.component("shopping-cart", __webpack_require__("./resources/assets/js/components/car/shopping_car.vue"));
+Vue.component("cart-notification", __webpack_require__("./resources/assets/js/components/UserCartNotifications.vue"));
 
 new Vue({
     el: '#app',
@@ -121784,25 +121860,69 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/UserCartNotifications.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/UserCartNotifications.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-14fb1e14\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserCartNotifications.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/UserCartNotifications.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-14fb1e14", Component.options)
+  } else {
+    hotAPI.reload("data-v-14fb1e14", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/components/UserNotifications.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c0045994\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/assets/js/components/UserNotifications.vue")
-}
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
 var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/UserNotifications.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-c0045994\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserNotifications.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-c0045994\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserNotifications.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
-var __vue_scopeId__ = "data-v-c0045994"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -122069,6 +122189,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-0308f5ba", Component.options)
   } else {
     hotAPI.reload("data-v-0308f5ba", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/car/shopping_car.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/car/shopping_car.vue")
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/car/shopping_car.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-30b6c0ef", Component.options)
+  } else {
+    hotAPI.reload("data-v-30b6c0ef", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

@@ -76,6 +76,12 @@ Route::get('messages/conversations', 'Client\MessageController@conversationUser'
 Route::get('messages/conversations/{conversation}', 'Client\MessageController@showConversation')->name('messages.show.conversation');
 
 /*
+ * Car
+ */
+Route::get('shopping/cart', 'CartController@index')->name('cart.index');
+Route::get('shopping/cart/count', 'CartController@countCartArticle')->name('cart.count');
+
+/*
  * Recursos API Web
  */
 Route::get('web/api/categories', 'CategoryController@categories')->middleware('auth');

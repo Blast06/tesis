@@ -155,7 +155,7 @@ class User extends Authenticatable implements HasMedia
 
     public function articles()
     {
-        return $this->belongsToMany(Article::class, 'shopping_car');
+        return $this->belongsToMany(Article::class, 'shopping_car')->withPivot('quantity');
     }
 
     public function addArticleToCar(Article $article, $quantity)
