@@ -21,11 +21,12 @@ Route::post('login', 'Api\AuthController@login');
 Route::post('signup', 'Api\AuthController@signup');
 Route::post('logout', 'Api\AuthController@logout');
 Route::post('refresh', 'Api\AuthController@refresh');
+Route::post('show', 'Api\AuthController@show');
 Route::post('me', 'Api\AuthController@me');
 
 /*
  * Articles
  */
-Route::resource('articles','Api\ArticleController')->only('index', 'show');
+Route::resource('articles','Api\ArticleController')->only('index', 'show','create');
 
 

@@ -28,6 +28,8 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => "Email or password does't exist"], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        // return response()->json(auth()->user(), Response::HTTP_OK);
 		
        return $this->respondWithToken($token);
     }
@@ -50,6 +52,23 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json(auth()->user(), Response::HTTP_OK);
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
+
+
+        if(!$user){
+            return Response::json([
+                'error' => [
+                    'message' => "No se encontro el usuario"
+                ]
+                ], 404);
+        }
+
+        return Response::json($user);
+
     }
 
     /**
