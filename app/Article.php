@@ -22,7 +22,7 @@ class Article extends Model implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'price', 'stock', 'sub_category_id', 'status', 'website_id', 'description', 'slug'
+        'name', 'price', 'stock', 'sub_category_id', 'status', 'website_id', 'description', 'location', 'slug'
     ];
 
     protected $hidden = [
@@ -92,7 +92,8 @@ class Article extends Model implements HasMedia
             'status' => $this->status,
             'updated_at' => $this->updated_at->format('l j F Y'),
             'sub_category' => $this->subCategory->name,
-            'url_path' => $this->url->show
+            'url_path' => $this->url->show,
+            'location' => $this->description != null ? $this->description : 'Sin definir',
         ];
     }
 }

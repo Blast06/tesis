@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use App\{Article, User};
 use Illuminate\Foundation\Testing\RefreshDatabase;

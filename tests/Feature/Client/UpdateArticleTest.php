@@ -45,7 +45,7 @@ class UpdateArticleTest extends TestCase
             ->json('put', $articles[1]->url->update, $this->withData([
                 'sub_category_id' => $articles[1]->sub_category_id
             ]))
-            ->assertStatus( Response::HTTP_FOUND)
+            ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
 
         $this->assertDatabaseMissing('articles', $this->withData());

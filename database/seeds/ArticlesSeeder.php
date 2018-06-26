@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\{SubCategory, User, Website, Article};
+use App\{User, Website, Article};
 
 class ArticlesSeeder extends Seeder
 {
@@ -15,6 +15,8 @@ class ArticlesSeeder extends Seeder
         User::truncate();
         Website::truncate();
         Article::truncate();
+        Artisan::call('medialibrary:clean');
+        Artisan::call('medialibrary:clear');
 
         factory(User::class)->create([
             'name' => 'cristian gomez',
@@ -22,8 +24,14 @@ class ArticlesSeeder extends Seeder
         ]);
 
         factory(User::class)->times(4)->create();
-        
-        factory(Website::class)->times(10)->create();
-        factory(Article::class)->times(100)->create();
+
+        factory(Website::class)->times(10)->create()->each(function ($website) {
+            $website->addMediaFromUrl(\Faker\Provider\Image::imageUrl(640, 480, 'city'))->toMediaCollection('websites');
+            $website->addMediaFromUrl(\Faker\Provider\Image::imageUrl(1920, 480, 'abstract'))->toMediaCollection('websites_banner');
+        });
+
+        factory(Article::class)->times(100)->create()->each(function ($article){
+            $article->addMediaFromUrl(\Faker\Provider\Image::imageUrl(640, 480, 'business'))->toMediaCollection('articles');
+        });
     }
 }

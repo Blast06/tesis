@@ -29,6 +29,7 @@ class UpdateWebsiteBrowserTest extends DuskTestCase
         });
 
         $this->assertDatabaseHas('websites',[
+            'id' => $website->id,
             'name' => 'New name',
             'username' => $website->username
         ]);

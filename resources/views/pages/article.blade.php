@@ -25,23 +25,28 @@
                         <article class="card-body p-5">
                             <h3 class="title mb-3">{{ $article->name }}</h3>
 
-                            <div class="rating">
-                                <div class="stars">
-                                    <span class="fa fa-star text-warning"></span>
-                                    <span class="fa fa-star text-warning"></span>
-                                    <span class="fa fa-star text-warning"></span>
-                                    <span class="fa fa-star text-warning"></span>
-                                    <span class="fa fa-star"></span>
-                                </div>
-                                <span class="review-no">41 opiniones</span>
-                            </div>
+                            <dl class="item-property">
+                                <dt>Vendedor</dt>
+                                <dd>
+                                    <div class="float-md-right">
+                                        <div class="stars">
+                                            <span class="fa fa-star text-warning"></span>
+                                            <span class="fa fa-star text-warning"></span>
+                                            <span class="fa fa-star text-warning"></span>
+                                            <span class="fa fa-star text-warning"></span>
+                                            <span class="fa fa-star"></span>
+                                        </div>
+                                    </div>
+                                    <p>{{ $article->website->name }}</p>
+                                </dd>
+                            </dl>
                             <br>
 
                             @if($article->status !== \App\Article::STATUS_PRIVATE)
                                 <p class="price-detail-wrap">
                                     <span class="price h3" style="color: #e74430;">
                                         <span class="currency">RD$</span>
-                                        <span class="num">{{ $article->price }}</span>
+                                        <span class="num">{{ number_format($article->price,2,'.',',') }}</span>
                                     </span>
                                 </p>
                             @endif
@@ -86,17 +91,16 @@
     @slot('scripts')
         <style>
             .gallery-wrap .img-big-wrap img {
-                height: 450px;
+                height: 320px !important;
                 width: auto;
                 display: inline-block;
                 cursor: zoom-in;
             }
 
-
             .gallery-wrap .img-small-wrap .item-gallery {
                 width: 60px;
                 height: 60px;
-                border: 1px solid #ddd;
+                //border: 1px solid #ddd;
                 margin: 7px 2px;
                 display: inline-block;
                 overflow: hidden;

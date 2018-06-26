@@ -15,7 +15,7 @@ class Website extends Model implements HasMedia
     use SoftDeletes, Searchable, HasMediaTrait;
 
     protected $fillable = [
-        'name', 'username', 'phone', 'address', 'private', 'domain'
+        'name', 'username', 'description', 'phone', 'address', 'private', 'domain'
     ];
 
     protected $hidden = [
@@ -23,7 +23,7 @@ class Website extends Model implements HasMedia
     ];
 
     protected $appends = [
-        'image_path', 'url'
+        'image_path', 'banner_path', 'url'
     ];
 
     // Mutators
@@ -72,6 +72,13 @@ class Website extends Model implements HasMedia
         return !empty($this->getFirstMediaUrl('websites', 'thumb'))
             ?  $this->getFirstMediaUrl('websites', 'thumb')
             : asset('img/website.png');
+    }
+
+    public function getBannerPathAttribute()
+    {
+        return !empty($this->getFirstMediaUrl('websites_banner', 'thumb'))
+            ?  $this->getFirstMediaUrl('websites_banner', 'thumb')
+            : asset('img/banner.png');
     }
 
     // Relationships

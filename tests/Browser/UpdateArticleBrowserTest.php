@@ -25,11 +25,12 @@ class UpdateArticleBrowserTest extends DuskTestCase
                 ->visit("/client/{$article->website->username}/articles/{$article->id}/edit")
                 ->type('name', 'Titulo de prueba')
                 ->click('.custom-control-label')
-                ->type('price', 100)
-                ->type('stock', 1)
+                ->type('price', 400)
+                ->type('stock', 100)
                 ->select('status', 'DISPONIBLE')
                 ->type('description', 'Descripcion de prueba....')
-                ->pressAndWaitFor('Actualizar',10);
+                ->press('Actualizar')
+                ->pause($this->pause_time);
         });
 
         $this->assertDatabaseHas('articles', [
@@ -37,8 +38,8 @@ class UpdateArticleBrowserTest extends DuskTestCase
             'name' => 'Titulo de prueba',
             'slug' => 'titulo-de-prueba',
             'status' => 'DISPONIBLE',
-            'price' => 100.00,
-            'stock' => 1,
+            'description' => 'Descripcion de prueba....',
+            'stock' => 100,
             'website_id' => $article->website->id
         ]);
     }

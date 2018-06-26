@@ -29,7 +29,27 @@ $factory->define(App\Website::class, function (Faker $faker) {
         'username' => $faker->unique()->userName,
         'phone' => $faker->phoneNumber,
         'address' => $faker->address,
-        'user_id' => \App\User::all()->random()->id ?? factory(App\User::class)->create()
+        'user_id' => !\App\User::all()->isEmpty() && !App::environment('testing') ? \App\User::all()->random()->id : factory(App\User::class)->create(),
+        'location' => $faker->randomElement([
+            'Santo Domingo',
+            'Santiago',
+            'San Pedro de Macorís',
+            'Puerto Plata',
+            'La Romana',
+            'San Cristóbal',
+            'San Francisco de Macorís',
+            'Higuey',
+            'Barahona',
+            'Bani',
+            'San Juan',
+            'Bonao',
+            'Moca',
+            'Azua',
+            'Cotui',
+            'La vega',
+            'Nagua',
+            'Salcedo'
+        ]),
     ];
 });
 
@@ -42,7 +62,7 @@ $factory->define(App\Category::class, function (Faker $faker) {
 $factory->define(App\SubCategory::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
-        'category_id' => \App\Category::all()->random()->id ?? factory(\App\Category::class)->create()
+        'category_id' => !\App\Category::all()->isEmpty() && !App::environment('testing') ? \App\Category::all()->random()->id : factory(\App\Category::class)->create()
     ];
 });
 
@@ -51,10 +71,11 @@ $factory->define(App\Article::class, function (Faker $faker) {
         'name' => $faker->jobTitle,
         'description' => $faker->paragraph,
         'price' => $faker->randomElement([$faker->randomNumber(3), $faker->randomNumber(4), $faker->randomNumber(5)]),
-        'sub_category_id' => \App\SubCategory::all()->random()->id ?? factory(\App\SubCategory::class)->create(),
-        'website_id' => \App\Website::all()->random()->id ?? factory(\App\Website::class)->create(),
+        'sub_category_id' => !\App\SubCategory::all()->isEmpty() && !App::environment('testing') ? \App\SubCategory::all()->random()->id : factory(\App\SubCategory::class)->create(),
+        'website_id' => !\App\Website::all()->isEmpty() && !App::environment('testing') ? \App\Website::all()->random()->id : factory(\App\Website::class)->create(),
         'status' => \App\Article::STATUS_AVAILABLE
     ];
+
 });
 
 $factory->define(App\Conversation::class, function (Faker $faker) {

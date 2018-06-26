@@ -26,7 +26,7 @@
                <p>
                    <span class="price h3" style="color: #e74430;">
                         <span class="currency">RD$</span>
-                        <span class="num">{{ $article->price }}</span>
+                        <span class="num">{{ number_format($article->price,2,'.',',') }}</span>
                     </span>
                </p>
 

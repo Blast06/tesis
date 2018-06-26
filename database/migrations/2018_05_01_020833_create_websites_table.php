@@ -17,8 +17,10 @@ class CreateWebsitesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('username')->unique();
+            $table->string('description')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('location')->nullable();
             $table->boolean('private')->default(false);
             $table->string('domain')->nullable();
             $table->unsignedInteger('user_id');

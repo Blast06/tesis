@@ -19,7 +19,9 @@ class UserContactBrowserTest extends DuskTestCase
     function an_user_can_contact_to_website()
     {
         $user = $this->create(User::class);
-        $website = $this->create(Website::class);
+        $website = $this->create(Website::class, [
+            'name' => 'Cristian'
+        ]);
 
         $this->browse(function (Browser $browser) use($user, $website){
             $message = 'Esto es una prueba';
@@ -51,27 +53,28 @@ class UserContactBrowserTest extends DuskTestCase
     {
         $conversation = $this->create(Conversation::class);
 
-        $message = $conversation->messages()->create([
+        $user_message_to_website = $conversation->messages()->create([
             'user_send' => $conversation->user->id,
-            'message' => 'Hola '. $conversation->website->name,
+            'message' => 'Hola, '.$conversation->website->name,
         ]);
 
-        $this->browse(function (Browser $browser) use($conversation, $message){
-            $message = 'Saludos '. $conversation->user->name;
+        $this->browse(function (Browser $browser) use($conversation, $user_message_to_website){
+            $website_message_to_user = 'Saludos, '.$conversation->user->name;
 
             $browser->loginAs($conversation->website->user)
                 ->visit("/client/{$conversation->website->username}/messages")
                 ->clickLink($conversation->user->name, 'h1')
-                ->type('.message input', $message)
+                ->type('.message input', $website_message_to_user)
                 ->click('.fa-play')
                 ->pause($this->pause_time)
-                ->assertSee($message);
+                ->assertSee($user_message_to_website->message)
+                ->assertSee($website_message_to_user);
 
             $browser->loginAs($conversation->user)
                 ->visit('/messages')
                 ->clickLink($conversation->website->name, 'h1')
-                ->assertSee('Hola '. $conversation->website->name)
-                ->assertSee($message);
+                ->assertSee($website_message_to_user)
+                ->assertSee($user_message_to_website->message);
         });
     }
 }

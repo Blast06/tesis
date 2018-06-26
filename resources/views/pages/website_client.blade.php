@@ -5,8 +5,15 @@
 
         <div class="col-md-10">
 
-            <div class="jumbotron mb-0">
-                <h1 class="text-center">Foto de portada</h1>
+            <div class="jumbotron mb-0" style="
+            background: url('{{ $website->banner_path  }}');
+            no-repeat: center;
+            -webkit-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            -o-background-size: 100% 100%;
+            background-size: 100% 100%;
+            border-radius: 0;
+            height: 240px">
             </div>
 
             @component('component.card')
@@ -23,10 +30,13 @@
                     <div class="col-md-6 text-center">
                         <h3 class="mt-5">
                             {{ $website->name }}
+                            <br>
                             <small class="text-muted">{{ $website->subscribedUsers()->count() }} suscriptores</small>
                         </h3>
 
-                        <p>A description list is perfect for defining terms.</p>
+                        @isset($website->description)
+                        <p>{{ $website->description }}</p>
+                        @endisset
                     </div>
 
                     <div class="col-md-3">
@@ -49,13 +59,16 @@
 
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Informacion</a>
+                        <a class="nav-link active" href="#">
+                            Informacion
+                            <i class="fas fa-info-circle"></i>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Preguntas Frecuentes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contacto</a>
+                        <a class="nav-link" href="{{ url('/messages/create') }}">
+                            Contactar
+                            <i class="far fa-envelope"></i>
+                        </a>
                     </li>
                 </ul>
             @endcomponent

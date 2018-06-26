@@ -8,6 +8,6 @@ class CategoryController extends Controller
 {
     public function categories()
     {
-        return $this->responseOne(Category::with('subCategory')->get());
+        return $this->showAll(Category::with('subCategory')->get());
     }
 }

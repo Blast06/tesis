@@ -30,17 +30,17 @@ class SidebarWebsiteBrowserTest extends DuskTestCase
             $browser->loginAs($user)
                 ->visit('/home')
                 ->assertSee('SUBSCRIPCIONES')
-                ->assertSee($websites[0]->name)
-                ->assertSee($websites[1]->name)
-                ->assertSee($websites[2]->name)
-                ->assertSee($websites[3]->name)
-                ->assertSee($websites[4]->name)
-                ->assertSee($websites[5]->name)
-                ->assertSee($websites[6]->name)
-                ->assertSee($websites[7]->name)
-                ->assertSee($websites[8]->name)
-                ->assertSee($websites[9]->name)
-                ->assertDontSee($websites[10]->name);
+                ->assertSee(str_limit($websites[0]->name, 20, '...'))
+                ->assertSee(str_limit($websites[1]->name, 20, '...'))
+                ->assertSee(str_limit($websites[2]->name, 20, '...'))
+                ->assertSee(str_limit($websites[3]->name, 20, '...'))
+                ->assertSee(str_limit($websites[4]->name, 20, '...'))
+                ->assertSee(str_limit($websites[5]->name, 20, '...'))
+                ->assertSee(str_limit($websites[6]->name, 20, '...'))
+                ->assertSee(str_limit($websites[7]->name, 20, '...'))
+                ->assertSee(str_limit($websites[8]->name, 20, '...'))
+                ->assertSee(str_limit($websites[9]->name, 20, '...'))
+                ->assertDontSee(str_limit($websites[10]->name, 20, '...'));
         });
     }
 
@@ -59,17 +59,17 @@ class SidebarWebsiteBrowserTest extends DuskTestCase
             $browser->loginAs($user)
                 ->visit('/home')
                 ->assertSee('SITIOS DE TRABAJO')
-                ->assertSee($websites[0]->name)
-                ->assertSee($websites[1]->name)
-                ->assertSee($websites[2]->name)
-                ->assertSee($websites[3]->name)
-                ->assertSee($websites[4]->name)
-                ->assertSee($websites[5]->name)
-                ->assertSee($websites[6]->name)
-                ->assertSee($websites[7]->name)
-                ->assertSee($websites[8]->name)
-                ->assertSee($websites[9]->name)
-                ->assertDontSee($websites[10]->name);
+                ->assertSee(str_limit($websites[0]->name, 20, '...'))
+                ->assertSee(str_limit($websites[1]->name, 20, '...'))
+                ->assertSee(str_limit($websites[2]->name, 20, '...'))
+                ->assertSee(str_limit($websites[3]->name, 20, '...'))
+                ->assertSee(str_limit($websites[4]->name, 20, '...'))
+                ->assertSee(str_limit($websites[5]->name, 20, '...'))
+                ->assertSee(str_limit($websites[6]->name, 20, '...'))
+                ->assertSee(str_limit($websites[7]->name, 20, '...'))
+                ->assertSee(str_limit($websites[8]->name, 20, '...'))
+                ->assertSee(str_limit($websites[9]->name, 20, '...'))
+                ->assertDontSee(str_limit($websites[10]->name, 20, '...'));
         });
     }
 }

@@ -11836,6 +11836,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -11847,7 +11901,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             form: new Form({
-                name: this.website.name
+                name: this.website.name,
+                description: this.website.description,
+                address: this.website.address,
+                phone: this.website.phone
             })
         };
     },
@@ -107968,6 +108025,230 @@ var render = function() {
               )
             ])
           ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }, [
+            _c(
+              "label",
+              { staticClass: "col-md-4 col-form-label text-md-right" },
+              [_vm._v("Telefono")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.phone,
+                    expression: "form.phone"
+                  },
+                  {
+                    name: "validate",
+                    rawName: "v-validate",
+                    value: "min:4|max:40",
+                    expression: "'min:4|max:40'"
+                  }
+                ],
+                staticClass: "form-control",
+                class: [
+                  { "is-invalid": _vm.errors.has("telefono") },
+                  { "is-invalid": _vm.form.errors.has("phone") }
+                ],
+                attrs: {
+                  type: "text",
+                  name: "phone",
+                  "data-vv-name": "telefono"
+                },
+                domProps: { value: _vm.form.phone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "phone", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.errors.has("telefono") ||
+                        _vm.form.errors.has("phone"),
+                      expression:
+                        "errors.has('telefono') || form.errors.has('phone')"
+                    }
+                  ],
+                  staticClass: "invalid-feedback"
+                },
+                [
+                  _c("strong", {
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.errors.first("telefono") ||
+                          _vm.form.errors.first("phone")
+                      )
+                    }
+                  })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group row" },
+            [
+              _c(
+                "label",
+                { staticClass: "col-md-4 col-form-label text-md-right" },
+                [_vm._v("Dirección")]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { attrs: { md: "6" } },
+                [
+                  _c("b-form-textarea", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "min:20",
+                        expression: "'min:20'"
+                      }
+                    ],
+                    class: [
+                      { "is-invalid": _vm.errors.has("dirección") },
+                      { "is-invalid": _vm.form.errors.has("address") }
+                    ],
+                    attrs: {
+                      rows: "4",
+                      name: "address",
+                      "data-vv-name": "direccion"
+                    },
+                    model: {
+                      value: _vm.form.address,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "address", $$v)
+                      },
+                      expression: "form.address"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value:
+                            _vm.errors.has("direccion") ||
+                            _vm.form.errors.has("address"),
+                          expression:
+                            "errors.has('direccion') || form.errors.has('address')"
+                        }
+                      ],
+                      staticClass: "invalid-feedback"
+                    },
+                    [
+                      _c("b", {
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.errors.first("direccion") ||
+                              _vm.form.errors.first("address")
+                          )
+                        }
+                      })
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group row" },
+            [
+              _c(
+                "label",
+                { staticClass: "col-md-4 col-form-label text-md-right" },
+                [_vm._v("Descripcion")]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-col",
+                { attrs: { md: "6" } },
+                [
+                  _c("b-form-textarea", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "min:20",
+                        expression: "'min:20'"
+                      }
+                    ],
+                    class: [
+                      { "is-invalid": _vm.errors.has("descripcion") },
+                      { "is-invalid": _vm.form.errors.has("description") }
+                    ],
+                    attrs: {
+                      rows: "4",
+                      name: "description",
+                      "data-vv-name": "descripcion"
+                    },
+                    model: {
+                      value: _vm.form.description,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "description", $$v)
+                      },
+                      expression: "form.description"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value:
+                            _vm.errors.has("descripcion") ||
+                            _vm.form.errors.has("description"),
+                          expression:
+                            "errors.has('descripcion') || form.errors.has('description')"
+                        }
+                      ],
+                      staticClass: "invalid-feedback"
+                    },
+                    [
+                      _c("b", {
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.errors.first("descripcion") ||
+                              _vm.form.errors.first("description")
+                          )
+                        }
+                      })
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "form-group row mb-0" }, [
             _c("div", { staticClass: "col-md-8 offset-md-4" }, [

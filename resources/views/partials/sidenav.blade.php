@@ -7,7 +7,7 @@
             @foreach($websites as $website)
                 <a href="{{ route('client.dashboard', $website) }}" class="list">
                     <img class="rounded-circle" src="{{ $website->image_path }}" width="24" height="24">
-                    {{ $website->name }}
+                    {{ str_limit($website->name, 20, '...') }}
                 </a>
             @endforeach
         </div>
@@ -19,7 +19,7 @@
             @foreach($subscriptions as $subscription)
                 <a href="{{ url("$subscription->username") }}" class="list">
                     <img class="rounded-circle" src="{{ $subscription->image_path }}" width="24" height="24">
-                    {{ $subscription->name }}
+                    {{ str_limit($subscription->name, 20, '..') }}
                 </a>
             @endforeach
         </div>

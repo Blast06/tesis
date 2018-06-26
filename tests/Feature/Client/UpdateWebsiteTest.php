@@ -38,7 +38,7 @@ class UpdateWebsiteTest extends TestCase
     {
         $this->actingAs($this->website->user)
             ->put($this->website->url->update, [
-                'name' => 'New name website'
+                'name' => 'New name website',
             ])
             ->assertStatus(Response::HTTP_OK)
             ->assertExactJson(['data' => true]);
@@ -57,5 +57,62 @@ class UpdateWebsiteTest extends TestCase
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }
+
+    /** @test */
+    function a_client_can_update_website_address()
+    {
+        $this->actingAs($this->website->user)
+            ->put($this->website->url->update, [
+                'name' => $this->website->name,
+                'phone' => null,
+                'description' => null,
+                'address' => 'La vega'
+            ])
+            ->assertStatus(Response::HTTP_OK)
+            ->assertExactJson(['data' => true]);
+
+        $this->assertDatabaseHas('websites', [
+            'name' => $this->website->name,
+            'address' => 'La vega'
+        ]);
+
+    }
+
+    /** @test */
+    function a_client_can_update_website_phone()
+    {
+        $this->actingAs($this->website->user)
+            ->put($this->website->url->update, [
+                'name' => $this->website->name,
+                'phone' => '809 573-3333',
+            ])
+            ->assertStatus(Response::HTTP_OK)
+            ->assertExactJson(['data' => true]);
+
+        $this->assertDatabaseHas('websites', [
+            'name' => $this->website->name,
+            'phone' => '809 573-3333',
+        ]);
+
+    }
+
+    /** @test */
+    function a_client_can_update_website_description()
+    {
+        $this->actingAs($this->website->user)
+            ->put($this->website->url->update, [
+                'name' => $this->website->name,
+                'description' => 'Descripcion de prueba',
+            ])
+            ->assertStatus(Response::HTTP_OK)
+            ->assertExactJson(['data' => true]);
+
+        $this->assertDatabaseHas('websites', [
+            'name' => $this->website->name,
+            'description' => 'Descripcion de prueba'
+        ]);
+
+    }
+
 
 }

@@ -26,6 +26,9 @@ class UpdateWebsiteRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4|max:40',
+            'address' => 'nullable|min:4|max:100',
+            'phone' => 'nullable|max:17',
+            'description' => 'nullable|min:15'
         ];
     }
 
@@ -33,6 +36,9 @@ class UpdateWebsiteRequest extends FormRequest
     {
         return [
             'name' => 'sitio',
+            'address' => 'dirección',
+            'phone' => 'teléfono',
+            'description' => 'descripción',
         ];
     }
 
