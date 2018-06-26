@@ -18,3 +18,7 @@ Broadcast::channel('User.{id}', function ($user, $id) {
 Broadcast::channel('Conversation.{id}', function ($conversation, $id) {
     return (int) $conversation->id === (int) $id;
 });
+
+Broadcast::channel('Cart.User.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});

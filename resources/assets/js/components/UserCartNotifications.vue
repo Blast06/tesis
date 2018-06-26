@@ -26,7 +26,10 @@
                     .then(response => { this.count = response.data.count; });
             },
             listEvent(){
-
+                Echo.private('Cart.User.' + this.user_id)
+                    .listen('.listenCarItem', (event) => {
+                        this.count = event.count;
+                    });
             },
         }
     }

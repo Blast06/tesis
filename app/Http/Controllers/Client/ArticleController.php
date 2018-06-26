@@ -50,7 +50,7 @@ class ArticleController extends Controller
      */
     public function store(CreateArticleRequest $request, Website $website)
     {
-        return $this->responseOne($request->createArticle($website), Response::HTTP_CREATED);
+        return $this->showOne($request->createArticle($website), Response::HTTP_CREATED);
     }
 
     /**
@@ -87,7 +87,7 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Website $website, Article $article)
     {
-        return $this->responseOne($request->updateArticle($article), Response::HTTP_OK);
+        return $this->successResponse(['data' => $request->updateArticle($article)]);
     }
 
     /**
@@ -102,7 +102,7 @@ class ArticleController extends Controller
     {
         $article->delete();
 
-        if (request()->ajax()) { return $this->responseOne($article, Response::HTTP_OK); }
+        if (request()->ajax()) { return $this->showOne($article, Response::HTTP_OK); }
 
         return redirect()->route('articles.index', $website);
     }
@@ -116,7 +116,7 @@ class ArticleController extends Controller
      */
     public function images(UploadImageArticleRequest $request, Website $website)
     {
-        $this->responseOne($request->uploadImage($website), Response::HTTP_OK);
+        $this->showOne($request->uploadImage($website), Response::HTTP_OK);
     }
 
     /**
@@ -128,7 +128,7 @@ class ArticleController extends Controller
     public function favorite(Article $article)
     {
         auth()->user()->favoriteTo($article);
-        return $this->responseMessage("Article {$article->name} is now favorited");
+        return $this->successResponse(['message' => "Article {$article->name} is now favorited"]);
     }
 
     /**
@@ -140,18 +140,6 @@ class ArticleController extends Controller
     public function unfavorite(Article $article)
     {
         auth()->user()->unfavoriteTo($article);
-        return $this->responseMessage("Article {$article->name} is now unfavorited");
-    }
-
-    public function addToCar(Article $article, $quantity)
-    {
-        auth()->user()->addArticleToCar($article, $quantity);
-        return $this->responseMessage("Article {$article->name} add to shopping car");
-    }
-
-    public function removeToCar(Article $article)
-    {
-        auth()->user()->removeArticleToCar($article);
-        return $this->responseMessage("Article {$article->name} remove to shopping car");
+        return $this->successResponse(['message' => "Article {$article->name} is now unfavorited"]);
     }
 }

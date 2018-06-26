@@ -4,35 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Article;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Response;
-// use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\CreateArticleRequest;
 
 class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::all();
-        // return $this->showAll($articles);
-        return response()->json(Article::all(), Response::HTTP_OK);
+        return $this->showAll(Article::all());
     }
 
-
-
-    public function show($id)
+    public function show(Article $article)
     {
-
-        // return $this->showOne($article);
-
-        return response()->json(Article::where('id',$id)->first());
-
-
-        
+        return $this->showOne($article);
     }
 
-    public function store(CreateArticleRequest $createArticleRequest)
+    public function store(CreateArticleRequest $request)
     {
-        return $createArticleRequest;
+        return $this->showOne($request->createArticle());
     }
 }

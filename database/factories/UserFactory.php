@@ -25,36 +25,34 @@ $factory->define(App\User::class, function (Faker $faker) {
 
 $factory->define(App\Website::class, function (Faker $faker) {
     return [
-        'name' => 'new website '. $faker->randomNumber,
+        'name' => $faker->company,
         'username' => $faker->unique()->userName,
         'phone' => $faker->phoneNumber,
         'address' => $faker->address,
-        'user_id' => factory(App\User::class)->create()
+        'user_id' => \App\User::all()->random()->id ?? factory(App\User::class)->create()
     ];
 });
 
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
-        'slug' => str_slug($faker->unique()->word)
+        'name' => $faker->word
     ];
 });
 
 $factory->define(App\SubCategory::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
-        'slug' => str_slug($faker->unique()->word),
-        'category_id' => factory(\App\Category::class)->create()
+        'category_id' => \App\Category::all()->random()->id ?? factory(\App\Category::class)->create()
     ];
 });
 
 $factory->define(App\Article::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
-        'description' => $faker->paragraph(4),
-        'price' => 100.00,
-        'sub_category_id' => factory(\App\SubCategory::class)->create(),
-        'website_id' => factory(\App\Website::class)->create(),
+        'name' => $faker->jobTitle,
+        'description' => $faker->paragraph,
+        'price' => $faker->randomElement([$faker->randomNumber(3), $faker->randomNumber(4), $faker->randomNumber(5)]),
+        'sub_category_id' => \App\SubCategory::all()->random()->id ?? factory(\App\SubCategory::class)->create(),
+        'website_id' => \App\Website::all()->random()->id ?? factory(\App\Website::class)->create(),
         'status' => \App\Article::STATUS_AVAILABLE
     ];
 });
@@ -70,7 +68,7 @@ $factory->define(App\Message::class, function (Faker $faker) {
     return [
         'conversation_id' => factory(\App\Conversation::class)->create(),
         'user_send' => factory(\App\User::class)->create(),
-        'message' => $faker->paragraph(1),
+        'message' => $faker->paragraph(2),
     ];
 });
 

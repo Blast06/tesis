@@ -18,7 +18,7 @@
 
         <a href="#" class="btn btn-primary text-uppercase">Ordenar ahora </a>
 
-        <button @click="addCar" class="btn btn-outline-primary text-uppercase" :class="loading ? 'loader' : ''">
+        <button type="button" @click="addCar" class="btn btn-outline-primary text-uppercase" :class="loading ? 'loader' : ''">
             <i class="fas fa-shopping-cart"></i> Añadir al carrito
         </button>
 
@@ -46,6 +46,7 @@
 
                 axios.get(`/${this.article.id}/add/${this.selectQuantity}/car`)
                     .then(() => {
+                        toastr.success(`¡Articulo ${this.article.name} añadido correctamente!`);
                         this.loading = false;
                     })
             }

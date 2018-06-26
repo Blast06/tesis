@@ -63,8 +63,6 @@ Route::get('{website}/unsubscribe', 'Client\WebsiteController@unsubscribe')->nam
 Route::get('articles/{slug}', 'Client\ArticleController@show')->name('articles.show');
 Route::get('{article}/favorite', 'Client\ArticleController@favorite')->name('articles.favorite')->fallback();
 Route::get('{article}/unfavorite', 'Client\ArticleController@unfavorite')->name('articles.unfavorite')->fallback();
-Route::get('{article}/add/{quantity}/car', 'Client\ArticleController@addToCar')->name('articles.add.car')->fallback();
-Route::get('{article}/remove/car', 'Client\ArticleController@removeToCar')->name('articles.remove.car')->fallback();
 
 /*
  *  Public Chat
@@ -76,10 +74,12 @@ Route::get('messages/conversations', 'Client\MessageController@conversationUser'
 Route::get('messages/conversations/{conversation}', 'Client\MessageController@showConversation')->name('messages.show.conversation');
 
 /*
- * Car
+ * Cart
  */
 Route::get('shopping/cart', 'CartController@index')->name('cart.index');
 Route::get('shopping/cart/count', 'CartController@countCartArticle')->name('cart.count');
+Route::get('{article}/add/{quantity}/car', 'CartController@addToCart')->name('articles.add.cart')->fallback();
+Route::get('{article}/remove/car', 'CartController@removeToCart')->name('articles.remove.cart')->fallback();
 
 /*
  * Recursos API Web

@@ -78,7 +78,7 @@ class Article extends Model implements HasMedia
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'shopping_car');
+        return $this->belongsToMany(User::class, 'shopping_cart');
     }
 
     public function toSearchableArray()

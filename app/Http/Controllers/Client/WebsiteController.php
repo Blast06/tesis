@@ -42,7 +42,7 @@ class WebsiteController extends Controller
      */
     public function store(CreateWebsiteRequest $request)
     {
-        return $this->responseOne($request->createWebsite(), Response::HTTP_CREATED);
+        return $this->showOne($request->createWebsite(), Response::HTTP_CREATED);
     }
 
     /**
@@ -79,7 +79,7 @@ class WebsiteController extends Controller
      */
     public function update(UpdateWebsiteRequest $request, Website $website)
     {
-        return $this->responseOne($request->updateWebsite($website), Response::HTTP_OK);
+        return $this->successResponse(['data' => $request->updateWebsite($website)]);
     }
 
     /**
@@ -102,7 +102,7 @@ class WebsiteController extends Controller
      */
     public function image(ChangeImageRequest $request, Website $website)
     {
-        return $this->responseMessage($request->updateImage($website));
+        return $this->successResponse(['message' => $request->updateImage($website)]);
     }
 
     /**
@@ -114,7 +114,7 @@ class WebsiteController extends Controller
     public function subscribe(Website $website)
     {
         auth()->user()->subscribeTo($website);
-        return $this->responseMessage('subscribe');
+        return $this->successResponse(['message' => 'subscribe']);
     }
 
     /**
@@ -126,7 +126,7 @@ class WebsiteController extends Controller
     public function unsubscribe(Website $website)
     {
         auth()->user()->unsubscribeTo($website);
-        return $this->responseMessage('unsubscribe');
+        return $this->successResponse(['message' => 'unsubscribe']);
     }
 
     public function feed()

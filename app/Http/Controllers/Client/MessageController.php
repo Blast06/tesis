@@ -51,7 +51,7 @@ class MessageController extends Controller
 
         broadcast(new NewMessage($newMessage->conversation, $newMessage))->toOthers();
 
-        return $this->responseOne($newMessage, 201);
+        return $this->successResponse(['data' => $newMessage], 201);
     }
 
     /**
@@ -74,7 +74,7 @@ class MessageController extends Controller
 
         broadcast(new NewMessage($newMessage->conversation, $newMessage))->toOthers();
 
-        return $this->responseOne($newMessage, 201);
+        return $this->successResponse(['data' => $newMessage], 201);
     }
 
     public function conversationUser()
@@ -89,7 +89,7 @@ class MessageController extends Controller
                 $q->select('id', 'name');
             }]);
 
-        return $this->responseOne($conversations, 200);
+        return $this->successResponse(['data' => $conversations]);
     }
 
     public function conversationWebsite(Website $website)
@@ -104,12 +104,12 @@ class MessageController extends Controller
                 $q->select('id', 'name');
             }]);
 
-        return $this->responseOne($conversations, 200);
+        return $this->successResponse(['data' => $conversations]);
     }
 
     public function showConversation(Conversation $conversation)
     {
-        return $this->responseOne($conversation->messages, 200);
+        return $this->successResponse(['data' => $conversation->messages]);
     }
 
 }

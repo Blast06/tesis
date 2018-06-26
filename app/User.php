@@ -155,10 +155,10 @@ class User extends Authenticatable implements HasMedia
 
     public function articles()
     {
-        return $this->belongsToMany(Article::class, 'shopping_car')->withPivot('quantity');
+        return $this->belongsToMany(Article::class, 'shopping_cart')->withPivot('quantity');
     }
 
-    public function addArticleToCar(Article $article, $quantity)
+    public function addArticleToCart(Article $article, $quantity)
     {
         try{
             $this->articles()->attach($article, ['quantity' => $quantity]);
@@ -168,7 +168,7 @@ class User extends Authenticatable implements HasMedia
 
     }
 
-    public function removeArticleToCar(Article $article)
+    public function removeArticleToCart(Article $article)
     {
         $this->articles()->detach($article);
     }
