@@ -1,6 +1,4 @@
-@guest
-    ads
-@else
+@auth
     @if($websites->count())
         <h5 class="title">Sitios De Trabajo</h5>
         <div class="list-group mb-5">
@@ -23,5 +21,10 @@
                 </a>
             @endforeach
         </div>
+    @else
+        <div class="alert alert-secondary" role="alert">
+            Suscribete en algun sitio para tener acceso rápido a ellos y ver todos sus artículos.
+            <i class="fas fa-smile fa-lg"></i>
+        </div>
     @endif
-@endguest
+@endauth

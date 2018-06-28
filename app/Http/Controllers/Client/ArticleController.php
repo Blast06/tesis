@@ -62,7 +62,11 @@ class ArticleController extends Controller
     public function show($slug)
     {
         $article = Article::where('slug', $slug)->firstOrFail();
-        return view('pages.article', compact('article'));
+        $relateds = Article::where([
+            ['sub_category_id', $article->sub_category_id],
+            ['id', '<>', $article->id],
+        ])->take(10)->get();
+        return view('pages.article', compact('article', 'relateds'));
     }
 
     /**

@@ -6,18 +6,18 @@
         <div class="col-md-10">
 
             <div class="jumbotron mb-0" style="
-            background: url('{{ $website->banner_path  }}');
-            no-repeat: center;
-            -webkit-background-size: 100% 100%;
-            -moz-background-size: 100% 100%;
-            -o-background-size: 100% 100%;
-            background-size: 100% 100%;
-            border-radius: 0;
-            height: 240px">
+                    background: url('{{ $website->banner_path  }}');
+                    no-repeat: center;
+                    -webkit-background-size: 100% 100%;
+                    -moz-background-size: 100% 100%;
+                    -o-background-size: 100% 100%;
+                    background-size: 100% 100%;
+                    border-radius: 0;
+                    height: 240px">
             </div>
 
             @component('component.card')
-                @slot('card_style', 'mt-0 mb-5 shadow-sm    ')
+                @slot('card_style', 'mt-0 mb-5 shadow-sm')
 
                 @slot('header_style', 'd-none')
 
@@ -35,7 +35,7 @@
                         </h3>
 
                         @isset($website->description)
-                        <p>{{ $website->description }}</p>
+                            <p>{{ $website->description }}</p>
                         @endisset
                     </div>
 
@@ -59,9 +59,9 @@
 
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('websites.information', $website) }}">
-                            Informacion
-                            <i class="fas fa-info-circle"></i>
+                        <a class="nav-link active" href="{{ route('websites.show', $website) }}">
+                            Ver articulos
+                            <i class="fas fa-archive"></i>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -73,14 +73,35 @@
                 </ul>
             @endcomponent
 
+            @component('component.card')
+                @slot('card_style', 'text-center shadow-sm mb-5')
+                @slot('header', 'Informacion de'. $website->name)
+                @slot('header_style', 'font-weight-bold text-uppercase')
 
-            @if($website->articles->count())
-                @each('partials.article', $website->articles, 'article')
-            @else
-                <div class="alert alert-info" role="alert">
-                    Parece que {{ $website->name }} no tienen ninguna publicación.
+                <div class="username">
+                    <dt>Nombre de usuario</dt>
+
+                    <dd>{{ '@'.$website->username }}</dd>
                 </div>
-            @endif
+
+                <div class="phone">
+                    <dt>Teléfono</dt>
+
+                    <dd>{{ $website->phone }}</dd>
+                </div>
+
+                <div class="address">
+                    <dt>Dirección</dt>
+
+                    <dd>{{ $website->address }}</dd>
+                </div>
+
+                <div class="location">
+                    <dt>Ubicación</dt>
+
+                    <dd>{{ $website->location }}</dd>
+                </div>
+            @endcomponent
         </div>
     </div>
 @endcomponent

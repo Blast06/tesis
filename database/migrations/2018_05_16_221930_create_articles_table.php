@@ -21,6 +21,7 @@ class CreateArticlesTable extends Migration
             $table->decimal('price',9,2)->nullable();
             $table->integer('stock' )->nullable();
             $table->enum('status', [\App\Article::STATUS_AVAILABLE, \App\Article::STATUS_NOT_AVAILABLE, \App\Article::STATUS_PRIVATE])->default(\App\Article::STATUS_AVAILABLE);
+            $table->string('shipping_place')->default('Sin definir');
             $table->unsignedInteger('website_id');
             $table->unsignedInteger('sub_category_id');
             $table->timestamps();

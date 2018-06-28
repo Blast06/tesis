@@ -158,6 +158,11 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Article::class, 'shopping_cart')->withPivot('quantity');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function addArticleToCart(Article $article, $quantity)
     {
         try{

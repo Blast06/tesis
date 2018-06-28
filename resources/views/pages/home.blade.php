@@ -17,6 +17,7 @@
                     Parece que los sitios que sigue no tienen ninguna publicación o no sigues a ningun sitio.
                     <br>
                     Haga clic en el enlace <b><a href="{{ url('/websites') }}">Buscar sitios</a></b> para encontrar el sitio de su preferencia.
+                    <i class="fas fa-grin-beam fa-lg"></i>
                 </div>
             @endif
 

@@ -33,6 +33,8 @@ class Article extends Model implements HasMedia
         'image_path', 'url'
     ];
 
+    protected $with = ['media', 'website', 'reviews'];
+
     const STATUS_NOT_AVAILABLE = 'NO_DISPONIBLE';
     const STATUS_AVAILABLE = 'DISPONIBLE';
     const STATUS_PRIVATE = 'PRIVADO';
@@ -54,6 +56,11 @@ class Article extends Model implements HasMedia
     public function getUrlAttribute()
     {
         return new UrlPresenter($this->website, $this);
+    }
+
+    public function getRatingAttribute()
+    {
+        return $this->reviews->avg('rating') ?? 0;
     }
 
     /**
@@ -81,6 +88,11 @@ class Article extends Model implements HasMedia
         return $this->belongsToMany(User::class, 'shopping_cart');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function toSearchableArray()
     {
         return [
@@ -93,7 +105,8 @@ class Article extends Model implements HasMedia
             'updated_at' => $this->updated_at->format('l j F Y'),
             'sub_category' => $this->subCategory->name,
             'url_path' => $this->url->show,
-            'location' => $this->description != null ? $this->description : 'Sin definir',
+            'location' => $this->location != null ? $this->location : 'Sin definir',
+            'rating' => $this->rating
         ];
     }
 }

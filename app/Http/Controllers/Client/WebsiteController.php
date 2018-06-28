@@ -53,9 +53,7 @@ class WebsiteController extends Controller
      */
     public function show(Website $website)
     {
-        $website->load(['articles' => function($query) {
-            $query->with(['media', 'website']);
-        }]);
+        $website->load(['articles']);
         return view('pages.website_client', compact('website'));
     }
 
@@ -129,10 +127,18 @@ class WebsiteController extends Controller
         return $this->successResponse(['message' => 'unsubscribe']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function feed()
     {
         $feeds = auth()->user()->subscribedWebsite()->paginate();
         return view('pages.feed', compact('feeds'));
+    }
+
+    public function information(Website $website)
+    {
+        return view('pages.website_client_information', compact('website'));
     }
 
 }

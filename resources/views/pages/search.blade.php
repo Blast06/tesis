@@ -39,6 +39,19 @@
                         </h5>
                     </ais-price-range>
 
+                    <ais-rating attribute-name="rating"
+                                :max="5"
+                                :min="0"
+                                :class-names="{
+                                'ais-rating__count': 'badge badge-pill badge-primary',
+                                'ais-rating': 'mt-5',
+                                'ais-rating__star': 'text-warning',
+                                'ais-rating__star--empty': 'text-dark'
+                                }">
+                        <span slot="clear">Restablecer</span>
+                        <h5 slot="header">Clasificación</h5>
+                    </ais-rating>
+
                 </div>
 
                 <div class="col-md-9">
@@ -102,11 +115,11 @@
                                                 <dd>
                                                     <div class="float-md-right">
                                                         <div class="stars">
-                                                            <span class="fa fa-star text-warning"></span>
-                                                            <span class="fa fa-star text-warning"></span>
-                                                            <span class="fa fa-star text-warning"></span>
-                                                            <span class="fa fa-star text-warning"></span>
-                                                            <span class="fa fa-star"></span>
+                                                            <span :class="['fa fa-star', { 'text-warning': result.rating >= 1 }]"></span>
+                                                            <span :class="['fa fa-star', { 'text-warning': result.rating >= 2 }]"></span>
+                                                            <span :class="['fa fa-star', { 'text-warning': result.rating >= 3 }]"></span>
+                                                            <span :class="['fa fa-star', { 'text-warning': result.rating >= 4 }]"></span>
+                                                            <span :class="['fa fa-star', { 'text-warning': result.rating >= 5 }]"></span>
                                                         </div>
                                                     </div>
                                                     <p v-text="result.website"></p>
@@ -115,8 +128,7 @@
 
                                             <p v-show="result.price !== null">
                                                <span class="price h3" style="color: #e74430;">
-                                                    <span class="currency">RD$</span>
-                                                    <span class="num" v-text="result.price"></span>
+                                                    <span class="num">@{{ result.price | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true })}}</span>
                                                 </span>
                                             </p>
 

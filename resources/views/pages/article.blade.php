@@ -29,13 +29,7 @@
                                 <dt>Vendedor</dt>
                                 <dd>
                                     <div class="float-md-right">
-                                        <div class="stars">
-                                            <span class="fa fa-star text-warning"></span>
-                                            <span class="fa fa-star text-warning"></span>
-                                            <span class="fa fa-star text-warning"></span>
-                                            <span class="fa fa-star text-warning"></span>
-                                            <span class="fa fa-star"></span>
-                                        </div>
+                                        @include('partials.article-start')
                                     </div>
                                     <p>{{ $article->website->name }}</p>
                                 </dd>
@@ -51,16 +45,7 @@
                                 </p>
                             @endif
 
-                            <dl>
-                                <dt>Estado</dt>
-                                @php
-                                    $badge = [
-                                     \App\Article::STATUS_AVAILABLE => 'badge-success',
-                                     \App\Article::STATUS_NOT_AVAILABLE => 'badge-danger',
-                                     \App\Article::STATUS_PRIVATE => 'badge-info'];
-                                @endphp
-                                <dd><span class="badge {{ $badge[$article->status] }}">{{ $article->status }}</span></dd>
-                            </dl>
+
 
                             <dl class="item-property">
                                 <dt>Description</dt>
@@ -84,6 +69,15 @@
                     </aside>
                 </div>
             @endcomponent
+
+            @if($relateds->count())
+                <div>
+                    <h4 class="mt-5 text-center">Articulos relacionados</h4>
+                    <div class="row">
+                        @each('partials.related', $relateds, 'article')
+                    </div>
+                </div>
+            @endif
 
         </div>
     </div>

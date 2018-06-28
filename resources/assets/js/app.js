@@ -15,13 +15,14 @@ import BootstrapVue from "bootstrap-vue";
 import InstantSearch from "vue-instantsearch";
 import VModal from 'vue-js-modal';
 import vSelect from 'vue-select';
+import Vue2Filters from 'vue2-filters'
 
 Vue.use(VeeValidate);
 Vue.use(BootstrapVue);
 Vue.use(InstantSearch);
 Vue.use(VModal);
-
 Vue.use(require('vue-moment'));
+Vue.use(Vue2Filters);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

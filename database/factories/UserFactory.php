@@ -73,7 +73,28 @@ $factory->define(App\Article::class, function (Faker $faker) {
         'price' => $faker->randomElement([$faker->randomNumber(3), $faker->randomNumber(4), $faker->randomNumber(5)]),
         'sub_category_id' => !\App\SubCategory::all()->isEmpty() && !App::environment('testing') ? \App\SubCategory::all()->random()->id : factory(\App\SubCategory::class)->create(),
         'website_id' => !\App\Website::all()->isEmpty() && !App::environment('testing') ? \App\Website::all()->random()->id : factory(\App\Website::class)->create(),
-        'status' => \App\Article::STATUS_AVAILABLE
+        'status' => \App\Article::STATUS_AVAILABLE,
+        'shipping_place' => $faker->randomElement([
+            'En cualquier ciudad de rep. dom.'.
+            'Santo Domingo',
+            'Santiago',
+            'San Pedro de Macorís',
+            'Puerto Plata',
+            'La Romana',
+            'San Cristóbal',
+            'San Francisco de Macorís',
+            'Higuey',
+            'Barahona',
+            'Bani',
+            'San Juan',
+            'Bonao',
+            'Moca',
+            'Azua',
+            'Cotui',
+            'La vega',
+            'Nagua',
+            'Salcedo'
+        ]),
     ];
 
 });

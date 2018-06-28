@@ -54,6 +54,7 @@ Route::post('websites', 'Client\WebsiteController@store')->name('websites.store'
 Route::get('websites/feed', 'Client\WebsiteController@feed')->name('websites.feed');
 Route::get('websites/create', 'Client\WebsiteController@create')->name('websites.create');
 Route::get('{website}', 'Client\WebsiteController@show')->name('websites.show')->fallback();
+Route::get('{website}/information', 'Client\WebsiteController@information')->name('websites.information')->fallback();
 Route::get('{website}/subscribe', 'Client\WebsiteController@subscribe')->name('websites.subscribe')->fallback();
 Route::get('{website}/unsubscribe', 'Client\WebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
 
