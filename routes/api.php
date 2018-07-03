@@ -29,4 +29,11 @@ Route::post('me', 'Api\AuthController@me');
  */
 Route::resource('articles','Api\ArticleController')->only('index', 'show','create');
 
+/*
+ * Categories
+ */
+Route::resource('categories','Api\CategoryController')->only('index', 'show');
+Route::resource('websites','Api\WebsiteController')->only('index', 'show','store');
+Route::resource('users','Api\UserController')->only('index', 'show');
+
 

@@ -20,6 +20,7 @@ class ArticleController extends Controller
 
     public function store(CreateArticleRequest $request)
     {
+        
         return $this->showOne($request->createArticle());
     }
 }
