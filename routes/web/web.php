@@ -83,6 +83,11 @@ Route::get('{article}/add/{quantity}/car', 'CartController@addToCart')->name('ar
 Route::get('{article}/remove/car', 'CartController@removeToCart')->name('articles.remove.cart')->fallback();
 
 /*
+ * Reviews
+ */
+Route::resource('articles.reviews', 'ReviewController')->only(['store', 'update']);
+
+/*
  * Recursos API Web
  */
 Route::get('web/api/categories', 'CategoryController@categories')->middleware('auth');

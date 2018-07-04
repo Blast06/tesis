@@ -21,7 +21,7 @@ class CreateWebsitesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('location')->nullable();
-            $table->boolean('private')->default(false);
+            $table->boolean('private')->default(\App\Website::WEBSITE_NON_PRIVATE);
             $table->string('domain')->nullable();
             $table->unsignedInteger('user_id');
             $table->timestamps();

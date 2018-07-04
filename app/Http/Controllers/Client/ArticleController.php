@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\{CreateArticleRequest, UploadImageArticleRequest};
-use App\{DataTables\ClientArticleDataTable, Http\Requests\UpdateArticleRequest, Website, Article};
+use App\{
+    DataTables\ClientArticleDataTable, Http\Requests\UpdateArticleRequest, Review, Website, Article
+};
 
 class ArticleController extends Controller
 {
@@ -61,12 +63,24 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
-        $article = Article::where('slug', $slug)->firstOrFail();
+        $article = Article::query()
+            ->where('slug', $slug)
+            ->with('reviews.user')
+            ->firstOrFail();
+        
         $relateds = Article::where([
             ['sub_category_id', $article->sub_category_id],
             ['id', '<>', $article->id],
         ])->take(10)->get();
-        return view('pages.article', compact('article', 'relateds'));
+
+        $user_review = Review::query()
+            ->where([
+                ['article_id', $article->id],
+                ['user_id', auth()->id() ?? 0],
+            ])
+            ->first();
+
+        return view('pages.article', compact('article', 'relateds', 'user_review'));
     }
 
     /**

@@ -30,6 +30,9 @@ class Website extends Model implements HasMedia
 
     protected $withCount = ['subscribedUsers'];
 
+    const WEBSITE_PRIVATE = true;
+    const WEBSITE_NON_PRIVATE = false;
+
     // Mutators
 
     public function setNameAttribute($name)
@@ -117,5 +120,10 @@ class Website extends Model implements HasMedia
             'location' => $this->location,
             'url_path' => $this->url->show,
         ];
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->private;
     }
 }

@@ -15,7 +15,8 @@ import BootstrapVue from "bootstrap-vue";
 import InstantSearch from "vue-instantsearch";
 import VModal from 'vue-js-modal';
 import vSelect from 'vue-select';
-import Vue2Filters from 'vue2-filters'
+import Vue2Filters from 'vue2-filters';
+import StarRating from 'vue-star-rating';
 
 Vue.use(VeeValidate);
 Vue.use(BootstrapVue);
@@ -47,6 +48,8 @@ Vue.component("favorite-button", require("./components/article/FavoriteButton"))
 Vue.component("shopping-button", require("./components/cart/ShoppingButton"));
 Vue.component("shopping-cart", require("./components/cart/shopping_cart"));
 Vue.component("cart-notification", require("./components/UserCartNotifications"));
+Vue.component('star-rating', StarRating);
+Vue.component('article-rating', require("./components/article/Rating"));
 
 new Vue({
     el: '#app',
@@ -54,5 +57,6 @@ new Vue({
         this.$validator.localize("es", {
             messages: es.messages,
         });
+        this.$moment.locale('es');
     }
 });

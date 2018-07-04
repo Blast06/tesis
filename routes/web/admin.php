@@ -10,6 +10,4 @@ Route::catch(function (){
     throw new NotFoundHttpException;
 });
 
-Route::get('/', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+Route::get('/', 'Admin\DashboardAdminController@index')->name('admin.dashboard');

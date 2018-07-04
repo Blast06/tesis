@@ -19,7 +19,12 @@
         </a>
 
         <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ url('/websites/create') }}">Crear Sitio</i></a></li>
+            @if(auth()->user()->isAdmin())
+            <li><a href="{{ route('admin.dashboard') }}">Panel admin</a></li>
+            @endif
+            <li class="divider"></li>
+
+            <li><a href="{{ url('/websites/create') }}">Crear Sitio</a></li>
 
             <li class="divider"></li>
 

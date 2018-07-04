@@ -127,3 +127,12 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
         ],
     ];
 });
+
+$factory->define(App\Review::class, function (Faker $faker) {
+    return [
+        'article_id' => factory(\App\Article::class)->create(),
+        'user_id' => factory(\App\User::class)->create(),
+        'rating' => $faker->randomElement([1, 2, 3, 4 ,5]),
+        'comment' => $faker->paragraph(2),
+    ];
+});

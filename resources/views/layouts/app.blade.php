@@ -53,7 +53,7 @@
         </main>
 
         <footer class="main">
-            <p>{{ config('app.name') }}. Copyright &copy; {{ config('app.name') }}.</p>
+            <p>{{ config('app.name') }}. Copyright &copy; Cristian Gómez Evangelista & Julio Delgado.</p>
         </footer>
     </div>
 </body>

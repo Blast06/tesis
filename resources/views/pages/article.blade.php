@@ -79,6 +79,15 @@
                 </div>
             @endif
 
+            <article-rating
+                    :is-auth="{{ json_encode(auth()->check()) }}"
+                    :is-review="{{ json_encode(optional(auth()->user())->hasNotRating($article)) }}"
+                    :user="{{ json_encode(auth()->user()) }}"
+                    :article="{{ json_encode($article) }}"
+                    :review="{{ json_encode($user_review) }}"
+                    :reviews="{{ json_encode($article->reviews) }}">
+            </article-rating>
+
         </div>
     </div>
 
