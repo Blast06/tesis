@@ -52,6 +52,11 @@ abstract class DuskTestCase extends BaseTestCase
         $this->browse(function (Browser $browser) {
             $browser->maximize();
         });
+
+        Browser::macro('scrollTo', function($selector) {
+            $this->driver->executeScript("$(\"html, body\").animate({scrollTop: $(\"$selector\").offset().top}, 0);");
+            return $this;
+        });
     }
 
     /** @throws \Throwable */

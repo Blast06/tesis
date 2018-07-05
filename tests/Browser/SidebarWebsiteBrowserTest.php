@@ -20,27 +20,18 @@ class SidebarWebsiteBrowserTest extends DuskTestCase
     {
         $user = $this->create(User::class);
 
-        $websites = $this->create(Website::class, [], 11);
+        $website_1 = $this->create(Website::class, ['name' => 'website 1']);
+        $website_2 = $this->create(Website::class, ['name' => 'website 2']);
 
-        foreach ($websites as $website){
-            $user->subscribeTo($website);
-        }
+        $user->subscribeTo($website_1);
+        $user->subscribeTo($website_2);
 
-        $this->browse(function (Browser $browser) use ($user, $websites) {
+        $this->browse(function (Browser $browser) use ($user, $website_1, $website_2) {
             $browser->loginAs($user)
                 ->visit('/home')
                 ->assertSee('SUBSCRIPCIONES')
-                ->assertSee(str_limit($websites[0]->name, 20, '...'))
-                ->assertSee(str_limit($websites[1]->name, 20, '...'))
-                ->assertSee(str_limit($websites[2]->name, 20, '...'))
-                ->assertSee(str_limit($websites[3]->name, 20, '...'))
-                ->assertSee(str_limit($websites[4]->name, 20, '...'))
-                ->assertSee(str_limit($websites[5]->name, 20, '...'))
-                ->assertSee(str_limit($websites[6]->name, 20, '...'))
-                ->assertSee(str_limit($websites[7]->name, 20, '...'))
-                ->assertSee(str_limit($websites[8]->name, 20, '...'))
-                ->assertSee(str_limit($websites[9]->name, 20, '...'))
-                ->assertDontSee(str_limit($websites[10]->name, 20, '...'));
+                ->assertSee($website_1->name)
+                ->assertSee($website_2->name);
         });
     }
 
@@ -53,23 +44,22 @@ class SidebarWebsiteBrowserTest extends DuskTestCase
     {
         $user = $this->create(User::class);
 
-        $websites = $this->create(Website::class, ['user_id' => $user->id], 11);
+        $website_1 = $this->create(Website::class, [
+            'name' => 'website 1',
+            'user_id' => $user->id
+        ]);
 
-        $this->browse(function (Browser $browser) use ($user, $websites) {
+        $website_2 = $this->create(Website::class, [
+            'name' => 'website 2',
+            'user_id' => $user->id
+        ]);
+
+        $this->browse(function (Browser $browser) use ($user, $website_1, $website_2) {
             $browser->loginAs($user)
                 ->visit('/home')
                 ->assertSee('SITIOS DE TRABAJO')
-                ->assertSee(str_limit($websites[0]->name, 20, '...'))
-                ->assertSee(str_limit($websites[1]->name, 20, '...'))
-                ->assertSee(str_limit($websites[2]->name, 20, '...'))
-                ->assertSee(str_limit($websites[3]->name, 20, '...'))
-                ->assertSee(str_limit($websites[4]->name, 20, '...'))
-                ->assertSee(str_limit($websites[5]->name, 20, '...'))
-                ->assertSee(str_limit($websites[6]->name, 20, '...'))
-                ->assertSee(str_limit($websites[7]->name, 20, '...'))
-                ->assertSee(str_limit($websites[8]->name, 20, '...'))
-                ->assertSee(str_limit($websites[9]->name, 20, '...'))
-                ->assertDontSee(str_limit($websites[10]->name, 20, '...'));
+                ->assertSee($website_1->name)
+                ->assertSee($website_2->name);
         });
     }
 }

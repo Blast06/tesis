@@ -82,12 +82,13 @@ class MessageController extends Controller
         $conversations = auth()->user()->conversation()
             ->select('id', 'website_id', 'user_id')
             ->orderBy('created_at', 'DESC')
-            ->get()
-            ->load(['messages' => function ($q) {
-                $q->orderBy('created_at', 'DESC');
-                }, 'website' => function ($q) {
-                $q->select('id', 'name');
-            }]);
+            ->with([
+                'messages' => function ($messages) {
+                    $messages->orderBy('created_at', 'DESC');
+                },
+                'website'
+            ])
+            ->get();
 
         return $this->successResponse(['data' => $conversations]);
     }

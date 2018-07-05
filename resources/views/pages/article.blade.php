@@ -31,7 +31,7 @@
                                     <div class="float-md-right">
                                         @include('partials.article-start')
                                     </div>
-                                    <p>{{ $article->website->name }}</p>
+                                    <a href="{{ url($article->website->username) }}"><p>{{ $article->website->name }}</p></a>
                                 </dd>
                             </dl>
                             <br>

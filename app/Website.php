@@ -19,7 +19,7 @@ class Website extends Model implements HasMedia
     ];
 
     protected $hidden = [
-        'url'
+        'url', 'private', 'domain'
     ];
 
     protected $appends = [

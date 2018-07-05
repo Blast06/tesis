@@ -2,7 +2,7 @@
     <div class="container">
         <h4 class="mt-5 text-center">Opiniones de los usuarios</h4>
         <div class="row">
-            <div class="col-md-12 mt-2" v-for="review in dataReview">
+            <div class="col-md-12 mt-2" v-for="review in dataReviews">
                 <div class="comment-wrap">
                     <div class="photo">
                         <div class="avatar" :style="{'background-image': 'url(' + review.user.avatar + ')' }" data-toggle="tooltip" data-placement="top" :title="review.user.name"></div>
@@ -57,15 +57,13 @@
                 <button class="btn-primary btn-block"
                         :disabled="form.rating < 1"
                         @click.prevent="create"
-                        v-if="is_review">
-                    Valorar articulo
+                        v-if="dataIsReview">Valorar articulo
                 </button>
 
                 <button class="btn-primary btn-block"
                         :disabled="form.rating < 1"
                         @click.prevent="update"
-                        v-else>
-                    Actualizar valoracion
+                        v-else>Actualizar valoracion
                 </button>
             </div>
         </div>
@@ -79,13 +77,13 @@
         data() {
             return {
                 form: new Form({
-                    rating: (this.review !== null && this.review.rating !== null &&  this.review.rating > 0) ? this.review.rating : 0,
-                    comment: (this.review !== null && this.review.comment !== null && this.review.comment.length > 0) ? this.review.comment : ''
+                    rating: (this.review !== null && this.isset(this.review.rating) && this.review.rating > 0) ? this.review.rating : 0,
+                    comment: (this.review !== null && this.isset(this.review.comment) && this.review.comment.length > 0) ? this.review.comment : ''
                 }),
-                dataReview: this.reviews,
-                myReview: this.review,
+                dataReviews: this.reviews,
+                dataReview: this.review,
+                dataIsReview: this.isReview,
                 loading: false,
-                is_review: this.isReview,
             }
         },
         methods: {
@@ -95,8 +93,11 @@
                         this.loading = true;
                         this.form.post(`/articles/${this.article.id}/reviews`)
                             .then((response) => {
-                                this.is_review = false;
-                                this.dataReview.push({
+                                this.dataIsReview = false;
+                                this.dataReview = response.data;
+
+                                this.dataReviews.push({
+                                    id: this.dataReview.id,
                                     rating: this.form.rating,
                                     comment: this.form.comment,
                                     created_at: Date.now(),
@@ -105,7 +106,7 @@
                                         name: this.user.name
                                     }
                                 });
-                                this.myReview = response.data;
+
                             });
                     }
                 });
@@ -114,16 +115,22 @@
                 this.$validator.validateAll().then((valid) => {
                     if (valid) {
                         this.loading = true;
-                        this.form.put(`/articles/${this.myReview.article_id}/reviews/${this.myReview.id}`)
+                        this.form.put(`/articles/${this.dataReview.article_id}/reviews/${this.dataReview.id}`)
                             .then((response) => {
-                                const review = this.dataReview.find(review => review.id === this.myReview.id);
-                                review.rating = this.form.rating;
-                                review.comment = this.form.comment;
-                                this.myReview = response.data;
+                                let update_review = this.dataReviews.find(review => review.id === this.dataReview.id);
+                                update_review.rating = this.form.rating;
+                                update_review.comment = this.form.comment;
+                                this.dataReview = response.data;
                             });
                     }
                 });
             },
+            isset(attribute){
+                if (attribute === undefined || attribute === null || attribute === 'undefined') {
+                    return false;
+                }
+                return true;
+            }
         }
     }
 

@@ -10916,8 +10916,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['isAuth', 'isReview', 'reviews', 'review', 'article', 'user'],
@@ -10925,13 +10923,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             form: new Form({
-                rating: this.review !== null && this.review.rating !== null && this.review.rating > 0 ? this.review.rating : 0,
-                comment: this.review !== null && this.review.comment !== null && this.review.comment.length > 0 ? this.review.comment : ''
+                rating: this.review !== null && this.isset(this.review.rating) && this.review.rating > 0 ? this.review.rating : 0,
+                comment: this.review !== null && this.isset(this.review.comment) && this.review.comment.length > 0 ? this.review.comment : ''
             }),
-            dataReview: this.reviews,
-            myReview: this.review,
-            loading: false,
-            is_review: this.isReview
+            dataReviews: this.reviews,
+            dataReview: this.review,
+            dataIsReview: this.isReview,
+            loading: false
         };
     },
 
@@ -10943,8 +10941,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (valid) {
                     _this.loading = true;
                     _this.form.post('/articles/' + _this.article.id + '/reviews').then(function (response) {
-                        _this.is_review = false;
-                        _this.dataReview.push({
+                        _this.dataIsReview = false;
+                        _this.dataReview = response.data;
+
+                        _this.dataReviews.push({
+                            id: _this.dataReview.id,
                             rating: _this.form.rating,
                             comment: _this.form.comment,
                             created_at: Date.now(),
@@ -10953,7 +10954,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 name: _this.user.name
                             }
                         });
-                        _this.myReview = response.data;
                     });
                 }
             });
@@ -10964,16 +10964,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$validator.validateAll().then(function (valid) {
                 if (valid) {
                     _this2.loading = true;
-                    _this2.form.put('/articles/' + _this2.myReview.article_id + '/reviews/' + _this2.myReview.id).then(function (response) {
-                        var review = _this2.dataReview.find(function (review) {
-                            return review.id === _this2.myReview.id;
+                    _this2.form.put('/articles/' + _this2.dataReview.article_id + '/reviews/' + _this2.dataReview.id).then(function (response) {
+                        var update_review = _this2.dataReviews.find(function (review) {
+                            return review.id === _this2.dataReview.id;
                         });
-                        review.rating = _this2.form.rating;
-                        review.comment = _this2.form.comment;
-                        _this2.myReview = response.data;
+                        update_review.rating = _this2.form.rating;
+                        update_review.comment = _this2.form.comment;
+                        _this2.dataReview = response.data;
                     });
                 }
             });
+        },
+        isset: function isset(attribute) {
+            if (attribute === undefined || attribute === null || attribute === 'undefined') {
+                return false;
+            }
+            return true;
         }
     }
 });
@@ -108456,7 +108462,7 @@ var render = function() {
       "div",
       { staticClass: "row" },
       [
-        _vm._l(_vm.dataReview, function(review) {
+        _vm._l(_vm.dataReviews, function(review) {
           return _c("div", { staticClass: "col-md-12 mt-2" }, [
             _c("div", { staticClass: "comment-wrap" }, [
               _c("div", { staticClass: "photo" }, [
@@ -108623,7 +108629,7 @@ var render = function() {
         _vm._v(" "),
         _vm.isAuth
           ? _c("div", { staticClass: "col-md-12 mt-2" }, [
-              _vm.is_review
+              _vm.dataIsReview
                 ? _c(
                     "button",
                     {
@@ -108636,7 +108642,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                Valorar articulo\n            ")]
+                    [_vm._v("Valorar articulo\n            ")]
                   )
                 : _c(
                     "button",
@@ -108650,11 +108656,7 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n                Actualizar valoracion\n            "
-                      )
-                    ]
+                    [_vm._v("Actualizar valoracion\n            ")]
                   )
             ])
           : _vm._e()

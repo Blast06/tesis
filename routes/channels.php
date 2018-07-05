@@ -11,12 +11,14 @@
 |
 */
 
+use App\Conversation;
+
 Broadcast::channel('User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('Conversation.{id}', function ($conversation, $id) {
-    return (int) $conversation->id === (int) $id;
+Broadcast::channel('Conversation.{conversation}', function ($user, Conversation $conversation) {
+    return (int) $user->id === (int) $conversation->user_id;
 });
 
 Broadcast::channel('Cart.User.{id}', function ($user, $id) {

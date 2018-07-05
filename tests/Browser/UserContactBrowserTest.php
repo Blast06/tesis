@@ -19,12 +19,14 @@ class UserContactBrowserTest extends DuskTestCase
     function an_user_can_contact_to_website()
     {
         $user = $this->create(User::class);
+
         $website = $this->create(Website::class, [
             'name' => 'Cristian'
         ]);
 
-        $this->browse(function (Browser $browser) use($user, $website){
-            $message = 'Esto es una prueba';
+        $message = 'Esto es una prueba';
+
+        $this->browse(function (Browser $browser) use($user, $website, $message){
 
             $browser->loginAs($user)
                 ->visit('/messages/create')
