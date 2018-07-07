@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\{User, Website, Article};
+use App\{
+    Review, User, Website, Article
+};
 
 class ArticlesSeeder extends Seeder
 {
@@ -33,5 +35,7 @@ class ArticlesSeeder extends Seeder
         factory(Article::class)->times(100)->create()->each(function ($article){
             //$article->addMediaFromUrl(\Faker\Provider\Image::imageUrl(640, 480, 'business'))->toMediaCollection('articles');
         });
+
+        factory(Review::class)->times(500)->create();
     }
 }

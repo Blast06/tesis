@@ -130,9 +130,9 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
 
 $factory->define(App\Review::class, function (Faker $faker) {
     return [
-        'article_id' => factory(\App\Article::class)->create(),
+        'article_id' => !\App\Article::all()->isEmpty() && !App::environment('testing') ? \App\Article::all()->random()->id : factory(\App\Article::class)->create(),
         'user_id' => factory(\App\User::class)->create(),
         'rating' => $faker->randomElement([1, 2, 3, 4 ,5]),
-        'comment' => $faker->paragraph(2),
+        'comment' => $faker->randomElement([$faker->paragraph(2), null]),
     ];
 });
