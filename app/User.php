@@ -2,11 +2,11 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,9 +14,9 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements HasMedia, JWTSubject
+class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, SoftDeletes, HasMediaTrait, SoftDeletes;
+    use HasApiTokens, Notifiable, SoftDeletes, HasMediaTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -96,22 +96,6 @@ class User extends Authenticatable implements HasMedia, JWTSubject
         return !empty($this->getFirstMediaUrl('avatars', 'thumb'))
             ? $this->getFirstMediaUrl('avatars', 'thumb')
             : asset('/img/avatar.png');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 
     /*
