@@ -126,4 +126,12 @@ class Website extends Model implements HasMedia
     {
         return $this->private;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

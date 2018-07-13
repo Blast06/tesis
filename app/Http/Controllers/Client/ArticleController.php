@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\{Website, Article};
 use App\Http\Controllers\Controller;
+use App\DataTables\ClientArticleDataTable;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\{CreateArticleRequest, UploadImageArticleRequest};
-use App\{
-    DataTables\ClientArticleDataTable, Http\Requests\UpdateArticleRequest, Review, Website, Article
-};
+use App\Http\Requests\{CreateArticleRequest, UpdateArticleRequest, UploadImageArticleRequest};
 
 class ArticleController extends Controller
 {
+    /**
+     * ArticleController constructor.
+     */
     public function __construct()
     {
-        $this->middleware('auth')->except('show');
+        $this->middleware('auth');
     }
 
     /**
@@ -26,9 +28,7 @@ class ArticleController extends Controller
     public function index(ClientArticleDataTable $dataTable, Website $website)
     {
         $header = 'Todos los articulos de '. $website->name;
-
         $breadcrumb_name = 'article';
-
         return $dataTable->render('datatables.index', compact('header', 'breadcrumb_name', 'website'));
     }
 
@@ -53,34 +53,6 @@ class ArticleController extends Controller
     public function store(CreateArticleRequest $request, Website $website)
     {
         return $this->showOne($request->createArticle($website), Response::HTTP_CREATED);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param $slug
-     * @return \Illuminate\Http\Response
-     */
-    public function show($slug)
-    {
-        $article = Article::query()
-            ->where('slug', $slug)
-            ->with('reviews.user')
-            ->firstOrFail();
-        
-        $relateds = Article::where([
-            ['sub_category_id', $article->sub_category_id],
-            ['id', '<>', $article->id],
-        ])->take(10)->get();
-
-        $user_review = Review::query()
-            ->where([
-                ['article_id', $article->id],
-                ['user_id', auth()->id() ?? 0],
-            ])
-            ->first();
-
-        return view('pages.article', compact('article', 'relateds', 'user_review'));
     }
 
     /**
@@ -119,9 +91,7 @@ class ArticleController extends Controller
     public function destroy(Website $website, Article $article)
     {
         $article->delete();
-
         if (request()->ajax()) { return $this->showOne($article, Response::HTTP_OK); }
-
         return redirect()->route('articles.index', $website);
     }
 
@@ -135,29 +105,5 @@ class ArticleController extends Controller
     public function images(UploadImageArticleRequest $request, Website $website)
     {
         $this->showOne($request->uploadImage($website), Response::HTTP_OK);
-    }
-
-    /**
-     * Favorite Article to user
-     *
-     * @param \App\Article $article
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function favorite(Article $article)
-    {
-        auth()->user()->favoriteTo($article);
-        return $this->successResponse(['message' => "Article {$article->name} is now favorited"]);
-    }
-
-    /**
-     * Unfavorite Article to user
-     *
-     * @param \App\Article $article
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function unfavorite(Article $article)
-    {
-        auth()->user()->unfavoriteTo($article);
-        return $this->successResponse(['message' => "Article {$article->name} is now unfavorited"]);
     }
 }

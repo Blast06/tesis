@@ -9,17 +9,26 @@ use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
 {
-
+    /**
+     * MessageController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * @param \App\Website|null $website
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Website $website = null)
     {
         return view('pages.message', compact('website'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function createMessage()
     {
         $websites = Website::select('id', 'name', 'username')->get()->map(function ($website) {
@@ -77,6 +86,9 @@ class MessageController extends Controller
         return $this->successResponse(['data' => $newMessage], 201);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function conversationUser()
     {
         $conversations = auth()->user()->conversation()
@@ -93,6 +105,10 @@ class MessageController extends Controller
         return $this->successResponse(['data' => $conversations]);
     }
 
+    /**
+     * @param \App\Website $website
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function conversationWebsite(Website $website)
     {
         $conversations = $website->conversation()
@@ -108,6 +124,10 @@ class MessageController extends Controller
         return $this->successResponse(['data' => $conversations]);
     }
 
+    /**
+     * @param \App\Conversation $conversation
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showConversation(Conversation $conversation)
     {
         return $this->successResponse(['data' => $conversation->messages]);

@@ -93,6 +93,14 @@ class Article extends Model implements HasMedia
         return $this->hasMany(Review::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function toSearchableArray()
     {
         return [

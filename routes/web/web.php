@@ -49,21 +49,19 @@ Route::get('search', 'HomeController@search');
 /*
  * Public Website Route
  */
-Route::get('websites', 'Client\WebsiteController@index')->name('websites.index');
-Route::post('websites', 'Client\WebsiteController@store')->name('websites.store');
-Route::get('websites/feed', 'Client\WebsiteController@feed')->name('websites.feed');
-Route::get('websites/create', 'Client\WebsiteController@create')->name('websites.create');
-Route::get('{website}', 'Client\WebsiteController@show')->name('websites.show')->fallback();
-Route::get('{website}/information', 'Client\WebsiteController@information')->name('websites.information')->fallback();
-Route::get('{website}/subscribe', 'Client\WebsiteController@subscribe')->name('websites.subscribe')->fallback();
-Route::get('{website}/unsubscribe', 'Client\WebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
+Route::get('websites/feed', 'WebsiteController@feed')->name('websites.feed');
+Route::resource('websites', 'WebsiteController')->only('index', 'create', 'store');
+Route::get('{website}', 'WebsiteController@show')->name('websites.show')->fallback();
+Route::get('{website}/subscribe', 'WebsiteController@subscribe')->name('websites.subscribe')->fallback();
+Route::get('{website}/unsubscribe', 'WebsiteController@unsubscribe')->name('websites.unsubscribe')->fallback();
+Route::get('{website}/information', 'WebsiteController@information')->name('websites.information')->fallback();
 
 /*
  * Public Articles Route
  */
-Route::get('articles/{slug}', 'Client\ArticleController@show')->name('articles.show');
-Route::get('{article}/favorite', 'Client\ArticleController@favorite')->name('articles.favorite')->fallback();
-Route::get('{article}/unfavorite', 'Client\ArticleController@unfavorite')->name('articles.unfavorite')->fallback();
+Route::get('articles/{slug}', 'ArticleController@show')->name('articles.show');
+Route::get('{article}/favorite', 'ArticleController@favorite')->name('articles.favorite')->fallback();
+Route::get('{article}/unfavorite', 'ArticleController@unfavorite')->name('articles.unfavorite')->fallback();
 
 /*
  *  Public Chat
@@ -86,6 +84,12 @@ Route::get('{article}/remove/car', 'CartController@removeToCart')->name('article
  * Reviews
  */
 Route::resource('articles.reviews', 'ReviewController')->only(['store', 'update']);
+
+/*
+ * Orders
+ */
+Route::get('orders', 'OrderController@index')->name('orders.index');
+Route::post('orders', 'OrderController@store')->name('orders.store');
 
 /*
  * Recursos API Web

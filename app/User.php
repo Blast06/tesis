@@ -312,4 +312,12 @@ class User extends Authenticatable implements HasMedia
     {
         return !$this->reviews()->where('article_id', $article->id)->count() > 0;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

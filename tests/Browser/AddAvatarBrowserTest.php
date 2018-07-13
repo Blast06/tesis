@@ -21,7 +21,7 @@ class AddAvatarBrowserTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->create(User::class))
                 ->visit('/profiles')
-                ->attach('avatar', '/home/cristian/Imágenes/goku_blue_kaio_ken.png')
+                ->attach('avatar', '/home/cristian/wallpaper/goku_blue_kaio_ken.png')
                 ->whenAvailable('.toast-success', function ($toast) {
                     $toast->assertSee('¡Cambió la imagen exitosamente!');
                 });

@@ -9,15 +9,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
-                    <h1 class="mb-5">Build a landing page for your business or project and generate more leads!</h1>
+                    <h1 class="mb-5">Sencillez a escala.</h1>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        {{ config()->get('app.name') }} proporciona el punto de partida perfecto para su negocio crezca rapido.
+                        Olvídese de la compra, mantenimiento y los altos costos de alojamiento de un sistema web y concéntrese en lo que importa: su negocio.
                     </p>
                 </div>
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                    <a class="btn btn-primary">{{ __('Login') }}</a>
-                    <a class="btn btn-outline-secondary">Buscar ahora!</a>
+                    <a href="{{ url('/register') }}" class="btn btn-primary">Empezar</a>
+                    <a href="{{ url('/search') }}" class="btn btn-outline-secondary">Explorar ahora</a>
                 </div>
             </div>
         </div>
@@ -30,28 +30,28 @@
                 <div class="col-lg-4">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex">
-                            <i class="fas fa-desktop m-auto text-primary"></i>
+                            <i class="fab fa-laravel m-auto text-primary text-danger"></i>
                         </div>
-                        <h3>Fully Responsive</h3>
-                        <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
+                        <h3>Laravel 5.6</h3>
+                        <p class="lead mb-0">La version más reciente de Laravel, para aprovechar todas las excelentes funciones del framework.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex">
-                            <i class="fas fa-mobile-alt m-auto text-primary"></i>
+                            <i class="fab fa-vuejs m-auto text-primary text-success"></i>
                         </div>
-                        <h3>Bootstrap 4 Ready</h3>
-                        <p class="lead mb-0">Featuring the latest build of the new Bootstrap 4 framework!</p>
+                        <h3>Vue.js</h3>
+                        <p class="lead mb-0">Interface de usuario asombrosas.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="features-icons-item mx-auto mb-0 mb-lg-3">
                         <div class="features-icons-icon d-flex">
-                            <i class="far fa-heart m-auto text-primary"></i>
+                            <i class="fab fa-algolia m-auto text-primary"></i>
                         </div>
-                        <h3>Easy to Use</h3>
-                        <p class="lead mb-0">Ready to use with your own content, or customize the source files!</p>
+                        <h3>Algolia</h3>
+                        <p class="lead mb-0">Encuentra lo que están buscando, con una búsqueda extremadamente rápida y muy relevante.</p>
                     </div>
                 </div>
             </div>
@@ -65,22 +65,28 @@
 
                 <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                    <h2>Fully Responsive Design</h2>
-                    <p class="lead mb-0">When you use a theme created by Start Bootstrap, you know that the theme will look great on any device, whether it's a phone, tablet, or desktop the page will behave responsively!</p>
+                    <h2 class="text-center">Encontrar Lo Que Busques Siempre Sera Facil</h2>
+                    <p class="lead mb-0">
+                      Una búsqueda precisa con múltiples opciones, que hace que los usuarios encuentren lo que buscan con solo un retraso de 1 milisegundo.
+                    </p>
                 </div>
             </div>
             <div class="row no-gutters">
                 <div class="col-lg-6 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
                 <div class="col-lg-6 my-auto showcase-text">
-                    <h2>Updated For Bootstrap 4</h2>
-                    <p class="lead mb-0">Newly improved, and full of great utility classes, Bootstrap 4 is leading the way in mobile responsive web development! All of the themes on Start Bootstrap are now using Bootstrap 4!</p>
+                    <h2 class="text-center">Crea tu Negocio</h2>
+                    <p class="lead mb-0">
+                        Publica todos los productos o servicios que ofreces, Para llegar a mas clientes que nunca.
+                    </p>
                 </div>
             </div>
             <div class="row no-gutters">
                 <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                    <h2>Easy to Use &amp; Customize</h2>
-                    <p class="lead mb-0">Landing Page is just HTML and CSS with a splash of SCSS for users who demand some deeper customization options. Out of the box, just add your content and images, and your new landing page will be ready to go!</p>
+                    <h2>Dashboard</h2>
+                    <p class="lead mb-0">
+                        Una tablero administrativo elegante y sencilla, para administrar su negocio y saber cómo se encuentra el mi.
+                    </p>
                 </div>
             </div>
         </div>
@@ -89,27 +95,27 @@
     <!-- Testimonials -->
     <section class="testimonials text-center bg-light">
         <div class="container">
-            <h2 class="mb-5">What people are saying...</h2>
+            <h2 class="mb-5">Testimonios de usuarios</h2>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                         <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
-                        <h5>Thanos</h5>
-                        <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
+                        <h5>Cristian Gómez</h5>
+                        <p class="font-weight-light mb-0">"¡Esto es fantástico! Muchas gracias chicos!"</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                         <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
-                        <h5>Melina S.</h5>
-                        <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
+                        <h5>Rosa Henriquez</h5>
+                        <p class="font-weight-light mb-0">"{{ config()->get('app.name') }} es increíble, Lo he estado usando estas últimas semanas y le recomendé a mis amigos."</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
                         <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
-                        <h5>Sarah	W.</h5>
-                        <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
+                        <h5>Patricia V.</h5>
+                        <p class="font-weight-light mb-0">"¡Muchas gracias por poner a disposición de nosotros esta aplicacion con un plan gratuito!"</p>
                     </div>
                 </div>
             </div>
