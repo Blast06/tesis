@@ -27,8 +27,8 @@
 <body class="@yield('body-class')">
     <div id="app">
         <div class="app-banner">
-            Banner informativo
-            <a href="#">¡Obtenga el suyo hoy!</a>
+            ¡Aún no ha registrado su empresa!
+            <a href="#">¡Registre una ahora es gratis!</a>
         </div>
 
         <nav class="main">

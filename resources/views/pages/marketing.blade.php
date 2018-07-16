@@ -5,12 +5,12 @@
     @slot('container', 'container-fluid')
 
     <!-- Masthead -->
-    <header class="text-center mb-5">
+    <header class="text-center">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
-                    <h1 class="mb-5">Sencillez a escala.</h1>
-                    <p>
+                    <h1 class="mb-5" style="color: #464240;">Sencillez a escala.</h1>
+                    <p class="start">
                         {{ config()->get('app.name') }} proporciona el punto de partida perfecto para su negocio crezca rapido.
                         Olvídese de la compra, mantenimiento y los altos costos de alojamiento de un sistema web y concéntrese en lo que importa: su negocio.
                     </p>
@@ -24,7 +24,7 @@
     </header>
 
     <!-- Icons Grid -->
-    <section class="features-icons bg-light text-center">
+    <section class="features-icons bg-light text-center" style="border-top: 4px solid #e66761;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
@@ -59,7 +59,7 @@
     </section>
 
 
-    <section class="showcase">
+    <section class="showcase" style="border-top: 4px solid #e66761;">
         <div class="container-fluid p-0">
             <div class="row no-gutters">
 
@@ -93,7 +93,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials text-center bg-light">
+    <section class="testimonials text-center" style="border-top: 4px solid #e66761;">
         <div class="container">
             <h2 class="mb-5">Testimonios de usuarios</h2>
             <div class="row">
@@ -122,4 +122,23 @@
         </div>
     </section>
 
+    @slot('scripts')
+        <style>
+            header {
+                background: url('img/hero-illustration.svg');
+                background-repeat: no-repeat,repeat-x;
+                background-position: bottom;
+                background-size: 1200px 609px;
+                height: 800px;
+                margin-bottom: -4px;
+            }
+
+            .start {
+                color: #797572;
+                font-size: 1.5rem;
+                line-height: 1.5;
+                font-family: Whitney SSm A,Whitney SSm B,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue;
+            }
+        </style>
+    @endslot
 @endcomponent

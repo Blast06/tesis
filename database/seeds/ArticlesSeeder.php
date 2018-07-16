@@ -28,12 +28,12 @@ class ArticlesSeeder extends Seeder
         factory(User::class)->times(4)->create();
 
         factory(Website::class)->times(10)->create()->each(function ($website) {
-            //$website->addMediaFromUrl(\Faker\Provider\Image::imageUrl(640, 480, 'city'))->toMediaCollection('websites');
-            //$website->addMediaFromUrl(\Faker\Provider\Image::imageUrl(1920, 480, 'abstract'))->toMediaCollection('websites_banner');
+            $website->addMediaFromUrl(\Faker\Provider\Image::imageUrl(640, 480, 'city'))->toMediaCollection('websites');
+            $website->addMediaFromUrl(\Faker\Provider\Image::imageUrl(1920, 480, 'abstract'))->toMediaCollection('websites_banner');
         });
 
         factory(Article::class)->times(100)->create()->each(function ($article){
-            //$article->addMediaFromUrl(\Faker\Provider\Image::imageUrl(640, 480, 'business'))->toMediaCollection('articles');
+            $article->addMediaFromUrl(\Faker\Provider\Image::imageUrl(640, 480, 'business'))->toMediaCollection('articles');
         });
 
         factory(Review::class)->times(500)->create();
