@@ -9,6 +9,7 @@
 | Article | :heavy_check_mark: | :x: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Search | :heavy_check_mark: | :x: | :x: | :x: | :heavy_check_mark: |
 | Order | :heavy_check_mark: | :x: | :x: | :heavy_check_mark: | :x: |
+| Subscription | :x: | :x: | :x: | :x: | :x: |
 | Chat | :heavy_check_mark: | :x: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Notifications | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x: | :heavy_check_mark: |
 | Client panel | :heavy_check_mark: | :x: | :heavy_check_mark: | :x: | :heavy_check_mark: |

@@ -10,6 +10,7 @@
         "barryvdh/laravel-cors": "^0.11.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.1",
         "fideloper/proxy": "^4.0",
+        "laravel/cashier": "~7.0",
         "laravel/framework": "5.6.*",
         "laravel/passport": "^6.0",
         "laravel/scout": "^4.0",
