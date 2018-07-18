@@ -23,6 +23,7 @@ Route::get('{website}/unsubscribe', 'Api\WebsiteController@unsubscribe')->name('
 
 // Articles
 Route::get('articles/subscribed', 'Api\ArticleController@articleOfMySubscribed');
+Route::get('articles/all', 'Api\ArticleController@allArticles');
 Route::get('articles/{slug}', 'Api\ArticleController@show')->name('api.articles.show ');
 Route::get('{article}/favorite', 'Api\ArticleController@favorite')->name('api.articles.favorite')->fallback();
 Route::get('{article}/unfavorite', 'Api\ArticleController@unfavorite')->name('api.articles.unfavorite')->fallback();

@@ -13,7 +13,7 @@ class ArticleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except('show');
+        $this->middleware('auth:api')->except('show','allArticles');
     }
 
     public function index(Website $website)
@@ -113,6 +113,17 @@ class ArticleController extends Controller
                 ->unique('id')
                 ->values()
         ]);
+    }
+
+   /*
+    *
+    * Shows articles
+    */
+
+    public function allArticles()
+    {
+        $articles = Article::all();
+        return response()->json($articles,Response::HTTP_OK);
     }
 
     /**
