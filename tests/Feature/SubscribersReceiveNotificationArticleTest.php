@@ -33,7 +33,7 @@ class SubscribersReceiveNotificationArticleTest extends TestCase
         }
 
         $this->actingAs($website->user)
-            ->json('POST',route('articles.store', $website), $this->withData([
+            ->json('POST',route('client.articles.store', $website), $this->withData([
                 'website_id' => $website->id,
                 'sub_category_id' => ($this->create(SubCategory::class))->id,
             ]))
@@ -54,7 +54,7 @@ class SubscribersReceiveNotificationArticleTest extends TestCase
         $website->user->subscribeTo($website);
 
         $this->actingAs($website->user)
-            ->json('POST',route('articles.store', $website), $this->withData([
+            ->json('POST',route('client.articles.store', $website), $this->withData([
                 'website_id' => $website->id,
                 'sub_category_id' => ($this->create(SubCategory::class))->id,
             ]))

@@ -44,6 +44,8 @@ class UpdateWebsiteRequest extends FormRequest
 
     public function updateWebsite(Website $website)
     {
-       return $website->update($this->validated());
+       return tap($website, function($website) {
+           $website->update($this->validated());
+       });
     }
 }

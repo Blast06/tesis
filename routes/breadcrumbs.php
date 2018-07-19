@@ -7,12 +7,12 @@ Breadcrumbs::for('dashboard', function ($breadcrumbs, $website) {
 
 Breadcrumbs::for('article', function ($breadcrumbs, $website) {
     $breadcrumbs->parent('dashboard', $website);
-    $breadcrumbs->push('Articles', route('articles.index', $website));
+    $breadcrumbs->push('Articles', route('client.articles.index', $website));
 });
 
 Breadcrumbs::for('create-article', function ($breadcrumbs, $website) {
     $breadcrumbs->parent('article', $website);
-    $breadcrumbs->push('Create', route('articles.create', $website));
+    $breadcrumbs->push('Create', route('client.articles.create', $website));
 });
 
 Breadcrumbs::for('edit-article', function ($breadcrumbs, $website, $article) {
@@ -22,11 +22,16 @@ Breadcrumbs::for('edit-article', function ($breadcrumbs, $website, $article) {
 
 Breadcrumbs::for('website_config', function ($breadcrumbs, $website) {
     $breadcrumbs->parent('dashboard', $website);
-    $breadcrumbs->push($website->name, route('websites.edit', $website));
+    $breadcrumbs->push($website->name, $website->url->edit);
 });
 
 Breadcrumbs::for('message', function ($breadcrumbs, $website) {
     $breadcrumbs->parent('dashboard', $website);
     $breadcrumbs->push('Message', url("/client/{$website->username}/messages"));
+});
+
+Breadcrumbs::for('order', function ($breadcrumbs, $website) {
+    $breadcrumbs->parent('dashboard', $website);
+    $breadcrumbs->push('Ordenes', route('client.orders.index', $website));
 });
 

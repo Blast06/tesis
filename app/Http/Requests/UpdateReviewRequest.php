@@ -31,7 +31,8 @@ class UpdateReviewRequest extends FormRequest
 
     public function updateReview($review)
     {
-        $review->update($this->validated());
-        return $review;
+        return tap($review, function($review) {
+            $review->update($this->validated());
+        });
     }
 }

@@ -34,11 +34,11 @@ class ClientArticleDataTable extends DataTable
                 }
                 return $article->stock;
             })
-            ->editColumn('created_at', function(Article $product) {
-                return $product->created_at->format('l j F Y');
+            ->editColumn('created_at', function(Article $article) {
+                return $article->created_at->format('l j F Y');
             })
-            ->editColumn('updated_at', function(Article $product) {
-                return $product->updated_at->format('l j F Y');
+            ->editColumn('updated_at', function(Article $article) {
+                return $article->updated_at->format('l j F Y');
             })
             ->rawColumns(['image_path', 'status', 'action']);
     }
@@ -50,7 +50,10 @@ class ClientArticleDataTable extends DataTable
      */
     public function query()
     {
-        return Article::with(['subCategory'])->where('website_id', request()->website->id)->get();
+        return request()->website->articles()
+            ->with(['subCategory'])
+            ->orderByDesc('id')
+            ->get();
     }
 
     /**

@@ -21,7 +21,7 @@ class PleaseConfirmYourEmail extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      *
-     * @param \App\Models\User $user
+     * @param \App\User $user
      */
     public function __construct(User $user)
     {

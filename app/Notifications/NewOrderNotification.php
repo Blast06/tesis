@@ -2,39 +2,31 @@
 
 namespace App\Notifications;
 
-use App\{Article, User};
+use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewArticleNotification extends Notification implements ShouldQueue
+class NewOrderNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     public $tries = 5;
 
     /**
-     * @var \App\User
+     * @var \App\Order
      */
-    public $user;
-
-    /**
-     * @var \App\Article
-     */
-    public $article;
+    public $order;
 
     /**
      * Create a new notification instance.
      *
-     * @param \App\User $user
-     * @param \App\Article $article
+     * @param \App\Order $order
      */
-    public function __construct(User $user, Article $article)
+    public function __construct(Order $order)
     {
-        $this->user = $user;
-        $this->article = $article;
+        $this->order = $order;
     }
 
     /**
@@ -57,26 +49,26 @@ class NewArticleNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("[{$this->article->website->name}] Nuevo articulo")
+            ->subject("[{$this->order->website->name}] Nuevo articulo")
             ->greeting("Hola {$notifiable->name}.")
-            ->line("{$this->article->website->name}, añadido un nuevo articulo {$this->article->name}")
-            ->action('Ver el articulo', $this->article->url->article)
+            ->line("El client {$this->order->user->name}, ordeno el articulo {$this->order->article->name}")
+            ->action('Ver la orden', '#')
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
     public function toArray($notifiable)
     {
         return [
-            'icon' => 'fas fa-newspaper',
-            'subject' => 'Nuevo articulo',
-            'body' => "{$this->article->website->name},  Ha a añadido un nuevo articulo.",
-            'url' => $this->article->url->article,
+            'icon' => 'fas fa-shipping-fast',
+            'subject' => 'Nueva orden',
+            'body' => "{$this->order->user->name},  Ha realizado un pedido.",
+            'url' => '',
         ];
     }
-
-    public function broadcastOn()
-    {
-        return new PrivateChannel('User.'.$this->user->id);
-    }
-
 }

@@ -42,7 +42,7 @@
                             <i class="fab fa-vuejs m-auto text-primary text-success"></i>
                         </div>
                         <h3>Vue.js</h3>
-                        <p class="lead mb-0">Interface de usuario asombrosas.</p>
+                        <p class="lead mb-0">Interface de usuario, asombrosas.</p>
                     </div>
                 </div>
                 <div class="col-lg-4">

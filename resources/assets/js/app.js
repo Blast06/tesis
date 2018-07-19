@@ -50,6 +50,7 @@ Vue.component("shopping-cart", require("./components/cart/shopping_cart"));
 Vue.component("cart-notification", require("./components/UserCartNotifications"));
 Vue.component('star-rating', StarRating);
 Vue.component('article-rating', require("./components/article/Rating"));
+Vue.component('user-order', require("./components/order/Order"));
 
 new Vue({
     el: '#app',

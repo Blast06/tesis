@@ -16,7 +16,7 @@
 
         <hr>
 
-        <a href="#" class="btn btn-primary text-uppercase">Ordenar ahora </a>
+        <a @click="confirmOrder" class="btn btn-primary text-uppercase" :class="loading ? 'loader' : ''">Ordenar ahora </a>
 
         <button type="button" @click="addCar" class="btn btn-outline-primary text-uppercase" :class="loading ? 'loader' : ''">
             <i class="fas fa-shopping-cart"></i> Añadir al carrito
@@ -35,7 +35,7 @@
         props: ['article', 'favorited'],
         data() {
             return{
-                quantity: this.article.stock !== null ? this.article.stock : 100,
+                quantity: this.article.stock !== null && this.article.stock > 20 ? this.article.stock : 20,
                 selectQuantity: 1,
                 loading: false,
             }
@@ -49,6 +49,34 @@
                         toastr.success(`¡Articulo ${this.article.name} añadido correctamente!`);
                         this.loading = false;
                     })
+            },
+            confirmOrder(){
+                swal({
+                    title: "¿Estás seguro?",
+                    text: "¡No podrás modificar o eliminar esta orden, una vez realizada!",
+                    buttons: ["Cancelar", "Ordenar ahora"],
+                    dangerMode: true,
+                }).then((confirm) => {
+                    if (confirm) {
+                        this.orderNow();
+                    }
+                });
+            },
+            orderNow(){
+                this.loading = true;
+
+                axios.post(`/orders`, {
+                    orders: [{
+                        "article_id": this.article.id,
+                        "quantity": this.selectQuantity
+                    }]
+                }).then(() => {
+                    toastr.success(`¡Articulo ${this.article.name} ordenado correctamente!`);
+                    this.loading = false;
+                    setTimeout(() => {
+                        window.location.href = '/orders';
+                    }, 3000);
+                })
             }
         }
     }

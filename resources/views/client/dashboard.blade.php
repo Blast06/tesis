@@ -34,7 +34,7 @@
                                 <p>Todos Los Articulos</p>
                             </div>
                             <div class="card-footer text-center" style="background-color: rgba(0,0,0,.1); border-top: none; padding: 0.4rem 0.8rem;">
-                                <a href="{{ route('articles.index', $website) }}" class="text-white">Mas informacion <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('client.articles.index', $website) }}" class="text-white">Mas informacion <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 

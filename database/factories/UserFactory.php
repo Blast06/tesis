@@ -136,3 +136,13 @@ $factory->define(App\Review::class, function (Faker $faker) {
         'comment' => $faker->randomElement([$faker->paragraph(2), null]),
     ];
 });
+
+$factory->define(App\Order::class, function (Faker $faker) {
+    return [
+        'price' => $faker->randomNumber(3),
+        'quantity' => $faker->randomNumber(1),
+        'user_id' => !\App\User::all()->isEmpty() && !App::environment('testing') ? \App\User::all()->random()->id : factory(\App\User::class)->create(),
+        'article_id' => !\App\Article::all()->isEmpty() && !App::environment('testing') ? \App\Article::all()->random()->id : factory(\App\Article::class)->create(),
+        'website_id' => !\App\Website::all()->isEmpty() && !App::environment('testing') ? \App\Website::all()->random()->id : factory(\App\Website::class)->create(),
+    ];
+});

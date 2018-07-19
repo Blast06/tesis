@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Article;
+use App\{Article, Order};
 use App\Events\ArticleUpdate;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\NewOrderNotification;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Notification;
 
 class CreateOrderRequest extends FormRequest
 {
@@ -48,6 +50,7 @@ class CreateOrderRequest extends FormRequest
                 $article = $this->getArticleInstace($order['article_id']);
                 $this->changeStock($article, $order['quantity']);
                 array_push($this->orders, $this->createOrder($article, $order['quantity']));
+                auth()->user()->removeArticleToCart($article);
             }
         });
 
@@ -103,11 +106,14 @@ class CreateOrderRequest extends FormRequest
      */
     private function createOrder(Article $article, $quantity)
     {
-        return $article->orders()->create([
+        return tap($article->orders()->create([
             'quantity' => $quantity,
             'price' => $article->status !== Article::STATUS_PRIVATE ? (int) $article->price : null,
             'user_id' => auth()->id(),
-            'website_id' => $article->website->id
-        ]);
+            'website_id' => $article->website->id,
+            'status' => $article->status !== Article::STATUS_PRIVATE ? Order::STATUS_CURRENT : Order::STATUS_WAIT,
+        ]), function ($order) use ($article){
+            Notification::send([$article->website->user], new NewOrderNotification($order));
+        });
     }
 }

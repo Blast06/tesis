@@ -41,7 +41,7 @@ class UpdateWebsiteTest extends TestCase
                 'name' => 'New name website',
             ])
             ->assertStatus(Response::HTTP_OK)
-            ->assertExactJson(['data' => true]);
+            ->assertJsonStructure(['data']);
 
         $this->assertDatabaseHas('websites', [
             'name' => 'New name website'
@@ -69,7 +69,7 @@ class UpdateWebsiteTest extends TestCase
                 'address' => 'La vega'
             ])
             ->assertStatus(Response::HTTP_OK)
-            ->assertExactJson(['data' => true]);
+            ->assertJsonStructure(['data']);
 
         $this->assertDatabaseHas('websites', [
             'name' => $this->website->name,
@@ -87,7 +87,7 @@ class UpdateWebsiteTest extends TestCase
                 'phone' => '809 573-3333',
             ])
             ->assertStatus(Response::HTTP_OK)
-            ->assertExactJson(['data' => true]);
+            ->assertJsonStructure(['data']);
 
         $this->assertDatabaseHas('websites', [
             'name' => $this->website->name,
@@ -105,7 +105,7 @@ class UpdateWebsiteTest extends TestCase
                 'description' => 'Descripcion de prueba',
             ])
             ->assertStatus(Response::HTTP_OK)
-            ->assertExactJson(['data' => true]);
+            ->assertJsonStructure(['data']);
 
         $this->assertDatabaseHas('websites', [
             'name' => $this->website->name,

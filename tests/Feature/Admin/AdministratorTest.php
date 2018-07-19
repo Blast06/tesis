@@ -20,7 +20,7 @@ class AdministratorTest extends TestCase
             ->get(route('admin.dashboard'))
             ->assertStatus(Response::HTTP_OK)
             ->assertViewIs('admin.dashboard')
-            ->assertSee("Admin Dashboard");
+            ->assertSee("Dashboard Administrador");
     }
 
     /** @test */

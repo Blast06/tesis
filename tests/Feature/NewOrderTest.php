@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\{Article, User};
+use App\{Article, Order, User};
+use App\Notifications\NewOrderNotification;
+use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -34,6 +36,8 @@ class NewOrderTest extends TestCase
     /** @test */
     function user_can_many_orders_articles()
     {
+        Notification::fake();
+
         $this->actingAs($this->user)
             ->post(route('orders.store'), [
                 'orders' => [
@@ -53,20 +57,29 @@ class NewOrderTest extends TestCase
             'article_id' => $this->articles[0]->id,
             'website_id' =>  $this->articles[0]->website->id,
             'quantity' => 1,
-            'status' => \App\Order::STATUS_WAIT
+            'status' => \App\Order::STATUS_CURRENT
         ]);
 
         $this->assertDatabaseHas('orders', [
             'article_id' => $this->articles[1]->id,
             'website_id' =>  $this->articles[1]->website->id,
             'quantity' => 2,
-            'status' => \App\Order::STATUS_WAIT
+            'status' => \App\Order::STATUS_CURRENT
         ]);
+
+        Notification::assertSentTo([
+                $this->articles[0]->website->user,
+                $this->articles[1]->website->user
+            ], NewOrderNotification::class
+        );
+
     }
 
     /** @test */
     function a_stock_of_the_article_is_reduced_when_new_orders_is_registered_and_this_stock_is_not_null()
     {
+        Notification::fake();
+
         $article = $this->create(Article::class, [
             'stock' => 10
         ]);
@@ -97,6 +110,8 @@ class NewOrderTest extends TestCase
     /** @test */
     function an_order_price_set_null_if_article_price_its_private()
     {
+        Notification::fake();
+
         $article = $this->create(Article::class, [
             'status' => Article::STATUS_PRIVATE
         ]);
@@ -114,6 +129,7 @@ class NewOrderTest extends TestCase
 
         $this->assertDatabaseHas('orders', [
             'price' => null,
+            'status' => Order::STATUS_WAIT,
             'article_id' => $article->id
         ]);
     }
@@ -121,6 +137,8 @@ class NewOrderTest extends TestCase
     /** @test */
     function an_article_change_status_when_stock_is_out()
     {
+        Notification::fake();
+
         $article = $this->create(Article::class, [
             'stock' => 10
         ]);
@@ -202,5 +220,34 @@ class NewOrderTest extends TestCase
                     ]
                 ]
             ])->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /** @test */
+    function user_cart_is_empty_when_order_is_processed()
+    {
+        Notification::fake();
+        
+        $this->be($this->user);
+
+        // Add article to cart
+        $this->json('GET',"{$this->articles[0]->id}/add/1/car")
+            ->json('GET',"{$this->articles[1]->id}/add/2/car");
+
+        // Order item in cart
+        $this->post(route('orders.store'), [
+            'orders' => [
+                [
+                    'article_id' => $this->articles[0]->id,
+                    'quantity' => 1,
+                ],
+                [
+                    'article_id' => $this->articles[1]->id,
+                    'quantity' => 2,
+                ],
+            ]
+        ])->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure(['data']);
+
+        $this->assertDatabaseEmpty('shopping_cart');
     }
 }

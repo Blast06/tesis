@@ -17,7 +17,13 @@ class OrderController extends Controller
 
     public function index()
     {
+        $orders = auth()->user()
+            ->orders()
+            ->with(['article:id,name,slug', 'website'])
+            ->orderByDesc('id')
+            ->get();
 
+        return view('pages.order', compact('orders'));
     }
 
     /**

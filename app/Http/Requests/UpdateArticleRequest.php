@@ -51,6 +51,8 @@ class UpdateArticleRequest extends FormRequest
 
     public function updateArticle(Article $article)
     {
-        return $article->update($this->validated());
+        return tap($article, function($article) {
+            $article->update($this->validated());
+        });
     }
 }

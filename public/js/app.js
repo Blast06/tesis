@@ -11340,7 +11340,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['article', 'favorited'],
     data: function data() {
         return {
-            quantity: this.article.stock !== null ? this.article.stock : 100,
+            quantity: this.article.stock !== null && this.article.stock > 20 ? this.article.stock : 20,
             selectQuantity: 1,
             loading: false
         };
@@ -11355,6 +11355,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/' + this.article.id + '/add/' + this.selectQuantity + '/car').then(function () {
                 toastr.success('\xA1Articulo ' + _this.article.name + ' a\xF1adido correctamente!');
                 _this.loading = false;
+            });
+        },
+        confirmOrder: function confirmOrder() {
+            var _this2 = this;
+
+            swal({
+                title: "¿Estás seguro?",
+                text: "¡No podrás modificar o eliminar esta orden, una vez realizada!",
+                buttons: ["Cancelar", "Ordenar ahora"],
+                dangerMode: true
+            }).then(function (confirm) {
+                if (confirm) {
+                    _this2.orderNow();
+                }
+            });
+        },
+        orderNow: function orderNow() {
+            var _this3 = this;
+
+            this.loading = true;
+
+            axios.post('/orders', {
+                orders: [{
+                    "article_id": this.article.id,
+                    "quantity": this.selectQuantity
+                }]
+            }).then(function () {
+                toastr.success('\xA1Articulo ' + _this3.article.name + ' ordenado correctamente!');
+                _this3.loading = false;
+                setTimeout(function () {
+                    window.location.href = '/orders';
+                }, 3000);
             });
         }
     }
@@ -11739,6 +11771,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this4.newMessage = '';
                 _this4.messages.push(response.data.data);
             });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/order/Order.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "user-orders",
+    props: ['orders'],
+    methods: {
+        badgesStatus: function badgesStatus(status) {
+            if (status === "EN ESPERA") return '<span class="badge badge-warning">' + status + '</span>';
+            if (status === 'EN PROCESO') return '<span class="badge badge-primary">' + status + '</span>';
+            if (status === "COMPLETADA") return '<span class="badge badge-success">' + status + '</span>';
+            if (status === "CANCELADA") return '<span class="badge badge-danger">' + status + '</span>';
+
+            return '<span class="badge badge-dark">' + status + '</span>';
         }
     }
 });
@@ -107698,6 +107783,109 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0e8b0e66\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/order/Order.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "table-responsive" }, [
+    _c("table", { staticClass: "table table-striped table-sm" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.orders, function(order) {
+          return _c("tr", [
+            _c("th", [
+              _c("a", { attrs: { href: "articles/" + order.article.slug } }, [
+                _vm._v(_vm._s(order.article.name))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(
+                  _vm._f("currency")(order.price, "RD$", 2, {
+                    spaceBetweenAmountAndSymbol: true
+                  })
+                )
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", { domProps: { textContent: _vm._s(order.quantity) } }),
+            _vm._v(" "),
+            _c("td", { domProps: { textContent: _vm._s(order.website.name) } }),
+            _vm._v(" "),
+            _c("td", {
+              domProps: { innerHTML: _vm._s(_vm.badgesStatus(order.status)) }
+            }),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(
+                  _vm._f("moment")(
+                    order.created_at,
+                    "dddd, MMMM Do YYYY, h:mm:ss a"
+                  )
+                )
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(
+                  _vm._f("moment")(
+                    order.updated_at,
+                    "dddd, MMMM Do YYYY, h:mm:ss a"
+                  )
+                )
+              )
+            ])
+          ])
+        })
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Articulo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Vendedor")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Estado")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fecha de Actualizacion")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fecha de Modificacion")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0e8b0e66", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-14fb1e14\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/UserCartNotifications.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -107970,7 +108158,11 @@ var render = function() {
       _vm._v(" "),
       _c(
         "a",
-        { staticClass: "btn btn-primary text-uppercase", attrs: { href: "#" } },
+        {
+          staticClass: "btn btn-primary text-uppercase",
+          class: _vm.loading ? "loader" : "",
+          on: { click: _vm.confirmOrder }
+        },
         [_vm._v("Ordenar ahora ")]
       ),
       _vm._v(" "),
@@ -122987,6 +123179,7 @@ Vue.component("shopping-cart", __webpack_require__("./resources/assets/js/compon
 Vue.component("cart-notification", __webpack_require__("./resources/assets/js/components/UserCartNotifications.vue"));
 Vue.component('star-rating', __WEBPACK_IMPORTED_MODULE_7_vue_star_rating___default.a);
 Vue.component('article-rating', __webpack_require__("./resources/assets/js/components/article/Rating.vue"));
+Vue.component('user-order', __webpack_require__("./resources/assets/js/components/order/Order.vue"));
 
 new Vue({
     el: '#app',
@@ -123908,6 +124101,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-0d99701c", Component.options)
   } else {
     hotAPI.reload("data-v-0d99701c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/order/Order.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/order/Order.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0e8b0e66\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/order/Order.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/order/Order.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e8b0e66", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e8b0e66", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

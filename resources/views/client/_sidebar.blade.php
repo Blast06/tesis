@@ -18,6 +18,14 @@
     </a>
 </div>
 
+<h5 class="title">Pedidos</h5>
+<div class="list-group mb-5">
+    <a href="{{ url("/client/{$website->username}/orders") }}" class="list">
+        <i class="far fa-circle"></i>
+        Todos los pedidos
+    </a>
+</div>
+
 @if($websites->count())
     <h5 class="title">Sitios De Trabajo</h5>
     <div class="list-group mb-5">
@@ -32,7 +40,7 @@
 
 <h5 class="title">Configuraciones</h5>
 <div class="list-group mb-5">
-    <a href="{{ route('websites.edit', request()->website) }}" class="list">
+    <a href="{{ request()->website->url->edit }}" class="list">
         <i class="fas fa-cog"></i>
         Website
     </a>

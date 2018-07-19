@@ -34,7 +34,7 @@ class UrlPresenter
 
     public function delete()
     {
-        return route('articles.destroy', [
+        return route('client.articles.destroy', [
             'website' => $this->website,
             'article' => $this->article
         ]);
@@ -42,7 +42,7 @@ class UrlPresenter
 
     public function edit()
     {
-        return route('articles.edit', [
+        return route('client.articles.edit', [
             'website' => $this->website,
             'article' => $this->article
         ]);
@@ -55,7 +55,7 @@ class UrlPresenter
 
     public function update()
     {
-        return route('articles.update',[
+        return route('client.articles.update',[
             'website' => $this->website,
             'article' => $this->article
         ]);

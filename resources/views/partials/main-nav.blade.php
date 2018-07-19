@@ -28,6 +28,10 @@
 
             <li class="divider"></li>
 
+            <li><a href="{{ url('/orders') }}">Mis Ordenes</a></li>
+
+            <li class="divider"></li>
+
             <li><a href="{{ route('profiles.index') }}">Perfil</a></li>
 
             <li class="divider"></li>

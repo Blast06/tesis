@@ -2,14 +2,14 @@
 
     <div class="row">
 
-        <div class="col-md-3">
-
+        <div class="col-md-3 sidebar">
+            @include('admin._sidebar')
         </div>
 
         <div class="col-md-9">
             @component('component.card')
 
-                @slot('header',  "Admin Dashboard")
+                @slot('header',  "Dashboard Administrador")
 
                 @slot('header_style', 'bg-white font-weight-bold')
 

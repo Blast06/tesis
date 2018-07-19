@@ -10,21 +10,24 @@ Route::catch(function (){
     throw new NotFoundHttpException;
 });
 
-Route::middleware(['client'])->group(function () {
+Route::middleware(['client'])->prefix('{website}')->name('client.')->group(function () {
 
-    Route::get('{website}/dashboard', 'Client\DashboardClientController@index')->name('client.dashboard');
+    Route::get('dashboard', 'Client\DashboardClientController@index')->name('dashboard');
 
-    Route::get('{website}/edit', 'Client\WebsiteController@edit')->name('websites.edit');
-    Route::put('{website}/update', 'Client\WebsiteController@update')->name('websites.update');
-    Route::post('{website}/image', 'Client\WebsiteController@image')->name('websites.image');
+    Route::get('edit', 'Client\WebsiteController@edit')->name('websites.edit');
+    Route::put('update', 'Client\WebsiteController@update')->name('websites.update');
+    Route::post('image', 'Client\WebsiteController@image')->name('websites.image');
 
-    Route::post('{website}/articles/images', 'Client\ArticleController@images');
-    Route::resource('{website}/articles', 'Client\ArticleController')->except('show');
+    Route::post('articles/images', 'Client\ArticleController@images')->name('article.image');
+    Route::resource('articles', 'Client\ArticleController')->except('show');
 
-    Route::get('{website}/messages', 'Client\MessageController@index');
-    Route::post('{website}/messages', 'Client\MessageController@storeWebsite');
-    Route::get('{website}/messages/conversations', 'Client\MessageController@conversationWebsite');
+    Route::get('messages', 'Client\MessageController@index')->name('message');
+    Route::post('messages', 'Client\MessageController@storeWebsite')->name('message.store');
+    Route::get('messages/conversations', 'Client\MessageController@conversationWebsite')->name('message.conversation');
 
-    Route::delete('{website}/medias/{media}', 'Client\MediaController@destroy');
+    Route::delete('medias/{media}', 'Client\MediaController@destroy')->name('media.destroy');
+
+    Route::get('orders', 'Client\OrderController@index')->name('orders.index');
+    Route::put('orders/{order}', 'Client\OrderController@update')->name('orders.update');
 });
 

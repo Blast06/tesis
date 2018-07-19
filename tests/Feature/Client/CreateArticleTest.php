@@ -34,7 +34,7 @@ class CreateArticleTest extends TestCase
     function a_non_client_cannot_create_a_article()
     {
         $this->actingAs($this->create(User::class))
-            ->post(route('articles.store', $this->website), $this->withData())
+            ->post(route('client.articles.store', $this->website), $this->withData())
             ->assertStatus(Response::HTTP_FOUND)
             ->assertRedirect('/home');
     }
@@ -45,7 +45,7 @@ class CreateArticleTest extends TestCase
         Notification::fake();
 
         $this->actingAs($this->website->user)
-            ->json('POST',route('articles.store', $this->website), $this->withData([
+            ->json('POST',route('client.articles.store', $this->website), $this->withData([
                 'website_id' => $this->website->id,
                 'sub_category_id' => $this->subcategory->id,
             ]))
@@ -67,7 +67,7 @@ class CreateArticleTest extends TestCase
         $this->handleValidationExceptions();
 
         $this->actingAs($this->website->user)
-            ->json('POST',route('articles.store', $this->website), [])
+            ->json('POST',route('client.articles.store', $this->website), [])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertExactJson(["errors" => [
                 "name" => ["El campo titulo es obligatorio."],
