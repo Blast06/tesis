@@ -28,7 +28,7 @@
     <div id="app">
         <div class="app-banner">
             ¡Aún no ha registrado su empresa!
-            <a href="#">¡Registre una ahora es gratis!</a>
+            <a href="{{ url('/pricing') }}">¡Registre una ahora es gratis!</a>
         </div>
 
         <nav class="main">
@@ -40,7 +40,7 @@
             <search-input></search-input>
 
             <ul class="main-nav">
-                @include('partials.main-nav')
+                @include('partials._main_nav')
             </ul>
 
             <div class="responsive-sidebar-nav">

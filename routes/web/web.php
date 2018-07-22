@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', 'MarketingController@index')->name('marketing.index');
+Route::get('/pricing', 'MarketingController@pricing')->name('pricing.index');
 
 /**
  * Auth Route

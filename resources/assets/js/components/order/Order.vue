@@ -4,9 +4,11 @@
             <thead>
             <tr>
                 <th>Articulo</th>
+                <th>Vendedor</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
-                <th>Vendedor</th>
+                <th>Iva</th>
+                <th>Total</th>
                 <th>Estado</th>
                 <th>Fecha de Actualizacion</th>
                 <th>Fecha de Modificacion</th>
@@ -16,9 +18,13 @@
             <tbody>
             <tr v-for="order in orders">
                 <th><a :href="'articles/'+order.article.slug">{{ order.article.name}}</a></th>
-                <td>{{ order.price | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true })}}</td>
-                <td v-text="order.quantity"></td>
                 <td v-text="order.website.name"></td>
+                <td>{{ order.price | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }}</td>
+                <td v-text="order.quantity"></td>
+                <td v-if="order.price">{{ (order.price + order.quantity) * 0.18 | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }} </td>
+                <td v-else>0</td>
+                <td v-if="order.price">{{ ((order.price + order.quantity) * 0.18) + (order.price + order.quantity) | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }}</td>
+                <td v-else>0</td>
                 <td v-html="badgesStatus(order.status)"></td>
                 <td>{{ order.created_at | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}</td>
                 <td>{{ order.updated_at | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}</td>

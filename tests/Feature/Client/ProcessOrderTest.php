@@ -63,7 +63,7 @@ class ProcessOrderTest extends TestCase
             ]), [
                 'price' => 100,
                 'status' => Order::STATUS_COMPLETE
-            ])->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ])->assertStatus(Response::HTTP_OK);
     }
 
     /** @test */

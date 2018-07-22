@@ -35,4 +35,13 @@ class Order extends Model
     {
         return $this->belongsTo(Website::class);
     }
+
+    /**
+     * @param \App\Website $website
+     * @return bool
+     */
+    public function isRegisteredIn(Website $website)
+    {
+        return $this->website()->where('id', $website->id)->count() > 0;
+    }
 }

@@ -28,6 +28,7 @@ Route::middleware(['client'])->prefix('{website}')->name('client.')->group(funct
     Route::delete('medias/{media}', 'Client\MediaController@destroy')->name('media.destroy');
 
     Route::get('orders', 'Client\OrderController@index')->name('orders.index');
+    Route::get('orders/{order}', 'Client\OrderController@edit')->name('orders.edit');
     Route::put('orders/{order}', 'Client\OrderController@update')->name('orders.update');
 });
 

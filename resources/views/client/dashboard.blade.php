@@ -20,11 +20,11 @@
                     <div class="card-deck col-md-12">
                         <div class="card bg-info">
                             <div class="card-body text-white text-center">
-                                <h3>150</h3>
+                                <h3>{{ $website->orders()->where('status', \App\Order::STATUS_CURRENT)->orWhere('status', \App\Order::STATUS_WAIT)->count() }}</h3>
                                 <p>Nuevos Pedidos</p>
                             </div>
                             <div class="card-footer text-center" style="background-color: rgba(0,0,0,.1); border-top: none; padding: 0.4rem 0.8rem;">
-                                <a href="#" class="text-white">Mas informacion <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('client.orders.index', $website) }}" class="text-white">Mas informacion <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
@@ -51,7 +51,7 @@
                         <div class="card bg-warning">
                             <div class="card-body text-white text-center">
                                 <h3> {{ $website->subscribedUsers()->count() }} </h3>
-                                <p>Usuarios Suscriptos</p>
+                                <p>Suscriptos</p>
                             </div>
                             <div class="card-footer text-center" style="background-color: rgba(0,0,0,.1); border-top: none; padding: 0.4rem 0.8rem;">
                                 <a href="#" class="text-white">Mas informacion <i class="fa fa-arrow-circle-right"></i></a>

@@ -3,7 +3,7 @@
     <div class="row">
 
         <div class="d-none d-md-block col-md-3 sidebar">
-            @include('partials.sidenav')
+            @include('partials._sidenav')
         </div>
 
         <div class="col-md-9">

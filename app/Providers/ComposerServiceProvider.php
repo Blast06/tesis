@@ -15,7 +15,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         \View::composer(
             [
-                'partials.sidenav',
+                'partials._sidenav',
                 'client._sidebar'
             ]
             , 'App\Http\ViewComposers\MainSidebarComposer'
@@ -25,15 +25,5 @@ class ComposerServiceProvider extends ServiceProvider
             $app_name = request()->website->name ?? config('app.name', 'Laravel');
             $view->with(compact('app_name'));
         });
-    }
-
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }

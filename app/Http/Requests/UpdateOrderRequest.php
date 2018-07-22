@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Notifications\OrderChangeStatusNotification;
 use App\Order;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Notification;
 
 class UpdateOrderRequest extends FormRequest
 {
@@ -36,20 +38,23 @@ class UpdateOrderRequest extends FormRequest
         $this->isCompleteOrCancel($order);
         $this->onlyWaitOrderCanChangePrice($order);
         return tap($order, function($order) {
-            $order->update($this->validated());
+            $fields = $this->validated();
+            $fields['price'] = $order->status === Order::STATUS_WAIT ? $fields['price'] : $order->price;
+            $order->update($fields);
+            Notification::send([$order->user], new OrderChangeStatusNotification($order));
         });
     }
 
     private function isCompleteOrCancel(Order $order)
     {
         abort_if($order->status === Order::STATUS_COMPLETE
-            || $order->status === Order::STATUS_WAIT, 422, 'No puedes cambiar el estado de un producto completado o cancelado');
+            || $order->status === Order::STATUS_CANCEL, 422, 'No puedes cambiar el estado de un producto completado o cancelado');
     }
 
     private function onlyWaitOrderCanChangePrice(Order $order)
     {
         abort_if($order->status === Order::STATUS_CURRENT
             && (isset($this->validated()['price'])
-                && $this->validated()['price'] !== null), 422, 'No puedes modificar el precio de una orden en proceso');
+                && $this->validated()['price'] !== null ), 422, 'No puedes modificar el precio de una orden en proceso');
     }
 }

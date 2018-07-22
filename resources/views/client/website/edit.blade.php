@@ -8,7 +8,7 @@
 
             {{ Breadcrumbs::render('website_config', $website) }}
 
-            @include('partials.alert')
+            @include('partials._alert')
 
             @component('component.card')
 

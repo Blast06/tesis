@@ -29,7 +29,7 @@
                                 <dt>Vendedor</dt>
                                 <dd>
                                     <div class="float-md-right">
-                                        @include('partials.article-start')
+                                        @include('partials._stars')
                                     </div>
                                     <a href="{{ url($article->website->username) }}"><p>{{ $article->website->name }}</p></a>
                                 </dd>
@@ -54,10 +54,12 @@
 
                             <dl class="param param-feature">
                                 <dt>Entrega</dt>
-                                <dd>Sola la vega</dd>
+                                <dd>{{ $article->shipping_place }}</dd>
                             </dl>
 
                             <hr>
+
+                            @include('partials._article_status')
 
                             @if(auth()->check())
                                 <shopping-button
@@ -74,7 +76,7 @@
                 <div>
                     <h4 class="mt-5 text-center">Articulos relacionados</h4>
                     <div class="row">
-                        @each('partials.related', $relateds, 'article')
+                        @each('partials._related', $relateds, 'article')
                     </div>
                 </div>
             @endif

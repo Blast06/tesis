@@ -52,7 +52,9 @@ class UpdateArticleRequest extends FormRequest
     public function updateArticle(Article $article)
     {
         return tap($article, function($article) {
-            $article->update($this->validated());
+            $fields = $this->validated();
+            $fields['stock'] = $fields['stock'] === 0 ? null : $fields['stock'];
+            $article->update($fields);
         });
     }
 }

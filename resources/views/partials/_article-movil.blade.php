@@ -8,7 +8,7 @@
             <dt>Vendedor</dt>
             <dd>
                 <p>{{ $article->website->name }}</p>
-                @include('partials.article-start')
+                @include('partials._stars')
             </dd>
         </dl>
         <p>
@@ -18,7 +18,7 @@
             </span>
         </p>
 
-        @include('partials.article-status')
+        @include('partials._article_status')
 
         <dl>
             <dt>Descripcion</dt>

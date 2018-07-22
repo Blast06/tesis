@@ -35,3 +35,8 @@ Breadcrumbs::for('order', function ($breadcrumbs, $website) {
     $breadcrumbs->push('Ordenes', route('client.orders.index', $website));
 });
 
+Breadcrumbs::for('edit-order', function ($breadcrumbs, $website, $order) {
+    $breadcrumbs->parent('order', $website);
+    $breadcrumbs->push("No. $order->id", route('client.orders.edit', ['website' => $website, 'order' => $order]));
+});
+

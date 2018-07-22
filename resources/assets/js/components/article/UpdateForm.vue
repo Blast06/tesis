@@ -84,7 +84,6 @@
                 <vue-numeric
                         class="form-control"
                         :class="[{ 'is-invalid' : errors.has('cantidad')  }, { 'is-invalid' : form.errors.has('stock') }]"
-                        :disabled="disableStock"
                         separator=","
                         name="stock"
                         v-validate="'numeric|max_value:9999'"
@@ -159,7 +158,6 @@
             return {
                 categories: {},
                 loading: false,
-                disableStock: false,
                 article_id: '',
                 form: new Form({
                     name: this.article.name,

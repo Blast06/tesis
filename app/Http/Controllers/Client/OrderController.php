@@ -32,8 +32,26 @@ class OrderController extends Controller
         return $dataTable->render('datatables.index', compact('header', 'breadcrumb_name', 'website'));
     }
 
+    /**
+     * @param \App\Website $website
+     * @param \App\Order $order
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Website $website, Order $order)
+    {
+        abort_unless($order->isRegisteredIn($website), 404);
+        return view('client.order.edit', compact('order', 'website'));
+    }
+
+    /**
+     * @param \App\Http\Requests\UpdateOrderRequest $request
+     * @param \App\Website $website
+     * @param \App\Order $order
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(UpdateOrderRequest $request, Website $website, Order $order)
     {
+        abort_unless($order->isRegisteredIn($website), 404);
         return $this->showOne($request->updateOrder($order));
     }
 }

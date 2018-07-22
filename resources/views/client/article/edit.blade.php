@@ -7,7 +7,7 @@
 
         <div class="col-md-9">
 
-            @include('partials.alert')
+            @include('partials._alert')
 
             {{ Breadcrumbs::render('edit-article', $website, $article) }}
 
@@ -15,7 +15,17 @@
 
                 @slot('card_style', 'shadow-sm mb-5')
 
-                @slot('header', "Editar ". $article->name)
+                @slot('header')
+                    <h6>Editar: {{ $article->name }}
+                        <button type="button"
+                                class="btn btn-secondary btn-sm"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                title="Poner tus articulos como privados hara que su precio no sea visible, pero deberas especificar en las ordenes el precio del mismo">
+                            <i class="fas fa-question-circle"></i>
+                        </button>
+                    </h6>
+                @endslot
 
                 @slot('header_style', 'bg-white font-weight-bold')
 
@@ -70,5 +80,13 @@
             @endcomponent
         </div>
     </div>
+
+    @slot('script')
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+        </script>
+    @endslot
 @endcomponent
 

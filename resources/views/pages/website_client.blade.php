@@ -75,7 +75,7 @@
 
 
             @if($website->articles->count())
-                @each('partials.article', $website->articles, 'article')
+                @each('partials._article', $website->articles, 'article')
             @else
                 <div class="alert alert-info" role="alert">
                     Parece que {{ $website->name }} no tienen ninguna publicación.

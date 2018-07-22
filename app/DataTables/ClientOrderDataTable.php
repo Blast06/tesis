@@ -16,13 +16,28 @@ class ClientOrderDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
+            ->addColumn('action', function(Order $order){
+                return view('datatables.action_orders', compact('order'));
+            })
             ->editColumn('price', function (Order $order){
                 if (is_null($order->price)) {
                     return 'Sin especificar';
                 }
                 return number_format($order->price,2,'.',',');
             })
-            ->addColumn('status', function (Order $order) {
+            ->addColumn('Iva', function (Order $order) {
+                if (is_null($order->price)) {
+                    return 'Sin especificar';
+                }
+                return number_format($order->price * 0.18,2,'.',',');
+            })
+            ->addColumn('Total', function (Order $order) {
+                if (is_null($order->price)) {
+                    return 'Sin especificar';
+                }
+                return number_format($order->price * ($order->price * 0.18),2,'.',',');
+            })
+            ->editColumn('status', function (Order $order) {
                 return $this->articleBadgeStatus($order);
             })
             ->editColumn('created_at', function(Order $order) {
@@ -71,10 +86,12 @@ class ClientOrderDataTable extends DataTable
         return [
             'id' => ['title' => 'Identificador', 'visible' => false, 'exportable' => false, 'printable' => false,],
             'article.name' => ['title' => 'Articulo'],
+            'user.name' => ['title' => 'Cliente'],
             'price' => ['title' => 'Precio'],
             'quantity' => ['title' => 'Cantidad'],
+            'Iva',
+            'Total',
             'status' => ['title' => 'Estatus'],
-            'user.name' => ['title' => 'Cliente'],
             'created_at' => ['title' => 'Fecha de creacion'],
             'updated_at'=> ['title' => 'Fecha actualización']
         ];

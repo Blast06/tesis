@@ -52,7 +52,7 @@ class NewOrderNotification extends Notification implements ShouldQueue
             ->subject("[{$this->order->website->name}] Nuevo articulo")
             ->greeting("Hola {$notifiable->name}.")
             ->line("El client {$this->order->user->name}, ordeno el articulo {$this->order->article->name}")
-            ->action('Ver la orden', '#')
+            ->action('Ver la orden', url("/client{$this->order->website->username}/orders"))
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 
@@ -68,7 +68,7 @@ class NewOrderNotification extends Notification implements ShouldQueue
             'icon' => 'fas fa-shipping-fast',
             'subject' => 'Nueva orden',
             'body' => "{$this->order->user->name},  Ha realizado un pedido.",
-            'url' => '',
+            'url' => url("/client{$this->order->website->username}/orders"),
         ];
     }
 }

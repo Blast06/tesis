@@ -1,11 +1,8 @@
 @guest
-    <li><a href="{{ route('websites.index') }}">SITIOS</a></li>
+    <li><a href="{{ route('websites.index') }}">Buscar Sitios</a></li>
     <li><a href="{{ route('login') }}">ACCEDER</a></li>
     <li><a href="{{ route('register') }}">REGISTRO</a></li>
 @else
-    <li><a href="{{ route('home.index') }}">HOME</a></li>
-    <li><a href="{{ route('websites.index') }}">BUSCAR SITIOS</a></li>
-
     <user-notifications :user_id="{{auth()->id()}}"></user-notifications>
 
     <li><a href="{{ route('messages.index') }}"><i class="fas fa-comment fa-lg"></i></a></li>
@@ -19,23 +16,21 @@
         </a>
 
         <ul class="dropdown-menu" role="menu">
+
             @if(auth()->user()->isAdmin())
             <li><a href="{{ route('admin.dashboard') }}">Panel admin</a></li>
+            <li class="divider"></li>
             @endif
+            <li><a href="{{ route('home.index') }}">Home</a></li>
             <li class="divider"></li>
-
+            <li><a href="{{ route('websites.index') }}">Buscar Sitios</a></li>
+            <li class="divider"></li>
             <li><a href="{{ url('/websites/create') }}">Crear Sitio</a></li>
-
             <li class="divider"></li>
-
             <li><a href="{{ url('/orders') }}">Mis Ordenes</a></li>
-
             <li class="divider"></li>
-
             <li><a href="{{ route('profiles.index') }}">Perfil</a></li>
-
             <li class="divider"></li>
-
             <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
@@ -44,6 +39,7 @@
                     @csrf
                 </form>
             </li>
+
         </ul>
     </li>
 @endguest

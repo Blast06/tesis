@@ -2,30 +2,31 @@
 
 namespace App\Notifications;
 
-use App\User;
+use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PleaseConfirmYourEmail extends Notification implements ShouldQueue
+class OrderChangeStatusNotification extends Notification implements ShouldQueue
 {
-
     use Queueable;
 
     public $tries = 5;
 
-    public $user;
+    /**
+     * @var \App\Order
+     */
+    public $order;
 
     /**
      * Create a new notification instance.
      *
-     * @param \App\User $user
+     * @param \App\Order $order
      */
-    public function __construct(User $user)
+    public function __construct(Order $order)
     {
-        $this->user = $user;
+        $this->order = $order;
     }
 
     /**
@@ -48,24 +49,26 @@ class PleaseConfirmYourEmail extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Verificación de correo electrónico')
-            ->greeting("Hola {$notifiable->name}, Un último paso.")
-            ->line("Solo necesitamos que confirmes tu dirección de correo electrónico para demostrar que eres humano. Lo entiendes, ¿verdad? Coo.")
-            ->action('Confirmar correo electrónico', $notifiable->signedTokenUrl() )
+            ->subject("Orden No. [{$this->order->id}], ha cambiado su estado.")
+            ->greeting("Hola {$notifiable->name}.")
+            ->line("El vendedor {$this->order->website->name}, cambio el estado de tu orden a {$this->order->status}")
+            ->action('Ver la orden', url('/orders'))
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
     public function toArray($notifiable)
     {
         return [
-            'icon' => 'far fa-envelope',
-            'subject' => 'Verificación de correo electrónico',
-            'body' => "necesitamos que confirmes tu dirección de correo electrónico...",
+            'icon' => 'fas fa-shipping-fast',
+            'subject' => 'Cambio de estado del pedido',
+            'body' => "{$this->order->id},  Ha cambiado el estado por {$this->order->id}.",
+            'url' => url('/orders'),
         ];
-    }
-
-    public function broadcastOn()
-    {
-        return new PrivateChannel('User.'.$this->user->id);
     }
 }

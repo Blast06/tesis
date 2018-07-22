@@ -1,6 +1,6 @@
 @component('component.main')
 
-    @include('partials.alert')
+    @include('partials._alert')
 
     <div class="row justify-content-center">
         <div class="col-md-8">

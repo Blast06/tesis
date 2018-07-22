@@ -11,7 +11,7 @@
                    <dt>Vendedor</dt>
                    <dd>
                        <div class="float-md-right">
-                           @include('partials.article-start')
+                           @include('partials._stars')
                        </div>
                        <p>{{ $article->website->name }}</p>
                    </dd>
@@ -24,7 +24,7 @@
                     </span>
                </p>
 
-               @include('partials.article-status')
+               @include('partials._article_status')
 
                <dl>
                    <dt>Descripcion</dt>
@@ -41,4 +41,4 @@
     </div>
 </div>
 
-@include('partials.article-movil')
+@include('partials._article-movil')

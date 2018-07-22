@@ -56,7 +56,11 @@ class CreateArticleRequest extends FormRequest
      */
     public function createArticle(Website $website)
     {
-        return tap($website->articles()->create($this->validated()), function ($article) {
+        $fields = $this->validated();
+        if ($fields['stock'] === 0) {
+            $fields['stock'] = null;
+        }
+        return tap($website->articles()->create($fields), function ($article) {
             $this->usersNotificationToArticle($article);
         });
     }

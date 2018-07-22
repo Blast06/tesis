@@ -3,15 +3,15 @@
     <div class="row">
 
         <div class="d-none d-md-block col-md-3 sidebar">
-            @include('partials.sidenav')
+            @include('partials._sidenav')
         </div>
 
         <div class="col-md-9">
 
-            @include('partials.alert')
+            @include('partials._alert')
 
             @if($articles->count())
-                @each('partials.article', $articles, 'article')
+                @each('partials._article', $articles, 'article')
             @else
                 <div class="alert alert-info" role="alert">
                     Parece que los sitios que sigue no tienen ninguna publicación o no sigues a ningun sitio.

@@ -64,6 +64,7 @@ class ArticleController extends Controller
      */
     public function edit(Website $website, Article $article)
     {
+        abort_unless($article->isRegisteredIn($website), 404);
         return view('client.article.edit', compact('website', 'article'));
     }
 
@@ -77,6 +78,7 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Website $website, Article $article)
     {
+        abort_unless($article->isRegisteredIn($website), 404);
         return $this->successResponse(['data' => $request->updateArticle($article)]);
     }
 
@@ -90,6 +92,7 @@ class ArticleController extends Controller
      */
     public function destroy(Website $website, Article $article)
     {
+        abort_unless($article->isRegisteredIn($website), 404);
         $article->delete();
         if (request()->ajax()) { return $this->showOne($article, Response::HTTP_OK); }
         return redirect()->route('articles.index', $website);

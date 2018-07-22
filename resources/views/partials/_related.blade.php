@@ -7,8 +7,8 @@
                 <a class="text-dark" href="{{ $article->url->show }}">
                     {{ $article->name }}
                 </a>
-                @include('partials.article-start')
-                @include('partials.article-status')
+                @include('partials._stars')
+                @include('partials._article_status')
             </div>
         </div>
 </div>

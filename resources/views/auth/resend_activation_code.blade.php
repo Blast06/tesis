@@ -2,7 +2,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @include('partials.alert')
+            @include('partials._alert')
 
             @component('component.card')
                 @slot('header', 'Volver a enviar el código de activación')

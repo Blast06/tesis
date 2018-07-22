@@ -51,6 +51,7 @@ Vue.component("cart-notification", require("./components/UserCartNotifications")
 Vue.component('star-rating', StarRating);
 Vue.component('article-rating', require("./components/article/Rating"));
 Vue.component('user-order', require("./components/order/Order"));
+Vue.component('client-order', require("./components/order/edit"));
 
 new Vue({
     el: '#app',

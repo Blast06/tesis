@@ -101,6 +101,15 @@ class Article extends Model implements HasMedia
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * @param \App\Website $website
+     * @return bool
+     */
+    public function isRegisteredIn(Website $website)
+    {
+        return $this->website()->where('id', $website->id)->count() > 0;
+    }
+
     public function toSearchableArray()
     {
         return [
