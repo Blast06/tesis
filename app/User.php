@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, Notifiable, SoftDeletes, HasMediaTrait, SoftDeletes;
+    use HasApiTokens, Notifiable, SoftDeletes, HasMediaTrait, Billable;
 
     /**
      * The attributes that are mass assignable.

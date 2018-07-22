@@ -11,9 +11,4 @@ class MarketingController extends Controller
     {
         return view('pages.marketing');
     }
-
-    public function pricing()
-    {
-        return view('pages.pricing');
-    }
 }

@@ -67,6 +67,15 @@
                             .then(response => {
                                 this.$validator.reset();
                                 window.location.href= '/client/'+ response.data.username +'/dashboard';
+                            })
+                            .catch(error => {
+                                toastr.error(error.message);
+
+                                if (error.message === "Debes elegir un plan antes de continuar") {
+                                    setTimeout(() => {
+                                        window.location.href= '/plans';
+                                    }, 3000);
+                                }
                             });
                     }
                 });

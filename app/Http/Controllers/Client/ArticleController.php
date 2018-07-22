@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\{Website, Article};
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\DataTables\ClientArticleDataTable;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,25 @@ class ArticleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+
+            if (App::environment('testing') || auth()->user()->isAdmin()) {
+                return $next($request);
+            }
+
+            abort_unless(auth()->user()->subscribed('main'), 403, "Debes elegir un plan antes de continuar");
+
+            abort_if(auth()->user()->subscribedToPlan('comunidad', 'main')
+                && request()->website->articles()->count() > 5, 403, 'Tu plan no te permite crear maas de 5 articulos');
+
+            abort_if(auth()->user()->subscribedToPlan('esencial', 'main')
+                && request()->website->articles()->count() > 10, 403, 'Tu plan no te permite crear maas de 10 articulos');
+
+            abort_if(auth()->user()->subscribedToPlan('premium', 'main')
+                && request()->website->articles()->count() > 20, 403, 'Tu plan no te permite crear maas de 20 articulos');
+
+            return $next($request);
+        })->only('store');
     }
 
     /**

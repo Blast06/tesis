@@ -188,6 +188,9 @@
                             .then((response) => {
                                 toastr.success("¡Articulo creado correctamente!");
                                 this.article_id = response.data.id;
+                            }).catch(error => {
+                                this.loading = true;
+                                toastr.error(error.message);
                             });
                     }
                 });

@@ -28,7 +28,7 @@
     <div id="app">
         <div class="app-banner">
             ¡Aún no ha registrado su empresa!
-            <a href="{{ url('/pricing') }}">¡Registre una ahora es gratis!</a>
+            <a href="{{ route('subscription.plans') }}">¡Registre una ahora es gratis!</a>
         </div>
 
         <nav class="main">

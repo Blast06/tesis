@@ -1,7 +1,11 @@
 <?php
 
 Route::get('/', 'MarketingController@index')->name('marketing.index');
-Route::get('/pricing', 'MarketingController@pricing')->name('pricing.index');
+Route::get('/plans', 'SubscriptionController@plans')->name('subscription.plans');
+Route::post('/process_subscription', 'SubscriptionController@processSubscription')->name('subscription.process');
+Route::get('/subscription/admin', 'SubscriptionController@admin')->name('subscriptions.admin');
+Route::post('/subscription/resume', 'SubscriptionController@resume')->name('subscription.resume');
+Route::post('/subscription/cancel', 'SubscriptionController@cancel')->name('subscription.cancel');
 
 /**
  * Auth Route
