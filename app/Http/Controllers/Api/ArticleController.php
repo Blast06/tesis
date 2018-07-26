@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\{Article, Review, Website};
+use App\{Article, Review};
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
-use App\Http\Requests\UploadImageArticleRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller
@@ -14,11 +11,26 @@ class ArticleController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->except('show','allArticles');
-    }
 
-    public function index(Website $website)
-    {
-        return $this->successResponse(['data' => Article::with(['subCategory'])->where('website_id', $website->id)->get()]);
+        $this->middleware(function ($request, $next) {
+
+            if (App::environment('testing') || auth()->user()->isAdmin()) {
+                return $next($request);
+            }
+
+            abort_unless(auth()->user()->subscribed('main'), 403, "Debes elegir un plan antes de continuar");
+
+            abort_if(auth()->user()->subscribedToPlan('comunidad', 'main')
+                && request()->website->articles()->count() > 5, 403, 'Tu plan no te permite crear maas de 5 articulos');
+
+            abort_if(auth()->user()->subscribedToPlan('esencial', 'main')
+                && request()->website->articles()->count() > 10, 403, 'Tu plan no te permite crear maas de 10 articulos');
+
+            abort_if(auth()->user()->subscribedToPlan('premium', 'main')
+                && request()->website->articles()->count() > 20, 403, 'Tu plan no te permite crear maas de 20 articulos');
+
+            return $next($request);
+        })->only('store');
     }
 
     /**
@@ -56,43 +68,13 @@ class ArticleController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\CreateArticleRequest $request
-     * @param \App\Website $website
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateArticleRequest $request, Website $website)
+    /*
+    * Shows articles
+    */
+    public function allArticles()
     {
-        return $this->showOne($request->createArticle($website), Response::HTTP_CREATED);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\UpdateArticleRequest $request
-     * @param \App\Website $website
-     * @param \App\Article $article
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(UpdateArticleRequest $request, Website $website, Article $article)
-    {
-        return $this->successResponse(['data' => $request->updateArticle($article)]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Website $website
-     * @param \App\Article $article
-     * @return \App\Article
-     * @throws \Exception
-     */
-    public function destroy(Website $website, Article $article)
-    {
-        $article->delete();
-        return $this->showOne($article, Response::HTTP_OK);
+        $articles = Article::all();
+        return response()->json($articles,Response::HTTP_OK);
     }
 
     /**
@@ -113,29 +95,6 @@ class ArticleController extends Controller
                 ->unique('id')
                 ->values()
         ]);
-    }
-
-   /*
-    *
-    * Shows articles
-    */
-
-    public function allArticles()
-    {
-        $articles = Article::all();
-        return response()->json($articles,Response::HTTP_OK);
-    }
-
-    /**
-     * Upload Image to the specified resource from storage.
-     *
-     * @param \App\Http\Requests\UploadImageArticleRequest $request
-     * @param \App\Website $website
-     * @return void
-     */
-    public function images(UploadImageArticleRequest $request, Website $website)
-    {
-        $this->showOne($request->uploadImage($website), Response::HTTP_OK);
     }
 
     /**

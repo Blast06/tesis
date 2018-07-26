@@ -1,5 +1,5 @@
 @guest
-    <li><a href="{{ route('websites.index') }}">Buscar Sitios</a></li>
+    <li><a href="{{ route('websites.index') }}">BUSCAR SITIOS</a></li>
     <li><a href="{{ route('login') }}">ACCEDER</a></li>
     <li><a href="{{ route('register') }}">REGISTRO</a></li>
 @else

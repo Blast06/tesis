@@ -124,7 +124,7 @@
 
                     <h6><strong>Total: </strong> @{{ total | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }}</h6>
 
-                    <a @click="confirmOrder" class="btn btn-primary text-uppercase" :class="loading ? 'loader' : ''">Ordenar ahora</a>
+                    <a @click="confirmOrder" class="btn btn-primary text-uppercase" :class="loading ? 'loader' : ''" v-show="itemsQuantity > 0">Ordenar ahora</a>
                 @endcomponent
             </div>
         </div>
