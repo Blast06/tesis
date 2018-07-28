@@ -26,7 +26,6 @@ class SubscriptionController extends Controller
 
     public function processSubscription()
     {
-        dd(request('type'));
         $token = request('stripeToken');
         try {
             if (request()->has('coupon') && !is_null(request('coupon'))) {
