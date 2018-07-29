@@ -17,7 +17,7 @@
 Route::get('user', 'Api\UserController@user');
 
 //Websites
-Route::post('websites', 'Api\WebsiteController@store')->name('api.websites.store')->fallback();
+Route::post('websites', 'Api\WebsiteController@store')->name('api.websites.store');
 Route::get('{website}', 'Api\WebsiteController@show')->name('api.websites.show')->fallback();
 Route::get('{website}/subscribe', 'Api\WebsiteController@subscribe')->name('api.websites.subscribe')->fallback();
 Route::get('{website}/unsubscribe', 'Api\WebsiteController@unsubscribe')->name('api.websites.unsubscribe')->fallback();

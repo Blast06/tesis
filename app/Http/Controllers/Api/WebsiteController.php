@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Website;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateWebsiteRequest;
 use Symfony\Component\HttpFoundation\Response;

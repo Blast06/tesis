@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\{Article, Review};
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
