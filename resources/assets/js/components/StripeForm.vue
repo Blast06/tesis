@@ -5,6 +5,7 @@
         :stripe-key="stripe_key"
         :product="product"
         :product-id="id"
+        :form-id="form_id"
     ></stripe-checkout>
 </template>
 
@@ -18,7 +19,8 @@
             name: '',
             amount: '',
             description: '',
-            id: ''
+            id: '',
+            form_id: ''
         },
         computed: {
             product() {

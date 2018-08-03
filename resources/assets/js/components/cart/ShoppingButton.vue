@@ -60,7 +60,7 @@
             addCar(){
                 this.loading = true;
 
-                axios.get(`/${this.article.id}/add/${this.selectQuantity}/car`)
+                axios.get(`/${this.article.id}/add/${this.selectQuantity}/cart`)
                     .then(() => {
                         toastr.success(`¡Articulo ${this.article.name} añadido correctamente!`);
                         this.loading = false;

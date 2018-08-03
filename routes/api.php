@@ -33,8 +33,8 @@ Route::get('{article}/unfavorite', 'Api\ArticleController@unfavorite')->name('ap
 // Cart
 Route::get('shopping/cart', 'Api\CartController@index')->name('cart.index');
 Route::get('shopping/cart/count', 'Api\CartController@countCartArticle')->name('api.cart.count');
-Route::get('{article}/add/{quantity}/car', 'Api\CartController@addToCart')->name('api.articles.add.cart')->fallback();
-Route::get('{article}/remove/car', 'Api\CartController@removeToCart')->name('api.articles.remove.cart')->fallback();
+Route::get('{article}/add/{quantity}/cart', 'Api\CartController@addToCart')->name('api.articles.add.cart')->fallback();
+Route::get('{article}/remove/cart', 'Api\CartController@removeToCart')->name('api.articles.remove.cart')->fallback();
 
 // Reviews
 Route::resource('articles.reviews', 'Api\ReviewController')->only(['store', 'update']);

@@ -13,5 +13,6 @@
             amount="{{ $product['amount'] }}"
             description="{{ $product['description'] }}"
             id="{{ $product['id'] }}"
+            form_id="{{ $product['form_id'] }}"
     ></stripe-form>
 </form>

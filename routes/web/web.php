@@ -82,8 +82,8 @@ Route::get('messages/conversations/{conversation}', 'Client\MessageController@sh
  */
 Route::get('shopping/cart', 'CartController@index')->name('cart.index');
 Route::get('shopping/cart/count', 'CartController@countCartArticle')->name('cart.count');
-Route::get('{article}/add/{quantity}/car', 'CartController@addToCart')->name('articles.add.cart')->fallback();
-Route::get('{article}/remove/car', 'CartController@removeToCart')->name('articles.remove.cart')->fallback();
+Route::get('{article}/add/{quantity}/cart', 'CartController@addToCart')->name('articles.add.cart')->fallback();
+Route::get('{article}/remove/cart', 'CartController@removeToCart')->name('articles.remove.cart')->fallback();
 
 /*
  * Reviews

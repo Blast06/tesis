@@ -10,7 +10,7 @@
             </div>
             <div class="row justify-content-md-center">
                 <div class="col-md-5 col-lg-3">
-                    <div class="item">
+                    <div class="item form-1">
                         <div class="heading">
                             <h3>COMUNIDAD</h3>
                         </div>
@@ -29,13 +29,14 @@
                                 "description" => "Mensual",
                                 "type" => "comunidad",
                                 "amount" => 0,
-                                "id" => "prod_DHJtJ69llRHLVF"
+                                "id" => "prod_DHJtJ69llRHLVF",
+                                "form_id" => "form-1"
                             ]
                         ])
                     </div>
                 </div>
                 <div class="col-md-5 col-lg-3">
-                    <div class="item">
+                    <div class="item form-2">
                         <div class="ribbon">Best Value</div>
                         <div class="heading">
                             <h3>ESENCIAL</h3>
@@ -55,13 +56,14 @@
                                "description" => "Mensual",
                                "type" => "esencial",
                                "amount" => 2499,99,
-                               "id" => "prod_DHJxhWxm9f3oMZ"
+                               "id" => "prod_DHJxhWxm9f3oMZ",
+                               "form_id" => "form-2"
                            ]
                        ])
                     </div>
                 </div>
                 <div class="col-md-5 col-lg-3">
-                    <div class="item">
+                    <div class="item form-3">
                         <div class="heading">
                             <h3>PREMIUM</h3>
                         </div>
@@ -80,13 +82,14 @@
                                "description" => "Mensual",
                                "type" => "premium",
                                "amount" => 7499,99,
-                               "id" => "prod_DHJxhRrBNP3rb4"
+                               "id" => "prod_DHJxhRrBNP3rb4",
+                               "form_id" => "form-3"
                            ]
                        ])
                     </div>
                 </div>
                 <div class="col-md-5 col-lg-3">
-                    <div class="item">
+                    <div class="item form-4">
                         <div class="heading">
                             <h3>PLUS</h3>
                         </div>
@@ -105,7 +108,8 @@
                               "description" => "Mensual",
                               "type" => "plus",
                               "amount" => 9999,99,
-                              "id" => "prod_DHJyMNN7IqdDgo"
+                              "id" => "prod_DHJyMNN7IqdDgo",
+                              "form_id" => "form-4"
                           ]
                       ])
                     </div>

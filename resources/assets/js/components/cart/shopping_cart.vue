@@ -13,13 +13,13 @@
         },
         methods: {
             quantityChange(article) {
-               axios.get(`/${article.pivot.article_id}/add/${article.pivot.quantity}/car`)
+               axios.get(`/${article.pivot.article_id}/add/${article.pivot.quantity}/cart`)
                    .then(() => {
                        toastr.success(`¡Articulo ${article.name} actualizado correctamente!`);
                    });
             },
             removeArticleToCar(article) {
-                axios.get(`/${article.pivot.article_id}/remove/car`)
+                axios.get(`/${article.pivot.article_id}/remove/cart`)
                     .then(() => {
                         toastr.info(`¡Articulo ${article.name} removido correctamente!`);
                         let index = this.items.findIndex(item => item.id === article.id);
