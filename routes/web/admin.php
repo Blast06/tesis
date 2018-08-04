@@ -10,4 +10,7 @@ Route::catch(function (){
     throw new NotFoundHttpException;
 });
 
-Route::get('/', 'Admin\DashboardAdminController@index')->name('admin.dashboard');
+Route::middleware(['auth'])->name('admin.')->group(function () {
+    Route::get('/', 'Admin\DashboardAdminController@index')->name('dashboard');
+});
+

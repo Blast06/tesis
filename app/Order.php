@@ -44,4 +44,23 @@ class Order extends Model
     {
         return $this->website()->where('id', $website->id)->count() > 0;
     }
+
+    public function subtotal()
+    {
+        if (is_null($this->price)) {
+            return 0;
+        }
+
+        return $this->price * $this->quantity;
+    }
+
+    public function iva()
+    {
+        return $this->subtotal() * 0.18;
+    }
+
+    public function total()
+    {
+        return $this->subtotal() + $this->iva();
+    }
 }

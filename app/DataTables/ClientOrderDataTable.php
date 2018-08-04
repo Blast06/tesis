@@ -25,17 +25,14 @@ class ClientOrderDataTable extends DataTable
                 }
                 return number_format($order->price,2,'.',',');
             })
+            ->addColumn('SubTotal', function (Order $order) {
+                return number_format($order->subtotal(),2,'.',',');
+            })
             ->addColumn('Iva', function (Order $order) {
-                if (is_null($order->price)) {
-                    return 'Sin especificar';
-                }
-                return number_format($order->price * 0.18,2,'.',',');
+                return number_format($order->iva(),2,'.',',');
             })
             ->addColumn('Total', function (Order $order) {
-                if (is_null($order->price)) {
-                    return 'Sin especificar';
-                }
-                return number_format($order->price * ($order->price * 0.18),2,'.',',');
+                return number_format($order->total(),2,'.',',');
             })
             ->editColumn('status', function (Order $order) {
                 return $this->articleBadgeStatus($order);
@@ -59,6 +56,11 @@ class ClientOrderDataTable extends DataTable
         return request()->website->orders()
             ->with(['user', 'article'])
             ->orderByDesc('id')
+            ->unless(!isset(request()->status), function ($order){
+                if ($this->isRequestStatusHasValidStatus()) {
+                    $order->where('status', request()->status);
+                }
+            })
             ->get();
     }
 
@@ -87,8 +89,10 @@ class ClientOrderDataTable extends DataTable
             'id' => ['title' => 'Identificador', 'visible' => false, 'exportable' => false, 'printable' => false,],
             'article.name' => ['title' => 'Articulo'],
             'user.name' => ['title' => 'Cliente'],
+            'user.email' => ['title' => 'correo electrónico'],
             'price' => ['title' => 'Precio'],
             'quantity' => ['title' => 'Cantidad'],
+            'SubTotal',
             'Iva',
             'Total',
             'status' => ['title' => 'Estatus'],
@@ -117,5 +121,13 @@ class ClientOrderDataTable extends DataTable
         ];
 
         return "<span class=\"badge {$array[$order->status]}\">{$order->status}</span>";
+    }
+
+    private function isRequestStatusHasValidStatus()
+    {
+        return request()->status === Order::STATUS_CANCEL
+            || request()->status === Order::STATUS_COMPLETE
+            || request()->status === Order::STATUS_CURRENT
+            || request()->status === Order::STATUS_WAIT;
     }
 }

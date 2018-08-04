@@ -40,3 +40,14 @@ Breadcrumbs::for('edit-order', function ($breadcrumbs, $website, $order) {
     $breadcrumbs->push("No. $order->id", route('client.orders.edit', ['website' => $website, 'order' => $order]));
 });
 
+Breadcrumbs::for('subscriber', function ($breadcrumbs, $website) {
+    $breadcrumbs->parent('dashboard', $website);
+    $breadcrumbs->push('Suscriptores', route('client.subscribers.index', $website));
+});
+
+Breadcrumbs::for('buyer', function ($breadcrumbs, $website) {
+    $breadcrumbs->parent('dashboard', $website);
+    $breadcrumbs->push('Compradores', route('client.subscribers.index', $website));
+});
+
+

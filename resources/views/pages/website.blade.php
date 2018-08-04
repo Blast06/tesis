@@ -8,15 +8,29 @@
                 index-name="websites">
 
             <div class="col-md-3">
-                <ais-refinement-list attribute-name="created_at"
+
+                <ais-refinement-list attribute-name="location"
                                      :class-names="{
                                          'ais-refinement-list__count': 'badge badge-pill badge-primary',
                                          'ais-refinement-list__item': 'form-check',
                                          'ais-refinement-list__checkbox': 'form-check-input',
                                          }">
                     <h5 slot="header">
+                        <i class="far fa-folder-open"></i>
+                        UBICACION
+                    </h5>
+                </ais-refinement-list>
+
+                <ais-refinement-list attribute-name="created_at"
+                                     :class-names="{
+                                         'ais-refinement-list__count': 'badge badge-pill badge-primary',
+                                         'ais-refinement-list__item': 'form-check',
+                                         'ais-refinement-list__checkbox': 'form-check-input',
+                                         'ais-refinement-list': 'mt-5'
+                                         }">
+                    <h5 slot="header">
                         <i class="fas fa-calendar-alt"></i>
-                        FECHA
+                        FECHA DE CREACION
                     </h5>
                 </ais-refinement-list>
             </div>

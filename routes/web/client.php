@@ -30,5 +30,10 @@ Route::middleware(['client'])->prefix('{website}')->name('client.')->group(funct
     Route::get('orders', 'Client\OrderController@index')->name('orders.index');
     Route::get('orders/{order}', 'Client\OrderController@edit')->name('orders.edit');
     Route::put('orders/{order}', 'Client\OrderController@update')->name('orders.update');
+    Route::put('orders/{order}', 'Client\OrderController@update')->name('orders.update');
+
+    Route::get('subscribers', 'Client\SubscriberController@index')->name('subscribers.index');
+
+    Route::get('buyers', 'Client\BuyerController@index')->name('buyers.index');
 });
 

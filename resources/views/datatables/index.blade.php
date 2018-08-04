@@ -3,7 +3,11 @@
     <div class="row">
 
         <div class="col-md-3 sidebar">
-            @include('client._sidebar')
+            @if(isset($website))
+                @include('client._sidebar')
+                @else
+                @include('admin._sidebar')
+            @endif
         </div>
 
         <div class="col-md-9">
@@ -15,7 +19,7 @@
             @component('component.card')
 
                 @slot('header')
-                    {{ $header ?? "Datatables" }}
+                    {!! $header ?? "Datatables" !!}
                 @endslot
 
                 @slot('header_style', 'bg-white font-weight-bold')

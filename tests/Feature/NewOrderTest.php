@@ -230,7 +230,7 @@ class NewOrderTest extends TestCase
         $this->be($this->user);
 
         // Add article to cart
-        $this->json('GET',"{$this->articles[0]->id}/add/1/car")
+        $this->json('GET',"{$this->articles[0]->id}/add/1/cart")
             ->json('GET',"{$this->articles[1]->id}/add/2/car");
 
         // Order item in cart

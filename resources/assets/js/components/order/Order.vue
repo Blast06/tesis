@@ -7,11 +7,12 @@
                 <th>Vendedor</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
+                <th>SubTotal</th>
                 <th>Iva</th>
                 <th>Total</th>
                 <th>Estado</th>
+                <th>Fecha de Pedido</th>
                 <th>Fecha de Actualizacion</th>
-                <th>Fecha de Modificacion</th>
                 <th></th>
             </tr>
             </thead>
@@ -21,10 +22,12 @@
                 <td v-text="order.website.name"></td>
                 <td>{{ order.price | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }}</td>
                 <td v-text="order.quantity"></td>
-                <td v-if="order.price">{{ (order.price + order.quantity) * 0.18 | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }} </td>
-                <td v-else>0</td>
-                <td v-if="order.price">{{ ((order.price + order.quantity) * 0.18) + (order.price + order.quantity) | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }}</td>
-                <td v-else>0</td>
+                <!-- subtotal -->
+                <td>{{ subTotal(order.price, order.quantity) | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }} </td>
+                <!-- iva -->
+                <td>{{  iva(order.price, order.quantity) | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }} </td>
+                <!-- total -->
+                <td>{{ total(order.price, order.quantity) | currency('RD$', 2, { spaceBetweenAmountAndSymbol: true }) }}</td>
                 <td v-html="badgesStatus(order.status)"></td>
                 <td>{{ order.created_at | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}</td>
                 <td>{{ order.updated_at | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}</td>
@@ -50,6 +53,17 @@
                     return '<span class="badge badge-danger">'+status+'</span>';
 
                 return '<span class="badge badge-dark">'+status+'</span>';
+            },
+            subTotal(price, quantity) {
+                if (price && quantity)   return  price * quantity;
+                return 0;
+
+            },
+            iva(price, quantity) {
+                return this.subTotal(price, quantity)  * 0.18;
+            },
+            total(price, quantity) {
+                return this.subTotal(price, quantity) + this.iva(price, quantity);
             }
         }
     }

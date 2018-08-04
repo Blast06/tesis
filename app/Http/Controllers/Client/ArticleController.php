@@ -47,7 +47,7 @@ class ArticleController extends Controller
      */
     public function index(ClientArticleDataTable $dataTable, Website $website)
     {
-        $header = 'Todos los articulos de '. $website->name;
+        $header = "Todas los articulos de {$website->name}". $this->buttonsFilter();
         $breadcrumb_name = 'article';
         return $dataTable->render('datatables.index', compact('header', 'breadcrumb_name', 'website'));
     }
@@ -115,7 +115,7 @@ class ArticleController extends Controller
         abort_unless($article->isRegisteredIn($website), 404);
         $article->delete();
         if (request()->ajax()) { return $this->showOne($article, Response::HTTP_OK); }
-        return redirect()->route('articles.index', $website);
+        return redirect()->route('client.articles.index', $website);
     }
 
     /**
@@ -128,5 +128,23 @@ class ArticleController extends Controller
     public function images(UploadImageArticleRequest $request, Website $website)
     {
         $this->showOne($request->uploadImage($website), Response::HTTP_OK);
+    }
+
+    /**
+     * @return string
+     */
+    public function buttonsFilter()
+    {
+        return "<form class=\"form-inline float-right\" method=\"get\">
+                  <div class=\"form-group\">
+                    <select class=\"form-control\" name=\"status\">
+                      <option value=\"TODOS\">Todos</option>
+                      <option value=\"NO_DISPONIBLE\">No disponible</option>
+                      <option value=\"DISPONIBLE\">Disponible</option>
+                      <option value=\"PRIVADO\">Privado</option>
+                    </select>
+                  </div>
+                  <button type=\"submit\" class=\"btn btn-primary ml-2\">Filtrar</button>
+                </form>";
     }
 }

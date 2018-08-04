@@ -56,5 +56,6 @@
             <p>{{ config('app.name') }}. Copyright &copy; Cristian Gómez Evangelista & Julio Delgado.</p>
         </footer>
     </div>
+
 </body>
 </html>

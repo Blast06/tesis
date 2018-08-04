@@ -53,6 +53,7 @@ Vue.component('article-rating', require("./components/article/Rating"));
 Vue.component('user-order', require("./components/order/Order"));
 Vue.component('client-order', require("./components/order/edit"));
 Vue.component('stripe-form', require("./components/StripeForm"));
+Vue.component('line-chart', require("./components/LineChart"));
 
 new Vue({
     el: '#app',

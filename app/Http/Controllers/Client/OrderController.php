@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\{
-    DataTables\ClientOrderDataTable, Order, Website
-};
+use App\{Order, Website};
 use App\Http\Controllers\Controller;
+use App\DataTables\ClientOrderDataTable;
 use App\Http\Requests\UpdateOrderRequest;
 
 class OrderController extends Controller
@@ -27,7 +26,7 @@ class OrderController extends Controller
      */
     public function index(ClientOrderDataTable $dataTable, Website $website)
     {
-        $header = 'Todas las ordenes de '. $website->name;
+        $header = "Todas las ordenes de {$website->name}". $this->buttonsFilter();
         $breadcrumb_name = 'order';
         return $dataTable->render('datatables.index', compact('header', 'breadcrumb_name', 'website'));
     }
@@ -53,5 +52,24 @@ class OrderController extends Controller
     {
         abort_unless($order->isRegisteredIn($website), 404);
         return $this->showOne($request->updateOrder($order));
+    }
+
+    /**
+     * @return string
+     */
+    public function buttonsFilter()
+    {
+        return "<form class='form-inline float-right' method=\"get\">
+                  <div class=\"form-group\">
+                    <select class=\"form-control\" name=\"status\">
+                      <option value='TODOS'>Todos</option>
+                      <option value='COMPLETADA'>Completado</option>
+                      <option value='EN PROCESO'>En proceso</option>
+                      <option value='EN ESPERA'>En espera</option>
+                      <option value='CANCELADA'>Cancelado</option>
+                    </select>
+                  </div>
+                  <button type=\"submit\" class=\"btn btn-primary ml-2\">Filtrar</button>
+                </form>";
     }
 }

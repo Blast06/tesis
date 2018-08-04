@@ -1,3 +1,11 @@
+<div class="list-group mb-5">
+    <a href="{{ url("/client/{$website->username}/dashboard") }}" class="list">
+        <i class="far fa-circle"></i>
+        Dashboard
+    </a>
+</div>
+
+
 <h5 class="title">Articulos</h5>
 <div class="list-group mb-5">
     <a href="{{ url("/client/{$website->username}/articles/create") }}" class="list">
@@ -15,6 +23,18 @@
     <a href="{{ url("/client/{$website->username}/messages") }}" class="list">
         <i class="far fa-circle"></i>
         Recibidos
+    </a>
+</div>
+
+<h5 class="title">Reportes</h5>
+<div class="list-group mb-5">
+    <a href="{{ route('client.subscribers.index', $website) }}" class="list">
+        <i class="far fa-circle"></i>
+        Todos los suscriptores
+    </a>
+    <a href="{{ route('client.buyers.index', $website) }}" class="list">
+        <i class="far fa-circle"></i>
+        Todos los clientes
     </a>
 </div>
 

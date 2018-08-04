@@ -53,6 +53,11 @@ class ClientArticleDataTable extends DataTable
         return request()->website->articles()
             ->with(['subCategory'])
             ->orderByDesc('id')
+            ->unless(!isset(request()->status), function ($order){
+                if ($this->isRequestStatusHasValidStatus()) {
+                    $order->where('status', request()->status);
+                }
+            })
             ->get();
     }
 
@@ -109,5 +114,12 @@ class ClientArticleDataTable extends DataTable
         ];
 
         return "<span class=\"badge {$array[$article->status]}\">{$article->status}</span>";
+    }
+
+    private function isRequestStatusHasValidStatus()
+    {
+        return request()->status === Article::STATUS_AVAILABLE
+            || request()->status === Article::STATUS_NOT_AVAILABLE
+            || request()->status === Article::STATUS_PRIVATE;
     }
 }

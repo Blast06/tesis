@@ -64,6 +64,7 @@ class ArticleController extends Controller
             'data' => [
                 'article' => $article,
                 'relateds' => $relateds,
+                'reviews' => $article->reviews,
                 'current_user_review' => $user_review
             ]
         ]);
