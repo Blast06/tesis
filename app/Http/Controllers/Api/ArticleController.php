@@ -122,4 +122,9 @@ class ArticleController extends Controller
         auth()->user()->unfavoriteTo($article);
         return $this->successResponse(['message' => "Article {$article->name} is now unfavorited"]);
     }
+
+    public function isFavoritedTo(Article $article)
+    {
+        return auth()->user()->isFavoritedTo($article);
+    }
 }

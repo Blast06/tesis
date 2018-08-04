@@ -9,10 +9,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
-                    <h1 class="mb-5" style="color: #464240;">Sencillez a escala.</h1>
+                    <h1 class="mb-5" style="color: #464240;">Sencillez a escala</h1>
                     <p class="start">
-                        {{ config()->get('app.name') }} proporciona el punto de partida perfecto para su negocio crezca rapido.
-                        Olvídese de la compra, mantenimiento y los altos costos de alojamiento de un sistema web y concéntrese en lo que importa: su negocio.
+                        <b>{{ config()->get('app.name') }}</b> proporciona el punto de partida perfecto para que tu negocio crezca rápidamente.
+                        Olvídate de la compra, mantenimiento y los altos costos de alojamiento de un sistema web y concéntrese en lo que realmente importa… ¡Tu negocio!
                     </p>
                 </div>
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
@@ -65,9 +65,9 @@
 
                 <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                    <h2 class="text-center">Encontrar Lo Que Busques Siempre Sera Facil</h2>
+                    <h2 class="text-center">Encontrar Lo Que Buscas Siempre Será Fácil</h2>
                     <p class="lead mb-0">
-                      Una búsqueda precisa con múltiples opciones, que hace que los usuarios encuentren lo que buscan con solo un retraso de 1 milisegundo.
+                        Una búsqueda precisa con múltiples opciones, que hace que los usuarios encuentren lo que buscan con tan solo un retraso de ¡un milisegundo!
                     </p>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                 <div class="col-lg-6 my-auto showcase-text">
                     <h2 class="text-center">Crea tu Negocio</h2>
                     <p class="lead mb-0">
-                        Publica todos los productos o servicios que ofreces, Para llegar a mas clientes que nunca.
+                        Publica todos los productos y/o servicios que ofreces para llegar a más clientes que nunca.
                     </p>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                     <h2>Dashboard</h2>
                     <p class="lead mb-0">
-                        Una tablero administrativo elegante y sencilla, para administrar su negocio y saber cómo se encuentra el mi.
+                        Un tablero administrativo elegante y sencillo para administrar tu negocio y saber cómo se están desarrollando tus operaciones.
                     </p>
                 </div>
             </div>
