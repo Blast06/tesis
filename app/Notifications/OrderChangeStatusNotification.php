@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -67,8 +68,14 @@ class OrderChangeStatusNotification extends Notification implements ShouldQueue
         return [
             'icon' => 'fas fa-shipping-fast',
             'subject' => 'Cambio de estado del pedido',
-            'body' => "{$this->order->id},  Ha cambiado el estado por {$this->order->id}.",
+            'body' => "{$this->order->id},  Ha cambiado el estado por {$this->order->status}.",
             'url' => url('/orders'),
         ];
     }
+
+    public function broadcastOn()
+    {
+        return new PrivateChannel('User.'.$this->order->user->id);
+    }
+
 }

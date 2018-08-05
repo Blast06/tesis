@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -52,7 +53,7 @@ class NewOrderNotification extends Notification implements ShouldQueue
             ->subject("[{$this->order->website->name}] Nuevo articulo")
             ->greeting("Hola {$notifiable->name}.")
             ->line("El client {$this->order->user->name}, ordeno el articulo {$this->order->article->name}")
-            ->action('Ver la orden', url("/client{$this->order->website->username}/orders"))
+            ->action('Ver la orden', url("/client/{$this->order->website->username}/orders"))
             ->line('¡Gracias por usar nuestra aplicación!');
     }
 
@@ -68,7 +69,12 @@ class NewOrderNotification extends Notification implements ShouldQueue
             'icon' => 'fas fa-shipping-fast',
             'subject' => 'Nueva orden',
             'body' => "{$this->order->user->name},  Ha realizado un pedido.",
-            'url' => url("/client{$this->order->website->username}/orders"),
+            'url' => url("/client/{$this->order->website->username}/orders"),
         ];
+    }
+
+    public function broadcastOn()
+    {
+        return new PrivateChannel('User.'.$this->order->website->user->id);
     }
 }
