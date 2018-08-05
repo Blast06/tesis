@@ -97,7 +97,7 @@ class ClientOrderDataTable extends DataTable
             'Total',
             'status' => ['title' => 'Estatus'],
             'created_at' => ['title' => 'Fecha de creacion'],
-            'updated_at'=> ['title' => 'Fecha actualización']
+            'updated_at'=> ['title' => 'Fecha de actualización']
         ];
     }
 

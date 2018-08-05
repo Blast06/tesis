@@ -1,7 +1,8 @@
 <?php
 return [
     'administrators' => [
-        'admin@system.com'
+        'admin@system.com',
+        'cristiangomeze@hotmail.com'
     ],
     'pagination' => [
         'perPage' => 20

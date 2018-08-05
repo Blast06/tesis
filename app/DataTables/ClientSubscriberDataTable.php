@@ -60,7 +60,7 @@ class ClientSubscriberDataTable extends DataTable
             'email' => ['title' => 'correo electrónico'],
             'orders_count' => ['title' => 'Ordenes realizadas'],
             'created_at' => ['title' => 'Fecha de creacion'],
-            'updated_at'=> ['title' => 'Fecha actualización']
+            'updated_at'=> ['title' => 'Fecha de actualización']
         ];
     }
 

@@ -12,5 +12,6 @@ Route::catch(function (){
 
 Route::middleware(['auth'])->name('admin.')->group(function () {
     Route::get('/', 'Admin\DashboardAdminController@index')->name('dashboard');
+    Route::get('users', 'Admin\UserController@index')->name('users.index');
 });
 

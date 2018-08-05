@@ -54,6 +54,7 @@ Vue.component('user-order', require("./components/order/Order"));
 Vue.component('client-order', require("./components/order/edit"));
 Vue.component('stripe-form', require("./components/StripeForm"));
 Vue.component('line-chart', require("./components/LineChart"));
+Vue.component('bar-chart', require("./components/BarChart"));
 
 new Vue({
     el: '#app',

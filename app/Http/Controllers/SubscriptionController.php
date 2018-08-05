@@ -52,7 +52,7 @@ class SubscriptionController extends Controller
     {
         $suscripcion = request()->user()->subscription(request('plan'));
 
-        if ($suscripcion->cancelled() && $suscripcion->onGracePeriod) {
+        if ($suscripcion->cancelled() && $suscripcion->onGracePeriod()) {
             request()->user()->subscription(request('plan'))->resume();
             return back()->with(['flash_success' => 'Has reanudado tu suscripcion correctamente']);
         }

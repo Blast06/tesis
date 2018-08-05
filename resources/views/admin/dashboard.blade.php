@@ -27,7 +27,7 @@
                         <div class="card bg-success">
                             <div class="card-body text-white text-center">
                                 <h3>{{ $website_count }}</h3>
-                                <p class="text-uppercase">Sitios Registrados <b>(NO PREMIUM)</b></p>
+                                <p class="text-uppercase">Sitios Registrados</p>
                             </div>
                         </div>
 
@@ -47,6 +47,24 @@
 
                     </div>
                 </div>
+            @endcomponent
+
+            @component('component.card')
+                @slot('card_style', 'shadow-sm mt-5')
+
+                @slot('header_style', 'bg-white')
+
+                <bar-chart
+                        :data="{
+                    labels: {{ $chart['labels'] }},
+                    datasets: [{label: 'Planes mas comprados',backgroundColor: '#1976D2',
+                    data: {{ $chart['data'] }} }]
+                    }"
+                        :options="{responsive: true}"
+                        :width="400"
+                        :height="200"
+                >
+                </bar-chart>
             @endcomponent
         </div>
 

@@ -4,4 +4,9 @@
         <i class="far fa-circle"></i>
         Dashboard
     </a>
+
+    <a href="{{ url("/admin/users") }}" class="list">
+        <i class="far fa-circle"></i>
+        Usuarios
+    </a>
 </div>

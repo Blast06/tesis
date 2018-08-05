@@ -63,7 +63,7 @@ class ClientBuyerDataTable extends DataTable
             'name' => ['title' => 'Cliente'],
             'email' => ['title' => 'Correo electrónico'],
             'created_at' => ['title' => 'Fecha de creacion'],
-            'updated_at'=> ['title' => 'Fecha actualización']
+            'updated_at'=> ['title' => 'Fecha de actualización']
         ];
     }
 

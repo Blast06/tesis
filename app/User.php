@@ -46,6 +46,8 @@ class User extends Authenticatable implements HasMedia
         'avatar'
     ];
 
+    protected $with = ['media'];
+
     /*
      |--------------------------------------------------------------------------
      | Mutators
