@@ -87,6 +87,6 @@ class WebsiteController extends Controller
      */
     public function isSubscribedTo(Website $website)
     {
-        return auth()->user()->isSubscribedTo($website);
+        return response()->json(auth()->user()->isSubscribedTo($website));
     }
 }

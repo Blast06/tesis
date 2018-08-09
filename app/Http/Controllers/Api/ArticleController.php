@@ -125,6 +125,6 @@ class ArticleController extends Controller
 
     public function isFavoritedTo(Article $article)
     {
-        return auth()->user()->isFavoritedTo($article);
+        return response()->json(auth()->user()->isFavoritedTo($article));
     }
 }

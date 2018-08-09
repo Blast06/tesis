@@ -30,6 +30,7 @@ Route::get('articles/{slug}', 'Api\ArticleController@show')->name('api.articles.
 Route::get('{article}/favorite', 'Api\ArticleController@favorite')->name('api.articles.favorite')->fallback();
 Route::get('{article}/unfavorite', 'Api\ArticleController@unfavorite')->name('api.articles.unfavorite')->fallback();
 Route::get('{article}/isFavoritedTo', 'Api\ArticleController@isFavoritedTo')->name('api.articles.isFavoritedTo')->fallback();
+
 // Cart
 Route::get('shopping/cart', 'Api\CartController@index')->name('cart.index');
 Route::get('shopping/cart/count', 'Api\CartController@countCartArticle')->name('api.cart.count');
