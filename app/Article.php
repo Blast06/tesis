@@ -30,7 +30,7 @@ class Article extends Model implements HasMedia
     ];
 
     protected $appends = [
-        'image_path', 'url'
+        'image_path', 'url', 'rating'
     ];
 
     protected $with = ['media', 'website', 'reviews'];
