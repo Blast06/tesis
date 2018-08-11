@@ -21,13 +21,13 @@ class WebsiteController extends Controller
             abort_unless(auth()->user()->subscribed('main'), 403, "Debes elegir un plan antes de continuar");
 
             abort_if(auth()->user()->subscribedToPlan('comunidad', 'main')
-                && auth()->user()->websites()->count() > 0, 403, 'Tu plan no te permite crear maas de 1 sitio de trabajo');
+                && auth()->user()->websites()->count() >= 1, 403, 'Tu plan no te permite crear maas de 1 sitio de trabajo');
 
             abort_if(auth()->user()->subscribedToPlan('esencial', 'main')
-                && auth()->user()->websites()->count() > 5, 403, 'Tu plan no te permite crear maas de 5 sitio de trabajo');
+                && auth()->user()->websites()->count() >= 5, 403, 'Tu plan no te permite crear maas de 5 sitio de trabajo');
 
             abort_if(auth()->user()->subscribedToPlan('premium', 'main')
-                && auth()->user()->websites()->count() > 10, 403, 'Tu plan no te permite crear maas de 10 sitio de trabajo');
+                && auth()->user()->websites()->count() >= 10, 403, 'Tu plan no te permite crear maas de 10 sitio de trabajo');
 
             return $next($request);
         })->only('store');
@@ -59,7 +59,12 @@ class WebsiteController extends Controller
      */
     public function show(Website $website)
     {
-        $website->load(['articles']);
+        $website->load(['articles' => function ($query) {
+            $query->when(request('search'), function ($q) {
+                $q->where('name', 'like', '%'.request('search').'%');
+            });
+        }]);
+
         return view('pages.website_client', compact('website'));
     }
 

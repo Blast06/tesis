@@ -6,6 +6,7 @@ Route::post('/process_subscription', 'SubscriptionController@processSubscription
 Route::get('/subscription/admin', 'SubscriptionController@admin')->name('subscriptions.admin');
 Route::post('/subscription/resume', 'SubscriptionController@resume')->name('subscription.resume');
 Route::post('/subscription/cancel', 'SubscriptionController@cancel')->name('subscription.cancel');
+Route::post('/subscription/admin', 'SubscriptionController@change')->name('subscription.change');
 
 /**
  * Auth Route
@@ -38,6 +39,7 @@ Route::post('activate/change/email', 'Auth\ActivationController@changeEmailAndRe
 Route::get('home', 'HomeController@index')->name('home.index');
 Route::get('profiles', 'ProfileController@index')->name('profiles.index');
 Route::post('profiles', 'ProfileController@avatar')->name('profiles.update');
+
 /*
  * Notification
  */

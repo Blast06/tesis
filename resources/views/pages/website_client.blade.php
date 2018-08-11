@@ -73,13 +73,27 @@
                 </ul>
             @endcomponent
 
+            <form action="{{ $website->url->show }}">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="search" placeholder="Buscar articulos de {{ $website->name }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Buscar articulos</button>
+                    </div>
+                </div>
+            </form>
 
             @if($website->articles->count())
                 @each('partials._article', $website->articles, 'article')
             @else
-                <div class="alert alert-info" role="alert">
-                    Parece que {{ $website->name }} no tienen ninguna publicación.
-                </div>
+                @if(request('search'))
+                    <div class="alert alert-info" role="alert">
+                        No hay resultados para la busqueda de  {{ request('search') }}.
+                    </div>
+                    @else
+                    <div class="alert alert-info" role="alert">
+                        Parece que {{ $website->name }} no tienen ninguna publicación.
+                    </div>
+                @endif
             @endif
         </div>
     </div>

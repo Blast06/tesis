@@ -9,6 +9,7 @@ class SubscriptionController extends Controller
     {
         $this->middleware('auth');
 
+        // Si tengo una suscripcion no puedo ver estos metodos
         $this->middleware(function ($request, $next) {
 
             if (auth()->user()->subscribed('main')) {
@@ -17,6 +18,16 @@ class SubscriptionController extends Controller
             }
             return $next($request);
         })->only(['plans', 'processSubscription']);
+
+        // Si no tengo una suscripcion no puedo ver estos metodos
+        $this->middleware(function ($request, $next) {
+            if (! auth()->user()->subscribed('main')) {
+                return redirect('/plans')
+                    ->with(['flash_danger' => "Debes elegir un plan, para poder ver la sección anterior"]);
+            }
+
+            return $next($request);
+        })->only(['admin', 'resume', 'cancel', 'change']);
     }
 
     public function plans()
@@ -36,7 +47,8 @@ class SubscriptionController extends Controller
                     ->create($token);
             }
 
-            return redirect()->route('subscriptions.admin');
+            return redirect()->route('subscriptions.admin')
+                ->with(['flash_success' => "Te haz suscrito de manera exito en nuestro plan ".request('type').""]);
         }catch (\Exception $exception) {
             return back()->with(['flash_danger' => $exception->getMessage()]);
         }
@@ -44,8 +56,8 @@ class SubscriptionController extends Controller
 
     public function admin()
     {
-        $subscriptions = auth()->user()->subscriptions;
-        return view('pages.subscriptions_admin', compact('subscriptions'));
+        $subscription = auth()->user()->subscriptions()->first();
+        return view('pages.subscriptions_admin', compact('subscription'));
     }
 
     public function resume()
@@ -57,12 +69,22 @@ class SubscriptionController extends Controller
             return back()->with(['flash_success' => 'Has reanudado tu suscripcion correctamente']);
         }
 
-        return back();
+        return back()->with(['flash_danger' => 'Has dejado finalizar tu suscripcion']);
     }
 
     public function cancel()
     {
         auth()->user()->subscription(request('plan'))->cancel();
         return back()->with(['flash_success' => 'La suscripcion se ha cancelado correctamente']);
+    }
+
+    public function change()
+    {
+        try{
+            auth()->user()->subscription('main')->swap(request('plan'));
+            return back()->with(['flash_success' => 'Has actualizado tu plan correctamente']);
+        }catch (\Exception $exception) {
+            return back()->with(['flash_danger' => $exception->getMessage()]);
+        }
     }
 }

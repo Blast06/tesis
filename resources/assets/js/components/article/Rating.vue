@@ -2,7 +2,7 @@
     <div class="container">
         <h4 class="mt-5 text-center">Opiniones de los usuarios</h4>
         <div class="row">
-            <div class="col-md-12 mt-2" v-for="review in dataReviews">
+            <div class="col-md-12 mt-2" v-for="review in dataReviews" v-if="review.length > 0">
                 <div class="comment-wrap">
                     <div class="photo">
                         <div class="avatar" :style="{'background-image': 'url(' + review.user.avatar + ')' }" data-toggle="tooltip" data-placement="top" :title="review.user.name"></div>
@@ -29,7 +29,15 @@
                 </div>
             </div>
 
-            <div class="col-md-6" v-if="isAuth">
+            <div class="col-md-12 mt-2">
+                <div class="container">
+                    <div class="alert alert-info" role="alert">
+                            <em> Aun no comentan este articulo </em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" v-if="isAuth && isOrder">
                 <star-rating
                         v-model="form.rating"
                         v-bind:increment="1"
@@ -44,7 +52,7 @@
                 </star-rating>
             </div>
 
-            <div class="col-md-6" v-if="isAuth">
+            <div class="col-md-6" v-if="isAuth && isOrder">
                 <b-form-textarea id="comment"
                                  v-model="form.comment"
                                  placeholder="Cuéntale a los demás lo que piensas sobre este artículo. ¿Lo recomendarías y por qué?"
@@ -53,7 +61,7 @@
                 </b-form-textarea>
             </div>
 
-            <div class="col-md-12 mt-2" v-if="isAuth">
+            <div class="col-md-12 mt-2" v-if="isAuth && isOrder">
                 <button class="btn-primary btn-block"
                         :disabled="form.rating < 1"
                         @click.prevent="create"
@@ -72,7 +80,7 @@
 
 <script>
     export default {
-        props: ['isAuth', 'isReview', 'reviews', 'review', 'article', 'user'],
+        props: ['isAuth', 'isReview', 'isOrder', 'reviews', 'review', 'article', 'user'],
         name: "rating_article",
         data() {
             return {

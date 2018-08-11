@@ -170,6 +170,11 @@ class User extends Authenticatable implements HasMedia
         );
     }
 
+    public function hasVerifiedEmail()
+    {
+        return $this->verified_at != null;
+    }
+
     /**
      * Send the password reset notification.
      *
@@ -322,5 +327,18 @@ class User extends Authenticatable implements HasMedia
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @param \App\Article $article
+     * @return bool
+     */
+    public function isOrder(Article $article): bool
+    {
+        return $this->orders()
+                ->where('article_id', $article->id)
+                ->where('status', Order::STATUS_COMPLETE)
+                ->orWhere('status', Order::STATUS_CANCEL)
+                ->count() > 0;
     }
 }

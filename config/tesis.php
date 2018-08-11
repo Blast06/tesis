@@ -2,7 +2,8 @@
 return [
     'administrators' => [
         'admin@system.com',
-        'cristiangomeze@hotmail.com'
+        'cristiangomeze@hotmail.com',
+        'lacalculadora06@hotmail.com'
     ],
     'pagination' => [
         'perPage' => 20

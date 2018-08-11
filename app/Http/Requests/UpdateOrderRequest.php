@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Notifications\OrderChangeStatusNotification;
+use App\Notifications\RateArticleNotification;
 use App\Order;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Notification;
@@ -42,6 +43,7 @@ class UpdateOrderRequest extends FormRequest
             $fields['price'] = $order->status === Order::STATUS_WAIT ? $fields['price'] : $order->price;
             $order->update($fields);
             Notification::send([$order->user], new OrderChangeStatusNotification($order));
+            Notification::send([$order->user], new RateArticleNotification($order, $order->article));
         });
     }
 

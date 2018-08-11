@@ -105,7 +105,7 @@
                             quantity: this.quantity,
                             status: this.status,
                         }).then(() => {
-                            toastr.success("¡Actualizado correctamnet!");
+                            toastr.success("¡Actualizado correctamente!");
                             this.loading = false;
 
                             setTimeout(() => {
