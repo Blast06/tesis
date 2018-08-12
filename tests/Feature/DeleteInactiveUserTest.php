@@ -4,13 +4,14 @@ namespace Tests\Feature;
 
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class DeleteInactiveUserTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /** @test */
     function inactive_user_its_deletes_when_7_days_pass()
