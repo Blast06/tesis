@@ -12,7 +12,7 @@
             <img :src="current_conversation.website.image_path">
             <div class="chat-name">
                 <h1 class="font-name chat-name-h1" v-text="current_conversation.website.name"></h1>
-                <p class="font-online">(809) 574-6565</p>
+                <p class="font-online"></p>
             </div>
             <i class="fa fa-bars fa-lg" aria-hidden="true" id="show-contact-information"></i>
         </div>

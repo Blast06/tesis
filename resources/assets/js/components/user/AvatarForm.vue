@@ -26,6 +26,10 @@
                 }).then(() => {
                     this.uploading = false;
                     toastr.success('¡Cambió la imagen exitosamente!')
+                }).catch(error => {
+                    this.uploading = false;
+                    toastr.error('Ha ocurrido un error al tratar de subir la imagen');
+                    console.log(error);
                 });
             }
         }

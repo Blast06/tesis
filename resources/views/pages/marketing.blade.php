@@ -63,7 +63,7 @@
         <div class="container-fluid p-0">
             <div class="row no-gutters">
 
-                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/marketing1.png');"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                     <h2 class="text-center">Encontrar Lo Que Buscas Siempre Será Fácil</h2>
                     <p class="lead mb-0">
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="row no-gutters">
-                <div class="col-lg-6 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
+                <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/markting3.png');"></div>
                 <div class="col-lg-6 my-auto showcase-text">
                     <h2 class="text-center">Crea tu Negocio</h2>
                     <p class="lead mb-0">
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="row no-gutters">
-                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-524398.jpg');"></div>
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/marketing2.png');"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                     <h2>Dashboard</h2>
                     <p class="lead mb-0">
@@ -99,21 +99,21 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgRMx2E8KtPle7fQQZs08bvrlI5sB_SAcGtMhWfVu3YyZNuFVd') }}" alt="">
                         <h5>Cristian Gómez</h5>
                         <p class="font-weight-light mb-0">"¡Esto es fantástico! Muchas gracias chicos!"</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('https://cf.ltkcdn.net/socialnetworking/images/std/168796-281x281-girl-swear-icon.png') }}" alt="">
                         <h5>Rosa Henriquez</h5>
                         <p class="font-weight-light mb-0">"{{ config()->get('app.name') }} es increíble, Lo he estado usando estas últimas semanas y le recomendé a mis amigos."</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/default.png') }}" alt="">
+                        <img class="img-fluid rounded-circle mb-3" src="{{ asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRETLsmFOlVNf6XJtNsPsdGpusnyaRa6xSwP7XOApi3rGmyIDjREQ') }}" alt="">
                         <h5>Patricia V.</h5>
                         <p class="font-weight-light mb-0">"¡Muchas gracias por poner a disposición de nosotros esta aplicacion con un plan gratuito!"</p>
                     </div>

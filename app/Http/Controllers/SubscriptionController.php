@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use Stripe\Collection;
+
 class SubscriptionController extends Controller
 {
     public function __construct()
@@ -86,5 +88,22 @@ class SubscriptionController extends Controller
         }catch (\Exception $exception) {
             return back()->with(['flash_danger' => $exception->getMessage()]);
         }
+    }
+
+    public function invoice()
+    {
+        $invoices = new Collection;
+        if (auth()->user()->stripe_id) {
+            $invoices = auth()->user()->invoices();
+        }
+        return view('pages.subscriptions_invoce', compact('invoices'));
+    }
+
+    public function invoiceDownload($invoice)
+    {
+        return request()->user()->downloadInvoice($invoice, [
+            "vendor" => config('app.name'),
+            "product" => "suscripción"
+        ]);
     }
 }

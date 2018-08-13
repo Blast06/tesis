@@ -2,7 +2,7 @@
     <div class="container">
         <h4 class="mt-5 text-center">Opiniones de los usuarios</h4>
         <div class="row">
-            <div class="col-md-12 mt-2" v-for="review in dataReviews" v-if="review.length > 0">
+            <div class="col-md-12 mt-2" v-for="review in dataReviews" v-if="dataReviews.length > 0">
                 <div class="comment-wrap">
                     <div class="photo">
                         <div class="avatar" :style="{'background-image': 'url(' + review.user.avatar + ')' }" data-toggle="tooltip" data-placement="top" :title="review.user.name"></div>
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mt-2">
+            <div class="col-md-12 mt-2" v-else>
                 <div class="container">
                     <div class="alert alert-info" role="alert">
                             <em> Aun no comentan este articulo </em>

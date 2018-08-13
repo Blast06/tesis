@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Client;
 
 use DB;
 use App\Events\NewMessage;
-use App\{Conversation, Website};
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
+use App\{Conversation, Notifications\NewClientMessage, User, Website};
 
 class MessageController extends Controller
 {
@@ -59,6 +60,7 @@ class MessageController extends Controller
         });
 
         broadcast(new NewMessage($newMessage->conversation, $newMessage))->toOthers();
+        Notification::send([$newMessage->conversation->website->user], new NewClientMessage($newMessage->conversation, $newMessage));
 
         return $this->successResponse(['data' => $newMessage], 201);
     }
@@ -70,9 +72,10 @@ class MessageController extends Controller
      */
     public function storeWebsite(Website $website)
     {
-        $newMessage = DB::transaction(function () use ($website){
+        $user = User::findOrFail(request()->user_id);
+        $newMessage = DB::transaction(function () use ($website, $user){
             $conversation = $website->conversation()
-                ->where('user_id', request()->user_id)
+                ->where('user_id', $user->id)
                 ->firstOrFail();
 
             return $conversation->messages()->create([
@@ -82,6 +85,7 @@ class MessageController extends Controller
         });
 
         broadcast(new NewMessage($newMessage->conversation, $newMessage))->toOthers();
+        Notification::send([$user], new NewClientMessage($newMessage->conversation, $newMessage));
 
         return $this->successResponse(['data' => $newMessage], 201);
     }

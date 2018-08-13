@@ -5,7 +5,10 @@
         @include('partials._alert')
 
         @slot('header')
-            <h5 class="text-center font-weight-bold">Actualizar Suscripción</h5>
+            <h5 class="text-center font-weight-bold">
+                Actualizar Suscripción
+                <a class="btn btn-link" href="{{ route('subscription.invoice') }}">Ver facturas</a>
+            </h5>
         @endslot
 
         @if(! $subscription->ends_at)

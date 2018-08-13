@@ -21,7 +21,7 @@ class OrderController extends Controller
             ->orders()
             ->with(['article:id,name,slug', 'website'])
             ->orderByDesc('id')
-            ->get();
+            ->paginate();
 
         return view('pages.order', compact('orders'));
     }

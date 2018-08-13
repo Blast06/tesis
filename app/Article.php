@@ -123,7 +123,7 @@ class Article extends Model implements HasMedia
             'sub_category' => $this->subCategory->name,
             'url_path' => $this->url->show,
             'location' => $this->location != null ? $this->location : 'Sin definir',
-            'rating' => $this->rating
+            'rating' => (int) $this->rating
         ];
     }
 }

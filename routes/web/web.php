@@ -7,6 +7,8 @@ Route::get('/subscription/admin', 'SubscriptionController@admin')->name('subscri
 Route::post('/subscription/resume', 'SubscriptionController@resume')->name('subscription.resume');
 Route::post('/subscription/cancel', 'SubscriptionController@cancel')->name('subscription.cancel');
 Route::post('/subscription/admin', 'SubscriptionController@change')->name('subscription.change');
+Route::get('/subscription/invoice', 'SubscriptionController@invoice')->name('subscription.invoice');
+Route::get('/{invoice}/download', 'SubscriptionController@invoiceDownload')->name('subscription.invoice.download');
 
 /**
  * Auth Route
